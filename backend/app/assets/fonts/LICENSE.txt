@@ -1,0 +1,16 @@
+DejaVu fonts — license notice
+=============================
+
+The two TrueType files in this directory (DejaVuSans.ttf,
+DejaVuSans-Bold.ttf) are used only to embed a Unicode-capable font in
+server-generated PDF exports, so accented and non-Latin historical text is
+not mangled.
+
+DejaVu fonts are based on Vera fonts and are released under a free license
+(the Bitstream Vera Fonts Copyright plus the DejaVu changes, which are in
+the public domain). Full text: https://dejavu-fonts.github.io/License.html
+
+Upstream: https://github.com/dejavu-fonts/dejavu-fonts
+Package used: dejavu-fonts-ttf 2.37.3 (via jsDelivr).
+
+These files are assets, not source code: do not edit them.

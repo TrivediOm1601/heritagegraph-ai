@@ -1,0 +1,1 @@
+"""Module D utilities (D1: file validation; later parts add text helpers)."""

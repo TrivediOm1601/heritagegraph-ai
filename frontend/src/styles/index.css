@@ -1,0 +1,88 @@
+/*
+ * HeritageGraph AI — design system foundation.
+ *
+ * Design tokens live in @theme so every value below is generated as a
+ * first-class Tailwind utility (bg-ivory-100, text-teal-700,
+ * border-terracotta-300, font-display, ...). Components must use the
+ * utilities rather than raw hex values so the palette stays consistent.
+ *
+ * Palette:
+ *   ivory      — warm parchment surfaces and neutral text tones
+ *   teal       — primary brand colour: header, headings, primary actions
+ *   terracotta — accent colour: emphasis, highlights, alerts
+ *   ink        — text tones that sit on ivory surfaces
+ */
+
+@import 'tailwindcss';
+
+@theme {
+  /* ── Ivory: warm parchment neutrals ─────────────────────────── */
+  --color-ivory: #fffff0; /* canonical ivory, used for raised surfaces */
+  --color-ivory-50: #fdfbf3; /* page background */
+  --color-ivory-100: #f7f1e1; /* card / panel background */
+  --color-ivory-200: #ece2cb; /* subtle fills */
+  --color-ivory-300: #ddcfb0; /* borders */
+  --color-ivory-400: #c6b489; /* strong borders */
+  --color-ivory-500: #a4926a; /* muted icons */
+  --color-ivory-700: #6f6247; /* muted text on light */
+  --color-ivory-900: #3b3427; /* dark text */
+
+  /* ── Teal: primary brand ────────────────────────────────────── */
+  --color-teal-50: #e7f3f2;
+  --color-teal-100: #cbe7e4;
+  --color-teal-200: #9fd2cd;
+  --color-teal-300: #6db9b4;
+  --color-teal-400: #3f9d98;
+  --color-teal-500: #1f827d;
+  --color-teal-600: #146a66; /* brand primary */
+  --color-teal-700: #115653; /* hover / pressed */
+  --color-teal-800: #124442; /* headings on ivory */
+  --color-teal-900: #103937;
+
+  /* ── Terracotta: accent ─────────────────────────────────────── */
+  --color-terracotta-50: #fbf0ea;
+  --color-terracotta-100: #f6ddd1;
+  --color-terracotta-200: #ecbda6;
+  --color-terracotta-300: #df9a79;
+  --color-terracotta-400: #d17c58;
+  --color-terracotta-500: #c1623c; /* accent primary */
+  --color-terracotta-600: #b1502e; /* accent emphasis / hover */
+  --color-terracotta-700: #934027;
+  --color-terracotta-800: #773725;
+  --color-terracotta-900: #622f21;
+
+  /* ── Ink: text tones on ivory ───────────────────────────────── */
+  --color-ink-900: #1f2a28; /* body / headings */
+  --color-ink-700: #37423f; /* secondary text */
+  --color-ink-500: #5b6462; /* muted text, captions */
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
+    'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ivory-50);
+    color: var(--color-ink-900);
+    font-family: var(--default-font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Keyboard focus uses the brand teal so it reads on every surface. */
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-terracotta-200);
+    color: var(--color-ink-900);
+  }
+}

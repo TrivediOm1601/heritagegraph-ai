@@ -1,0 +1,197 @@
+{
+  "_meta": {
+    "name": "HeritageGraph AI development seed — historical records",
+    "owner": "Module C (Member 3), part C3",
+    "curated_on": "2026-10-25",
+    "purpose": "Development seed ONLY. This JSON file is not a substitute for a verified source of truth: every record cites a public source that must be re-verified before any production use.",
+    "editing_rules": [
+      "Every record must carry id, title, year, publisher, url, text and provenance.",
+      "Text entries are original summaries of the cited source, not copied excerpts.",
+      "Only add a record whose URL was actually checked (HTTP 200) on the stated date."
+    ],
+    "url_check": "All 20 source URLs below returned HTTP 200 on 2026-10-25.",
+    "record_count": 20
+  },
+  "records": [
+    {
+      "id": "rec-ada-lovelace",
+      "title": "Ada Lovelace",
+      "year": "1815–1852",
+      "publisher": "Encyclopædia Britannica",
+      "url": "https://www.britannica.com/biography/Ada-Lovelace",
+      "text": "Augusta Ada Lovelace (née Byron; 10 December 1815 – 27 November 1852) was an English mathematician who worked on Charles Babbage's proposed mechanical general-purpose computer, the Analytical Engine. In 1843 she published a translation of an article by Luigi Menabrea together with her own extensive notes, which included a method for computing Bernoulli numbers that is widely recognised as the first program intended for a machine. She has been called the first computer programmer.",
+      "provenance": "Original summary of Encyclopædia Britannica, 'Ada Lovelace' (URL checked 2026-10-25); birth/death dates and the 1843 Menabrea notes follow the cited page."
+    },
+    {
+      "id": "rec-charles-babbage",
+      "title": "Charles Babbage",
+      "year": "1791–1871",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Charles_Babbage",
+      "text": "Charles Babbage (26 December 1791 – 18 October 1871) was an English mathematician, philosopher, inventor and mechanical engineer who originated the concept of a programmable computer. He designed the Difference Engine in the 1820s to tabulate polynomial functions, and from the 1830s designed the more general Analytical Engine, which included an arithmetic unit, memory and conditional control. He is widely regarded as the father of computing.",
+      "provenance": "Original summary of Wikipedia, 'Charles Babbage' (URL checked 2026-10-25); life dates match the cited infobox."
+    },
+    {
+      "id": "rec-analytical-engine",
+      "title": "Analytical Engine",
+      "year": "c. 1837",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Analytical_Engine",
+      "text": "The Analytical Engine was a proposed digital mechanical general-purpose computer designed by Charles Babbage in the 1830s. It was the first design to combine an arithmetic logic unit, control flow in the form of conditional branching and loops, and integrated memory, making it a general-purpose machine in the modern sense. Ada Lovelace's notes, published in 1843, described a detailed method for the machine to compute Bernoulli numbers.",
+      "provenance": "Original summary of Wikipedia, 'Analytical Engine' (URL checked 2026-10-25)."
+    },
+    {
+      "id": "rec-difference-engine",
+      "title": "Difference Engine",
+      "year": "1822",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Difference_Engine",
+      "text": "The Difference Engine is an automatic mechanical calculator designed by Charles Babbage in the 1820s to tabulate polynomial functions by the method of finite differences, aimed at removing human error from mathematical tables. A full-scale engine built from Babbage's later plans is held by the Science Museum in London, demonstrating that the nineteenth-century design was mechanically sound.",
+      "provenance": "Original summary of Wikipedia, 'Difference engine' (URL checked 2026-10-25)."
+    },
+    {
+      "id": "rec-great-exhibition",
+      "title": "Great Exhibition",
+      "year": "1851",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Great_Exhibition",
+      "text": "The Great Exhibition of the Works of Industry of All Nations was held in Hyde Park, London, from 1 May to 11 October 1851. It was the first international exhibition of manufactured products, housed in the purpose-built Crystal Palace, and it recorded 6,039,722 visitors. Its surplus helped fund institutions including what became the Victoria and Albert Museum.",
+      "provenance": "Original summary of Wikipedia, 'Great Exhibition' (URL checked 2026-10-25); visitor figure taken from the cited page."
+    },
+    {
+      "id": "rec-crystal-palace",
+      "title": "Crystal Palace",
+      "year": "1851",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Crystal_Palace",
+      "text": "The Crystal Palace was a prefabricated cast-iron and glass building designed by Joseph Paxton to house the Great Exhibition of 1851 in Hyde Park, London. After the exhibition it was re-erected on a hillside at Sydenham in south London, where it stood until it was destroyed by fire in 1936. The building's modular construction made it one of the largest glass structures of its century.",
+      "provenance": "Original summary of Wikipedia, 'Crystal Palace' (URL checked 2026-10-25); 1851/1936 dates follow the cited page."
+    },
+    {
+      "id": "rec-industrial-revolution",
+      "title": "Industrial Revolution",
+      "year": "c. 1760–1840",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Industrial_Revolution",
+      "text": "The Industrial Revolution was the shift from agrarian to industrial economies that began in Great Britain and spread through western Europe and North America, conventionally dated from about 1760 to 1840. Its key developments included mechanised textile production, the factory system, canal construction, rising iron output and the spread of the steam engine. The period transformed work, transport and urban life.",
+      "provenance": "Original summary of Wikipedia, 'Industrial Revolution' (URL checked 2026-10-25); date range and key events follow the cited page."
+    },
+    {
+      "id": "rec-printing-press",
+      "title": "Printing press",
+      "year": "c. 1440",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Printing_press",
+      "text": "The printing press is a mechanical device that applies inked, movable type to a sheet under pressure to produce repeated copies of a text. Johannes Gutenberg introduced the metal movable-type press in Europe around 1440 in Mainz, Germany, and the books it produced — among them the famous 42-line Bible — sharply reduced the cost of books and spread literacy.",
+      "provenance": "Original summary of Wikipedia, 'Printing press' (URL checked 2026-10-25); inventor and c. 1440 date follow the cited page."
+    },
+    {
+      "id": "rec-steam-engine",
+      "title": "Steam engine",
+      "year": "1698",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Steam_engine",
+      "text": "A steam engine is a heat engine that performs mechanical work by using steam as its working fluid. Thomas Savery patented the first practical engine in 1698 for pumping water from mines, and James Watt's separate condenser, patented in 1769, made the engine far more efficient. Watt's improved engine powered mills, mines and locomotives during the Industrial Revolution.",
+      "provenance": "Original summary of Wikipedia, 'Steam engine' (URL checked 2026-10-25)."
+    },
+    {
+      "id": "rec-james-watt",
+      "title": "James Watt",
+      "year": "1736–1819",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/James_Watt",
+      "text": "James Watt (30 January 1736 – 25 August 1819) was a Scottish inventor, mechanical engineer and chemist whose separate condenser, patented in 1769, transformed the Newcomen steam engine into an efficient industrial power source. Working with Matthew Boulton he manufactured engines that drove the Industrial Revolution, and the SI unit of power, the watt, is named after him.",
+      "provenance": "Original summary of Wikipedia, 'James Watt' (URL checked 2026-10-25); life dates match the cited infobox."
+    },
+    {
+      "id": "rec-grace-hopper",
+      "title": "Grace Hopper",
+      "year": "1906–1992",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Grace_Hopper",
+      "text": "Grace Brewster Hopper (née Murray; 9 December 1906 – 1 January 1992) was an American computer scientist and United States Navy rear admiral. She was one of the first programmers of the Harvard Mark I computer in 1945, developed the first compiler, the A-0 System in 1952, and helped shape the COBOL programming language. The destroyer USS Hopper (DDG-70) is named after her.",
+      "provenance": "Original summary of Wikipedia, 'Grace Hopper' (URL checked 2026-10-25); life dates and rank follow the cited infobox."
+    },
+    {
+      "id": "rec-alan-turing",
+      "title": "Alan Turing",
+      "year": "1912–1954",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+      "text": "Alan Mathison Turing (23 June 1912 – 7 June 1954) was an English mathematician, computer scientist and logician, widely regarded as the father of theoretical computer science and artificial intelligence. During the Second World War he worked at Bletchley Park on the cryptanalysis of the German Enigma machine, and later proposed the Turing test for machine intelligence.",
+      "provenance": "Original summary of Wikipedia, 'Alan Turing' (URL checked 2026-10-25); life dates and known-for entries follow the cited page."
+    },
+    {
+      "id": "rec-marie-curie",
+      "title": "Marie Curie",
+      "year": "1867–1934",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+      "text": "Marie Skłodowska Curie (7 November 1867 – 4 July 1934) was a Polish and naturalised-French physicist and chemist who conducted pioneering research on radioactivity, a term she coined. She discovered the elements polonium and radium, shared the 1903 Nobel Prize in Physics, and in 1911 won the Nobel Prize in Chemistry, making her the first person to win Nobel Prizes in two different sciences.",
+      "provenance": "Original summary of Wikipedia, 'Marie Curie' (URL checked 2026-10-25); Nobel years match the cited award list."
+    },
+    {
+      "id": "rec-florence-nightingale",
+      "title": "Florence Nightingale",
+      "year": "1820–1910",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Florence_Nightingale",
+      "text": "Florence Nightingale (12 May 1820 – 13 August 1910) was an English social reformer and the founder of modern nursing. She rose to prominence leading nurses during the Crimean War, and her insistence on sanitation and hospital hygiene sharply cut mortality rates. Her statistical diagrams, including the polar-area chart, made public-health evidence visible to decision-makers.",
+      "provenance": "Original summary of Wikipedia, 'Florence Nightingale' (URL checked 2026-10-25); life dates and polar-area diagram follow the cited page."
+    },
+    {
+      "id": "rec-victorian-era",
+      "title": "Victorian era",
+      "year": "1837–1901",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Victorian_era",
+      "text": "The Victorian era was the period of Queen Victoria's reign, from 20 June 1837 until her death on 22 January 1901. It was marked by industrial expansion, the growth of the British Empire, strict social codes and rapid change in mass media: illustrated newspapers, carte-de-visite photographs and cheap printed books carried images and text to a mass audience for the first time.",
+      "provenance": "Original summary of Wikipedia, 'Victorian era' (URL checked 2026-10-25); reign dates follow the cited page."
+    },
+    {
+      "id": "rec-photography",
+      "title": "Photography",
+      "year": "c. 1826",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Photography",
+      "text": "Photography is the art, application and practice of creating durable images by recording light, either electronically by means of an image sensor or chemically on light-sensitive material. Joseph Nicéphore Niépce made the earliest surviving photograph around 1826–1827, and Louis Daguerre's daguerreotype process was announced publicly in 1839. Early colour processes such as Autochrome followed in 1907.",
+      "provenance": "Original summary of Wikipedia, 'Photography' (URL checked 2026-10-25); definition follows the cited page's opening sentence."
+    },
+    {
+      "id": "rec-jacquard-loom",
+      "title": "Jacquard loom",
+      "year": "1804",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Jacquard_loom",
+      "text": "The Jacquard loom is a weaving loom fitted with a control device patented by Joseph Marie Jacquard in 1804 that uses punched cards to weave complex patterns such as brocade and damask automatically. A woven portrait of Jacquard made with thousands of punched cards caught the attention of Charles Babbage and influenced the card control of his Analytical Engine.",
+      "provenance": "Original summary of Wikipedia, 'Jacquard machine' (URL checked 2026-10-25); the Babbage portrait detail follows the cited page."
+    },
+    {
+      "id": "rec-braille",
+      "title": "Braille",
+      "year": "1824",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Braille",
+      "text": "Braille is a tactile writing system in which raised dots arranged in cells represent letters, numbers and punctuation, used by blind and partially sighted readers. Louis Braille introduced the first version in 1824 at the Royal Institute for Blind Youth in Paris, adapting a tactile military night-writing code devised by Charles Barbier, and refined it through the 1830s into the system used worldwide.",
+      "provenance": "Original summary of Wikipedia, 'Braille' (URL checked 2026-10-25); creator follows the cited page's infobox."
+    },
+    {
+      "id": "rec-typewriter",
+      "title": "Typewriter",
+      "year": "c. 1874",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Typewriter",
+      "text": "A typewriter is a mechanical or electromechanical machine for typing characters: each key strikes an inked ribbon against paper to produce one printed character. The first commercial typewriters were introduced in 1874 and became common in offices in the United States after the mid-1880s. Their keyboards established the QWERTY layout still used on computers today.",
+      "provenance": "Original summary of Wikipedia, 'Typewriter' (URL checked 2026-10-25); the 1874 commercial date follows the cited page."
+    },
+    {
+      "id": "rec-metropolitan-railway",
+      "title": "Metropolitan Railway",
+      "year": "1863",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Metropolitan_Railway",
+      "text": "The Metropolitan Railway, known as the Met, was a passenger and goods railway that served London from 1863 to 1933. Its first line, opened in January 1863 between Paddington and Farringdon, was the world's first underground railway and connected London's main-line termini with the northern suburbs. Steam locomotives hauled the early trains before later electrification.",
+      "provenance": "Original summary of Wikipedia, 'Metropolitan Railway' (URL checked 2026-10-25); 1863–1933 service dates follow the cited page."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+# ---------------------------------------------------------------- local state --
+# One-command dev runner output, archived probe artifacts, manual server logs.
+.dev-logs/
+*.log
+logs/
+
+# Tool/runtime state (not part of the project)
+.freebuff/
+.sidecar/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Secrets and local configuration (templates stay in version control)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/.vision_key
+backend/.adaption_key
+backend/*service-account*.json
+backend/*credentials*.json
+
+# Local databases (SQLite files are runtime state, never source)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/heritage.db
+backend/*.db
+backend/testdata/**/*.db
+
+# Generated reports / probe output (screenshots' captions stay)
+screenshots/*.json
+backend/*.json
+
+# Python
+__pycache__/
+.venv/
+venv/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/.vite/

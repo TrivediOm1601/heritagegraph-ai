@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="HeritageGraph AI">
+  <rect width="32" height="32" rx="7" fill="#146a66" />
+  <path d="M7 22.5V14l9-5.5 9 5.5v8.5" fill="none" stroke="#f7f3e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="11" cy="23" r="2.2" fill="#c96f4a" />
+  <circle cx="21" cy="23" r="2.2" fill="#c96f4a" />
+  <circle cx="16" cy="11.5" r="2.2" fill="#f7f3e8" />
+</svg>

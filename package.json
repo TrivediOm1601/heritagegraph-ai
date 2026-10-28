@@ -1,0 +1,18 @@
+{
+  "name": "heritagegraph-ai",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HeritageGraph AI — historical image analysis, evidence-backed search and knowledge graph (repository root: one-command local development).",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "node scripts/dev.mjs",
+    "test": "node scripts/test.mjs",
+    "build": "npm --prefix frontend run build",
+    "typecheck": "npm --prefix frontend run typecheck",
+    "check:browser": "node scripts/browser-check.mjs"
+  }
+}

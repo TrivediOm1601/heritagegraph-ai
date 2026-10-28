@@ -1,0 +1,1 @@
+"""Runnable operational scripts (``python -m scripts.<name>``)."""

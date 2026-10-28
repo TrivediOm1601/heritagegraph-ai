@@ -1,0 +1,30 @@
+# HeritageGraph AI backend — runtime
+fastapi>=0.115,<1.0
+uvicorn>=0.30,<1.0
+# multipart file uploads (POST /api/analysis)
+python-multipart>=0.0.9
+# Module C — models, migrations, PostgreSQL driver
+# [asyncio] pulls greenlet, required by SQLAlchemy's async engine (used by
+# the async repositories and their test suite)
+sqlalchemy[asyncio]>=2.0,<3.0
+alembic>=1.13,<2.0
+psycopg[binary]>=3.1,<4.0
+# async SQLite driver used by the repository test suite (PG uses psycopg's
+# native async support at runtime)
+aiosqlite>=0.20,<1.0
+
+# Module D — safe image decode / orientation normalisation (D1)
+Pillow>=10.0,<13.0
+# Module D — OCR/vision provider adapters (D2) make async HTTP calls;
+# also used by the test suite (live-server fixtures, MockTransport)
+httpx>=0.27,<1.0
+# R7 — Google Cloud Vision OCR via Application Default Credentials
+# (GOOGLE_APPLICATION_CREDENTIALS / workload identity). Optional at runtime:
+# deployments using GOOGLE_VISION_API_KEY do not need it, but the documented
+# service-account setup does, so it is installed by default.
+google-auth>=2.20,<3.0
+# R7 — server-side PDF export (Unicode-capable, paginated documents)
+reportlab>=4.0,<6.0
+
+# Tests
+pytest>=8.0,<9.0

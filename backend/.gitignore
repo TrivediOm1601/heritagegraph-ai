@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.log
+*.db
+
+# Local secrets — never commit provider credentials
+.vision_key
+.env
+.env.*
+!.env.example
+
+# Downloaded evaluation images (large binaries; provenance lives in
+# testdata/eval/manifest.json and they are re-downloadable via
+# python -m scripts.fetch_eval_images)
+testdata/
+
+# Adaption provider key (local secret) — never commit
+.adaption_key
