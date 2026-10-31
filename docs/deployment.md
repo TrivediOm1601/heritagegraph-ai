@@ -68,7 +68,7 @@ python -m scripts.run_server --migrate --seed
 ```
 
 `--migrate` is idempotent. `--seed` upserts the curated historical records, 67
-heritage sites and 18 stories; it does not overwrite community rows. Never run
+heritage sites and 75 stories; it does not overwrite community rows. Never run
 destructive migration commands against a database with user data.
 
 ---

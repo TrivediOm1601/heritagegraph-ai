@@ -105,9 +105,9 @@ Status legend:
 | F6 | Health checks documented | **Verified** | `/api/health`, `/api/ready`, `/api/diagnostics` |
 | F7 | File storage requirements documented | **Verified** | Persistent `HG_STORAGE_DIR` |
 | F8 | Deployment blockers documented | **Verified** | `docs/deployment.md` §11 |
-| F9 | Deployment executed | **N/A (excluded)** | Explicitly not performed |
-| F10 | Public URL created | **N/A (excluded)** | None |
-| F11 | Docker added/tested | **N/A** | Not added; rationale in deployment doc |
+| F9 | Deployment executed | **Verified** | Deployed on Render (Docker) |
+| F10 | Public URL created | **Verified** | https://heritagegraph-ai.onrender.com |
+| F11 | Docker added/tested | **Verified** | `Dockerfile` builds and runs on Render |
 
 ## G. Local repository readiness
 

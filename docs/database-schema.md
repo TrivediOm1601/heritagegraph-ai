@@ -176,7 +176,7 @@ python -m scripts.run_server --migrate          # schema only
 python -m scripts.run_server --migrate --seed   # + curated records (idempotent)
 ```
 
-The `--seed` path upserts the historical seed, 67 heritage sites and 18 stories;
+The `--seed` path upserts the historical seed, 67 heritage sites and 75 stories;
 it does not overwrite community rows.
 
 ---
@@ -185,7 +185,7 @@ it does not overwrite community rows.
 
 - `backend/heritage.db` is the local SQLite file (git-ignored). At audit time it
   contained 8 users, 21 sessions, 114 analyses, 4 archives, 5 files, 67 sites and
-  18 stories. **Do not publish it.**
+  75 stories. **Do not publish it.**
 - Uploaded originals are in `backend/var/archive` (git-ignored) and are separate
   from database rows.
 - There is no automatic retention job, account-wide deletion or backup schedule.

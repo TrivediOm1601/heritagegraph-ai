@@ -268,7 +268,7 @@ The Stories & Legends layer keeps different kinds of knowledge apart:
 - **Versions** — separate accounts of the same story, each with its own
   tradition, community, differences and sources. They are never merged.
 
-The curated seed contains 18 stories for 10 sites, 29 story-level sources plus
+The curated seed contains 75 stories for 67 sites, 86 story-level sources plus
 4 attached to alternative versions, and 2 versions of the Konark origin story.
 The corpus is hand-compiled and source-checked; there is no automated crawler
 and no generative storyteller. `POST /api/heritage/stories/ask` performs

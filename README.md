@@ -6,9 +6,10 @@
 *Digital Revitalisation of Unstructured Cultural & Architectural Heritage
 Archives* (Software — Open Innovation; Culture, Media & Entertainment).
 
-**Status:** pre-1.0 hackathon build. The application runs and is verified locally;
-it has **not been deployed** and no public URL exists. The submission checklist
-records exactly what is verified, partial or still an owner action.
+**Status:** hackathon build, deployed on Render from the included `Dockerfile`.
+**Live demo:** https://heritagegraph-ai.onrender.com (free hosting: the first load
+after idle can take about a minute, and accounts or uploads reset on restart).
+A one-page summary is in [APPROACH_AND_LIMITS.md](APPROACH_AND_LIMITS.md).
 
 [Submission checklist](SUBMISSION_CHECKLIST.md) ·
 [Repository audit](docs/repository-audit.md) ·
@@ -33,7 +34,8 @@ It now combines six connected systems:
 | **Historical image analysis** | a photograph, scan, inscription or document | visual reading, extracted text, candidate identification, grounded history, entities, relationships, graph, evidence |
 | **Heritage Archive Studio** | several images, PDF, DOCX, PPTX, TXT, Markdown or a ZIP | one archive whose files are digitised independently, with per-file status, page-level extracted text, entities, a dated timeline, duplicate detection, search and a PDF report |
 | **India Heritage Explorer** | nothing (curated dataset) | 67 India-wide heritage sites covering all 28 states and 8 Union Territories, with sourced coordinates, national filters, a searchable site list and a clearly-labelled approximate route |
-| **Stories & Legends** | a curated heritage site | 18 sourced narratives across 10 sites — history, mythology, local legend, architecture, culture — each labelled by its epistemic basis, with separate versions when traditions disagree, a source panel, retrieval-only Q&A, and a reviewed community oral-history intake |
+| **Stories & Legends** | a curated heritage site | 75 narratives across all 67 sites (the first 18 hand-checked, 57 short summaries marked unverified) — history, mythology, local legend, architecture, culture — each labelled by its epistemic basis, with separate versions when traditions disagree, a source panel, retrieval-only Q&A, and a reviewed community oral-history intake |
+| **3D depth view** | a photograph chosen in the upload box | a tilt-and-zoom depth relief of the photo; depth is AI-estimated in the browser (Depth Anything V2) and labelled as an estimate, with an approximate fallback if the model cannot load |
 | **Research workspace + account** | archives, notes, email + password | collections of archives with notes, a combined PDF report, and private owner-scoped history of every search and analysis |
 
 Everything the app answers with is traceable: explanations quote the retrieved
@@ -76,7 +78,7 @@ More: [archive studio](docs/screenshots/archive-studio.png) ·
 | [docs/technical-approach.md](docs/technical-approach.md) | how the system works end to end |
 | [docs/known-limitations.md](docs/known-limitations.md) | what is missing or unverified, with impact and next steps |
 | [docs/database-schema.md](docs/database-schema.md) | tables, relationships, migrations, ownership |
-| [docs/deployment.md](docs/deployment.md) | production topology and configuration (nothing deployed) |
+| [docs/deployment.md](docs/deployment.md) | production topology and configuration (deployed on Render using the Dockerfile) |
 | [SECURITY.md](SECURITY.md) | verified controls, reporting, security limits |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | setup, conventions, tests, PR expectations |
 | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) | honest status of every submission item |
@@ -256,8 +258,8 @@ cultural background, provenance and verification state. These are deliberately
 orthogonal: history is not “more true” than a myth, and the API returns the
 label rather than a numeric truth score.
 
-The curated seed (`database/seeds/heritage_stories.json`) holds **18 stories for
-10 sites**, with **29 story-level sources** (33 source rows including the 4 on
+The curated seed (`database/seeds/heritage_stories.json`) holds **75 stories for
+67 sites**, with **86 story-level sources** (90 source rows including the 4 on
 the alternative versions) and **2 alternative versions** for the Konark
 origin story, which is itself labelled *conflicting accounts*. Sources are typed
 (secondary reference, World Heritage listing, historical record, religious text,
@@ -358,7 +360,7 @@ the account has no hosted model — inert by design, never faked), PostgreSQL
 environment, email verification / password reset (no email delivery is wired
 up, so neither is claimed) and lint/coverage tooling. Also **not implemented**
 and therefore not demonstrated: automated story discovery from live external
-sources (the 18 stories are hand-curated and source-checked), translated story
+sources (the first 18 stories are hand-curated and source-checked; the 57 added later are short summaries marked unverified), translated story
 versions (the schema and contribution form accept 14 Indian language tags, but
 the curated corpus is English), a generative AI storyteller (the “ask” endpoint
 retrieves stored stories only), the 3D (GLB/GLTF) viewer, the heritage tour
@@ -379,7 +381,7 @@ and [§12](#12-engineering-notes).
 | Archive Studio + PDF/DOCX/PPTX extraction | **Completed** | Full backend/frontend suites + live archive run |
 | Archive search, timeline, duplicates | **Completed** | Keyword search only; explicitly not semantic |
 | India Heritage Explorer + route estimate | **Completed** | 67 sourced sites, all 36 states/UTs; approximate straight-line route |
-| Stories & Legends (curated) | **Completed** | 18 sourced stories, 10 sites, 2 alternative traditions |
+| Stories & Legends (curated) | **Completed** | 75 stories, 67 sites, 2 alternative traditions |
 | Community oral histories + moderation | **Completed (API/UI/tests)** | Pending-by-default; moderator allowlist empty until configured |
 | Story entity graph (people/deities/communities) | **Planned** | Not implemented; see limitations |
 | Generative storyteller / automatic story discovery | **Planned** | Retrieval-only Q&A is what exists |
@@ -1087,14 +1089,14 @@ tail -n 40 .dev-logs/backend.log
 │   │                         #   0008 = stories, story sources and alternative versions)
 │   └── seeds/                # curated development records (historical_records.json), the national
 │                             # heritage-site dataset (heritage_sites.json, 67 sites) and the sourced
-│                             # story corpus (heritage_stories.json, 18 stories / 29 sources)
+│                             # story corpus (heritage_stories.json, 75 stories / 86 sources)
 ├── docs/
 │   ├── repository-audit.md   # audit findings, security review, Git/publication risk
 │   ├── cleanup-report.md     # what was removed/retained and why
 │   ├── technical-approach.md # engineering explanation end to end
 │   ├── known-limitations.md  # limitations with impact/workaround/next step
 │   ├── database-schema.md    # tables, ER diagram, migrations, ownership
-│   ├── deployment.md         # production preparation (nothing deployed)
+│   ├── deployment.md         # production setup (deployed on Render)
 │   ├── screenshots/          # genuine current UI screenshots used by this README
 │   └── HeritageGraph-AI.pdf  # earlier report snapshot (28 Oct 2026; not current docs)
 ├── frontend/
@@ -1239,8 +1241,9 @@ The honest limits of the current build:
   deployment sets it. The archive search is keyword search and is labelled
   `mode: keyword` in the API and UI; no embedding provider is configured, so
   calling it semantic would be false.
-* **Stories are curated, not exhaustive.** 18 stories cover 10 of the 67 sites;
-  a site without stories says so rather than inventing one. The curated corpus
+* **Stories vary in depth.** All 67 sites have a story, but only the first 18 are
+  hand-checked; the other 57 are short summaries from the site record and
+  Wikipedia, marked `unverified` until a person checks them. The curated corpus
   is English-only (the schema and contribution form accept 14 Indian language
   tags), and the sources are mostly Wikipedia and UNESCO listings — real,
   traceable secondary references, not archival primary documents.
