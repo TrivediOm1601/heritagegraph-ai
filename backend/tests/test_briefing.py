@@ -486,3 +486,30 @@ async def test_title_subject_match_outranks_a_mention(open_db):
 
     assert hits[0].record.id == "rec-babbage"
     assert normalize_query("Babbage   Mathematician") == "babbage mathematician"
+
+
+# ---------------------------------------------------------------------------
+# Related-topic quality
+# ---------------------------------------------------------------------------
+
+
+def test_a_same_name_entity_is_not_offered_as_a_related_topic():
+    """``Taj Mahal (musician)`` is a different entity, not a relation.
+
+    Wikipedia parenthesises such titles precisely because they share a name
+    with another article; offering one as a related topic of the monument is
+    the "unrelated entity chosen because the name matches" failure.
+    """
+    from app.services.briefing_service import _is_same_name_entity
+
+    assert _is_same_name_entity("Taj Mahal (musician)", "Taj Mahal") is True
+    assert _is_same_name_entity("Ashoka (film)", "Ashoka") is True
+
+
+def test_a_different_title_is_left_to_retrieval():
+    """A genuinely different name is not filtered by the same-name rule."""
+    from app.services.briefing_service import _is_same_name_entity
+
+    assert _is_same_name_entity("Shah Jahan", "Taj Mahal") is False
+    assert _is_same_name_entity("Taj Mahal Palace Hotel", "Taj Mahal") is False
+    assert _is_same_name_entity("Agra (city)", "Taj Mahal") is False

@@ -15,6 +15,7 @@ from fastapi import APIRouter
 from ..core.config import Settings
 from .routes import (
     analysis,
+    archives,
     auth,
     diagnostics,
     evidence,
@@ -22,6 +23,7 @@ from .routes import (
     health,
     history,
     media,
+    research,
     search,
 )
 
@@ -54,5 +56,10 @@ def create_api_router(settings: Settings) -> APIRouter:
 
     # B5: safe self-check ("which setting is missing?") for the running app.
     router.include_router(diagnostics.router)
+
+    # Heritage Archive Studio + research workspace + heritage map.
+    router.include_router(archives.router)
+    router.include_router(archives.heritage_router)
+    router.include_router(research.router)
 
     return router

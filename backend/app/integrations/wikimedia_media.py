@@ -49,7 +49,14 @@ import httpx
 
 from ..core.logging import get_logger
 from . import ProviderConfigurationError, read_timeout
-from .wikipedia import DEFAULT_LANG, USER_AGENT
+from .retry import (
+    TransientSourceError,
+    fetch_json_with_retries,
+    is_retryable_status,
+    parse_retry_after,
+    policy_from_environ,
+)
+from .wikipedia import DEFAULT_LANG, user_agent
 
 logger = get_logger("sources.wikimedia")
 
@@ -142,26 +149,40 @@ def _url_or_none(value: Any) -> Optional[str]:
 
 def _fetch_via_urllib(url: str, *, timeout: float) -> tuple[int, bytes]:
     request = urllib.request.Request(
-        url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}
+        url, headers={"User-Agent": user_agent(), "Accept": "application/json"}
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return response.status, response.read()
 
 
-async def _fetch_json(
+async def _fetch_once(
     url: str, *, client: Optional[httpx.AsyncClient], timeout: float, label: str
 ) -> Any:
-    """GET ``url`` and parse JSON; ``None`` on any problem (never raises)."""
+    """One attempt: parsed JSON, or ``None`` for a permanent failure.
+
+    Retryable outcomes raise :class:`TransientSourceError` (the wrapper
+    retries them); a 4xx or a malformed body returns ``None`` immediately.
+    """
     if client is None:
         try:
             status, body = await asyncio.to_thread(_fetch_via_urllib, url, timeout=timeout)
         except urllib.error.HTTPError as exc:
+            if is_retryable_status(exc.code):
+                raise TransientSourceError(
+                    f"HTTP {exc.code}",
+                    retry_after=parse_retry_after(
+                        getattr(exc, "headers", None)
+                        and exc.headers.get("Retry-After")
+                    ),
+                    status=exc.code,
+                ) from exc
             logger.warning("%s answered HTTP %d", label, exc.code)
             return None
         except Exception as exc:  # noqa: BLE001 — media is an enhancement only
-            logger.warning("%s fetch failed: %s", label, type(exc).__name__)
-            return None
+            raise TransientSourceError(type(exc).__name__) from exc
         if status >= 400:
+            if is_retryable_status(status):
+                raise TransientSourceError(f"HTTP {status}", status=status)
             logger.warning("%s answered HTTP %d", label, status)
             return None
         try:
@@ -171,7 +192,7 @@ async def _fetch_json(
             return None
 
     request = httpx.Request(
-        "GET", url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}
+        "GET", url, headers={"User-Agent": user_agent(), "Accept": "application/json"}
     )
     request.extensions["timeout"] = {
         "connect": timeout,
@@ -181,10 +202,17 @@ async def _fetch_json(
     }
     try:
         response = await client.send(request)
+    except httpx.TimeoutException as exc:
+        raise TransientSourceError(f"timed out after {timeout:g}s") from exc
     except httpx.HTTPError as exc:
-        logger.warning("%s fetch failed: %s", label, type(exc).__name__)
-        return None
+        raise TransientSourceError(type(exc).__name__) from exc
     if response.status_code >= 400:
+        if is_retryable_status(response.status_code):
+            raise TransientSourceError(
+                f"HTTP {response.status_code}",
+                retry_after=parse_retry_after(response.headers.get("Retry-After")),
+                status=response.status_code,
+            )
         logger.warning("%s answered HTTP %d", label, response.status_code)
         return None
     try:
@@ -192,6 +220,27 @@ async def _fetch_json(
     except (ValueError, UnicodeDecodeError):
         logger.warning("%s returned non-JSON content", label)
         return None
+
+
+async def _fetch_json(
+    url: str,
+    *,
+    client: Optional[httpx.AsyncClient],
+    timeout: float,
+    label: str,
+    environ: Optional[Mapping[str, str]] = None,
+) -> Any:
+    """GET ``url`` and parse JSON with bounded retries of transient faults.
+
+    Returns ``None`` when the source could not be read. Because the caller
+    distinguishes ``None`` from an empty payload, a failure is never cached
+    as "this subject has no image".
+    """
+    return await fetch_json_with_retries(
+        lambda: _fetch_once(url, client=client, timeout=timeout, label=label),
+        policy=policy_from_environ(environ),
+        label=label,
+    )
 
 
 def _media_request_url(titles: Sequence[str], *, lang: str) -> str:
@@ -407,7 +456,14 @@ async def fetch_page_media(
         client=client,
         timeout=timeout,
         label="historical source media",
+        environ=environ,
     )
+    if payload is None:
+        # The source could not be read. Returning [] here is the graceful
+        # degradation, but it must NOT be cached: remembering an outage as
+        # "this subject has no photograph" is what made a recovered source
+        # keep showing a placeholder for the whole TTL.
+        return []
     media = _parse_media(payload)
 
     files = [f"File:{item.file_name}" for item in media if item.file_name]
@@ -417,6 +473,7 @@ async def fetch_page_media(
             client=client,
             timeout=timeout,
             label="historical source file metadata",
+            environ=environ,
         )
         info = _parse_fileinfo(file_payload)
         if info:

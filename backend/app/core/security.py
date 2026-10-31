@@ -56,6 +56,7 @@ __all__ = [
     "limit_credentials",
     "limit_analysis",
     "limit_export",
+    "limit_archive",
 ]
 
 #: Safe message when the session store itself cannot be reached.
@@ -298,3 +299,5 @@ limit_credentials = RateLimiter(limit=10, window_seconds=300)
 limit_analysis = RateLimiter(limit=30, window_seconds=3600)
 #: Exports: 20 per hour per user (PDF generation is CPU-bound).
 limit_export = RateLimiter(limit=20, window_seconds=3600)
+#: Archive uploads: 60 per hour per user (each file may spend OCR credits).
+limit_archive = RateLimiter(limit=60, window_seconds=3600)

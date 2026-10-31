@@ -61,8 +61,10 @@ def test_migration_history_is_exactly_the_frozen_revision_chain():
     repair revisions: 0002 (``historical_records.url`` — R3, source
     traceability), 0003 (``analysis_runs.interpretation`` — R4, the vision
     model's reading), 0004 (``analysis_runs.briefing`` — R5, the grounded
-    historical explanation) and 0005 (users, sessions, analysis ownership
-    and personal history — R7). Any other revision is unreviewed drift.
+    historical explanation), 0005 (users, sessions, analysis ownership
+    and personal history — R7), 0006 (Heritage Archive Studio, timeline,
+    heritage map and research workspace), 0007 (India-wide heritage metadata)
+    and 0008 (Stories & Legends). Any other revision is unreviewed drift.
     """
     config = alembic_config("sqlite:///:memory:")
     script = ScriptDirectory.from_config(config)
@@ -70,13 +72,16 @@ def test_migration_history_is_exactly_the_frozen_revision_chain():
     revisions = list(script.walk_revisions("base", "heads"))
 
     assert [revision.revision for revision in revisions] == [
+        "0008_heritage_stories",
+        "0007_india_heritage",
+        "0006_archive_studio",
         "0005_users_sessions_history",
         "0004_analysis_briefing",
         "0003_analysis_interpretation",
         "0002_historical_record_url",
         "0001_initial_schema",
     ]
-    assert script.get_current_head() == "0005_users_sessions_history"
+    assert script.get_current_head() == "0008_heritage_stories"
 
 
 def test_alembic_check_reports_no_model_migration_drift(tmp_path):

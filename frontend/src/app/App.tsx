@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
 import { AuthPanel, type AuthMode } from '../components/auth/AuthPanel';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -7,35 +8,39 @@ import { ImageUpload } from '../components/upload/ImageUpload';
 import { useAuth } from '../hooks/useAuth';
 import { useSubjectRoute } from '../hooks/useSubjectRoute';
 import { AnalysisPage } from '../pages/AnalysisPage';
+import { ArchivePage } from '../pages/ArchivePage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { HomePage } from '../pages/HomePage';
+import { MapPage } from '../pages/MapPage';
+import { ResearchPage } from '../pages/ResearchPage';
 
-/** The two top-level views; the URL hash makes each one linkable/refreshable. */
-type View = 'home' | 'history';
+/** Top-level views; the URL hash makes each one linkable/refreshable. */
+type View = 'home' | 'archive' | 'map' | 'research' | 'history';
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '#home' },
+  { label: 'Archive', href: '#archive' },
+  { label: 'Map', href: '#map' },
+  { label: 'Research', href: '#research' },
   { label: 'History', href: '#history' },
 ];
 
+const VIEWS: View[] = ['home', 'archive', 'map', 'research', 'history'];
+
 function readView(): View {
   if (typeof window === 'undefined') return 'home';
-  return window.location.hash.replace('#', '') === 'history' ? 'history' : 'home';
+  const hash = window.location.hash.replace('#', '');
+  return (VIEWS as string[]).includes(hash) ? (hash as View) : 'home';
 }
 
 /**
- * R7 — application root.
+ * HeritageGraph AI — application root.
  *
- * Adds two things to the A1/A5 shell without changing the search or analysis
- * experience:
- *
- * * a **session-aware header** (sign in / signed-in user + sign out) and a
- *   gated upload area — uploading, history and export all require an account;
- * * a second view, **History**, addressable through `#history` so a refresh
- *   or the browser's back/forward buttons return to the same place.
- *
- * The home view keeps its original layout: hero + search, the uploader, and
- * the analysis results section underneath.
+ * Five views share one shell: the historical search + image analysis home
+ * page, the Heritage Archive Studio, the curated heritage map, the research
+ * workspace, and the personal history. Navigation is hash-based and the
+ * selected archive lives in `?archive=`, so every view is linkable and
+ * survives a refresh.
  */
 export default function App() {
   const [activeAnalysisId, setActiveAnalysisId] = useState<string | null>(null);
@@ -55,7 +60,7 @@ export default function App() {
     setView(next);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
-      url.hash = next === 'history' ? 'history' : '';
+      url.hash = next === 'home' ? '' : next;
       window.history.pushState({ view: next }, '', `${url.pathname}${url.search}${url.hash}`);
     }
   }, []);
@@ -87,6 +92,25 @@ export default function App() {
       goTo('home');
     },
     [goTo, open],
+  );
+
+  // From a heritage site to the archive studio, with the site name pre-filled
+  // as the archive search (`?q=`). `archive` is cleared so the search runs
+  // across the account's archives rather than a stale selection.
+  const openArchiveSearch = useCallback(
+    (query: string) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('q', query);
+      url.searchParams.delete('archive');
+      url.hash = 'archive';
+      window.history.pushState(
+        { view: 'archive' },
+        '',
+        `${url.pathname}${url.search}${url.hash}`,
+      );
+      setView('archive');
+    },
+    [],
   );
 
   const sessionSlot =
@@ -121,49 +145,78 @@ export default function App() {
     />
   );
 
+  /** An authenticated view: show the session check, the panel, or the page. */
+  const gated = (reason: string, render: () => ReactNode) => {
+    if (auth.phase === 'loading') {
+      return (
+        <p role="status" className="rounded-xl border border-ivory-300 bg-ivory p-5 text-sm text-ink-700">
+          Checking your session…
+        </p>
+      );
+    }
+    if (auth.phase === 'authenticated') return render();
+    return (
+      <div className="flex flex-col gap-4">
+        {auth.phase === 'error' ? (
+          <p
+            role="alert"
+            className="rounded-lg border border-terracotta-300 bg-terracotta-50 px-3 py-2 text-sm text-terracotta-700"
+          >
+            {auth.error}
+          </p>
+        ) : null}
+        {authPanel(reason)}
+      </div>
+    );
+  };
+
+  const renderView = () => {
+    if (view === 'history') {
+      return gated('Sign in to see your analysis history and export it as a PDF.', () => (
+        <HistoryPage onOpenAnalysis={openAnalysis} onOpenSearch={openSearch} />
+      ));
+    }
+    if (view === 'archive') {
+      return gated('Sign in to build an archive, upload material and search its extracted text.', () => (
+        <ArchivePage />
+      ));
+    }
+    if (view === 'research') {
+      return gated('Sign in to keep research collections, notes and reports.', () => (
+        <ResearchPage />
+      ));
+    }
+    if (view === 'map') {
+      return (
+        <MapPage onOpenSubject={openSearch} onSearchArchives={openArchiveSearch} />
+      );
+    }
+    return (
+      <>
+        <HomePage />
+
+        <div className="mt-6 sm:mt-8">
+          {auth.phase === 'loading' ? (
+            <p role="status" className="rounded-xl border border-ivory-300 bg-ivory p-5 text-sm text-ink-700">
+              Checking your session…
+            </p>
+          ) : auth.phase === 'authenticated' ? (
+            <ImageUpload onSubmitted={(result) => setActiveAnalysisId(result.analysisId)} />
+          ) : (
+            authPanel('Sign in to upload an image, keep its analysis in your history and export it.')
+          )}
+        </div>
+
+        <div id="analysis-section" className="mt-6 scroll-mt-4 sm:mt-8">
+          <AnalysisPage analysisId={activeAnalysisId} />
+        </div>
+      </>
+    );
+  };
+
   return (
     <AppLayout navItems={NAV_ITEMS} activeHref={`#${view}`} sessionSlot={sessionSlot}>
-      {view === 'history' ? (
-        auth.phase === 'loading' ? (
-          <p role="status" className="rounded-xl border border-ivory-300 bg-ivory p-5 text-sm text-ink-700">
-            Checking your session…
-          </p>
-        ) : auth.phase === 'authenticated' ? (
-          <HistoryPage onOpenAnalysis={openAnalysis} onOpenSearch={openSearch} />
-        ) : (
-          <div className="flex flex-col gap-4">
-            {auth.phase === 'error' ? (
-              <p
-                role="alert"
-                className="rounded-lg border border-terracotta-300 bg-terracotta-50 px-3 py-2 text-sm text-terracotta-700"
-              >
-                {auth.error}
-              </p>
-            ) : null}
-            {authPanel('Sign in to see your analysis history and export it as a PDF.')}
-          </div>
-        )
-      ) : (
-        <>
-          <HomePage />
-
-          <div className="mt-6 sm:mt-8">
-            {auth.phase === 'loading' ? (
-              <p role="status" className="rounded-xl border border-ivory-300 bg-ivory p-5 text-sm text-ink-700">
-                Checking your session…
-              </p>
-            ) : auth.phase === 'authenticated' ? (
-              <ImageUpload onSubmitted={(result) => setActiveAnalysisId(result.analysisId)} />
-            ) : (
-              authPanel('Sign in to upload an image, keep its analysis in your history and export it.')
-            )}
-          </div>
-
-          <div id="analysis-section" className="mt-6 scroll-mt-4 sm:mt-8">
-            <AnalysisPage analysisId={activeAnalysisId} />
-          </div>
-        </>
-      )}
+      {renderView()}
     </AppLayout>
   );
 }

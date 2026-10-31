@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import { HomePage } from '../src/pages/HomePage';
 
@@ -211,7 +211,36 @@ describe('HomePage search', () => {
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent('Search failed.');
     expect(alert).toHaveTextContent('Could not reach the server');
+    // Actionable, not a generic "check your connection": it names where the
+    // API was expected and the thing the operator can act on.
+    expect(alert).toHaveTextContent('Check that the backend is running');
     expect(screen.queryByText(/No relevant historical records/)).not.toBeInTheDocument();
+  });
+
+  it('reports a timeout instead of staying stuck when the server never answers', async () => {
+    vi.useFakeTimers();
+    fetchMock.mockImplementation((url: string, init?: RequestInit) => {
+      if (String(url).includes('/api/search')) {
+        return new Promise<Response>((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => {
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        });
+      }
+      return Promise.resolve(jsonResponse({ error: 'unauthorized' }, 401));
+    });
+
+    render(<HomePage />);
+    searchFor('taj');
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(30_000);
+    });
+    vi.useRealTimers();
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('did not answer within 30 seconds');
+    expect(screen.getByRole('button', { name: 'Search' })).toBeEnabled();
   });
 
   it('surfaces the backend message when the API answers with an error', async () => {
@@ -225,5 +254,52 @@ describe('HomePage search', () => {
     // An API failure never renders as an empty result.
     expect(screen.queryByText(/No relevant historical records/)).not.toBeInTheDocument();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('recovers from a transient provider failure without a second search', async () => {
+    // 429 is what the live source answers when it rate-limits; it is
+    // transient, so the client retries it instead of asking the user to
+    // press Search again — the "first attempt fails, repeating works" bug.
+    fetchMock
+      .mockResolvedValueOnce(jsonResponse({ error: 'rate limited' }, 429))
+      .mockResolvedValueOnce(
+        jsonResponse(
+          {
+            query: 'Taj Mahal',
+            results: [
+              {
+                id: 'wiki:799638',
+                title: 'Taj Mahal',
+                source: 'Wikipedia',
+                url: 'https://en.wikipedia.org/wiki/Taj_Mahal',
+              },
+            ],
+            briefing: null,
+          },
+          200,
+        ),
+      );
+
+    render(<HomePage />);
+    searchFor('Taj Mahal');
+
+    expect(
+      await screen.findByRole('heading', { name: 'Taj Mahal' }, { timeout: 4_000 }),
+    ).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    // The retry is internal: the user never sees a failure they must fix.
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('does not retry a permanent rejection', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ error: 'bad request' }, 400));
+
+    render(<HomePage />);
+    searchFor('Ada Lovelace');
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('bad request');
+    // 400 would fail identically forever: retrying only delays the answer.
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

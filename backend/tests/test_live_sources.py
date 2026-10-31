@@ -105,6 +105,46 @@ def _client(handler):
     return httpx.AsyncClient(transport=httpx.MockTransport(handler))
 
 
+def test_default_user_agent_carries_a_contact_url():
+    """A bare agent name is throttled by Wikimedia; the default must have a
+    contact (verified live: bare name → HTTP 429, contact form → 200)."""
+    from app.integrations.wikipedia import user_agent
+
+    agent = user_agent({})
+
+    assert agent.startswith("HeritageGraphAI/")
+    assert "(+http://localhost:8000" in agent
+
+
+def test_user_agent_uses_the_deployment_origin_as_contact():
+    from app.integrations.wikipedia import user_agent
+
+    assert "https://heritage.example" in user_agent({"APP_ORIGIN": "https://heritage.example"})
+
+
+def test_user_agent_override_is_used_verbatim():
+    from app.integrations.wikipedia import user_agent
+
+    custom = "MyArchive/2.0 (+https://archive.example; ops@archive.example)"
+    assert user_agent({"HG_SOURCE_USER_AGENT": custom}) == custom
+
+
+async def test_configured_user_agent_is_sent(monkeypatch):
+    seen: dict[str, str] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["user_agent"] = request.headers.get("User-Agent", "")
+        return httpx.Response(200, json=SAMPLE_PAYLOAD)
+
+    monkeypatch.setenv(
+        "HG_SOURCE_USER_AGENT", "ConfiguredArchive/9 (+https://example.org; a@example.org)"
+    )
+
+    await search_wikipedia("Rani ki Vav", limit=2, client=_client(handler))
+
+    assert seen["user_agent"] == "ConfiguredArchive/9 (+https://example.org; a@example.org)"
+
+
 async def test_adapter_sends_user_agent_and_returns_hits():
     seen: dict = {}
 
@@ -120,6 +160,8 @@ async def test_adapter_sends_user_agent_and_returns_hits():
     assert "wikipedia.org/w/api.php" in seen["url"]
     # MediaWiki policy: a descriptive User-Agent, not the default httpx one.
     assert "HeritageGraphAI" in seen["user_agent"]
+    # ...and with contact details: the bare product name is throttled (429).
+    assert "(+http" in seen["user_agent"]
     assert seen["params"]["gsrsearch"] == "Rani ki Vav"
     assert seen["params"]["gsrlimit"] == "3"
     assert seen["params"]["exintro"] == "1"
@@ -173,9 +215,10 @@ async def test_production_transport_parses_the_stdlib_fetch(monkeypatch):
 
     calls: dict = {}
 
-    def fake_fetch(url: str, *, timeout: float) -> tuple[int, bytes]:
+    def fake_fetch(url: str, *, timeout: float, environ=None) -> tuple[int, bytes]:
         calls["url"] = url
         calls["timeout"] = timeout
+        calls["environ"] = environ
         return 200, json.dumps(SAMPLE_PAYLOAD).encode("utf-8")
 
     monkeypatch.setattr(wiki, "_fetch_via_urllib", fake_fetch)

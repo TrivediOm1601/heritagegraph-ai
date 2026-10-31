@@ -47,11 +47,24 @@ CLEARED_ENV_VARS = (
     "HG_DEMO_MODE",
     "HG_LIVE_SOURCES",
     "HG_SOURCE_TIMEOUT",
+    "HG_SOURCE_RETRIES",
     # The same-origin image proxy is on by default; a test that wants it off
     # sets HG_MEDIA_PROXY explicitly, and its upstream User-Agent override is
     # never inherited from the host machine.
     "HG_MEDIA_PROXY",
     "HG_MEDIA_USER_AGENT",
+    # The source API's User-Agent (and the deployment origin used as its
+    # contact) must not leak in from the host machine either.
+    "HG_SOURCE_USER_AGENT",
+    "APP_ORIGIN",
+    # Archive Studio: storage location and ZIP bounds must never leak in from
+    # the host machine (a test sets its own temp directory explicitly).
+    "HG_STORAGE_DIR",
+    "HG_ZIP_MAX_ENTRIES",
+    "HG_ZIP_MAX_ENTRY_BYTES",
+    "HG_ZIP_MAX_TOTAL_BYTES",
+    "HG_ZIP_MAX_DEPTH",
+    "HG_ARCHIVE_OCR_MAX_PAGES",
     # Provider credentials: no default test may depend on the host
     # machine having (or not having) real keys configured.
     "OCR_API_URL",
@@ -143,7 +156,12 @@ def _reset_rate_limiters():
     """
     from app.core import security
 
-    for limiter in (security.limit_credentials, security.limit_analysis, security.limit_export):
+    for limiter in (
+        security.limit_credentials,
+        security.limit_analysis,
+        security.limit_export,
+        security.limit_archive,
+    ):
         limiter._hits.clear()
     yield
 

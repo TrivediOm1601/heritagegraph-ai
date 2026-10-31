@@ -14,7 +14,7 @@
 import {
   API_BASE_URL,
   ApiError,
-  getJson,
+  getJsonWithRetry,
   normaliseBriefing,
   readErrorDetail,
   MIN_SEARCH_QUERY_LENGTH,
@@ -415,7 +415,9 @@ export async function searchGraph(query: string): Promise<SearchGraphResponse> {
     throw new ApiError(`Enter at least ${MIN_SEARCH_QUERY_LENGTH} characters to search.`);
   }
 
-  return getJson(
+  // Same transport rule as the search itself: one transparent retry of a
+  // transient source failure instead of making the user switch tabs again.
+  return getJsonWithRetry(
     `${API_BASE_URL}${SEARCH_ENDPOINT}/graph?query=${encodeURIComponent(trimmed)}`,
     'Could not build the knowledge graph',
     (record) => {
@@ -451,5 +453,6 @@ export async function searchGraph(query: string): Promise<SearchGraphResponse> {
         notice: asString(record.notice),
       };
     },
+    { transientRetries: 1 },
   );
 }

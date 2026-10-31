@@ -17,8 +17,10 @@
  * * port conflicts are detected before start-up, reported, and resolved by
  *   moving to the next free port (never a silent switch — the URL printed at
  *   the end is the URL that works);
- * * start-up is *verified*: the backend must answer `/api/health` and the
- *   frontend must answer HTTP 200 before the banner is printed;
+ * * start-up is *ordered* and *verified*: the backend must answer
+ *   `/api/health` before the app is served at all, and the frontend must
+ *   answer HTTP 200 before the banner is printed — a page can never load
+ *   against an API that is not listening;
  * * a service that dies during start-up fails the command with that service's
  *   last log lines instead of leaving a half-running app behind;
  * * Ctrl+C (or an unexpected exit) stops both process trees;
@@ -204,6 +206,24 @@ async function main() {
       });
     }
 
+    // The app is not served until its API answers. Vite binds in well under a
+    // second while uvicorn is still importing and migrating, so starting both
+    // together leaves a window where the page loads normally and then every
+    // /api call fails with a transport error — the "could not reach the
+    // server" report. Waiting here removes that window entirely.
+    if (START_BACKEND && START_FRONTEND) {
+      log('', 'waiting for the backend to answer /api/health before starting the app\u2026');
+      try {
+        await waitForHttp(`${backendOrigin}/api/health`, {
+          timeoutMs: 60_000,
+          what: 'the backend health endpoint',
+        });
+      } catch (error) {
+        fail(error.message, tail('backend'));
+        return;
+      }
+    }
+
     if (START_FRONTEND) {
       const vite = viteBin();
       const args = ['--host', HOST, '--port', String(frontendPort), '--strictPort'];
@@ -223,16 +243,15 @@ async function main() {
 
     // 3 — verify, then report.
     try {
-      if (START_BACKEND) {
-        await waitForHttp(`${backendOrigin}/api/health`, {
-          timeoutMs: 60_000,
-          what: 'the backend health endpoint',
-        });
-      }
       if (START_FRONTEND) {
         await waitForHttp(`http://${HOST}:${frontendPort}/`, {
           timeoutMs: 60_000,
           what: 'the frontend dev server',
+        });
+      } else if (START_BACKEND) {
+        await waitForHttp(`${backendOrigin}/api/health`, {
+          timeoutMs: 60_000,
+          what: 'the backend health endpoint',
         });
       }
     } catch (error) {

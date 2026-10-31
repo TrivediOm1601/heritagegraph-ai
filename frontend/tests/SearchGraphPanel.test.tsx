@@ -84,7 +84,9 @@ describe('SearchGraphPanel', () => {
   });
 
   it('reports a failed graph request instead of rendering a fake graph', async () => {
-    fetchMock.mockResolvedValueOnce(
+    // Transient 503: the client retries once, so each attempt needs a
+    // fresh Response (a body can only be read once).
+    fetchMock.mockImplementation(async () =>
       jsonResponse({ error: { code: 'dependency_unavailable', message: 'Search is unavailable.' } }, 503),
     );
 

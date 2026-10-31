@@ -68,7 +68,7 @@ export function AppHeader({
 
   return (
     <header className="sticky top-0 z-40 border-b border-ivory-300 bg-ivory-100/95 backdrop-blur supports-[backdrop-filter]:bg-ivory-100/90">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-2 sm:h-16 sm:flex-nowrap sm:gap-6 sm:px-6 sm:py-0 lg:px-8">
         <a
           href="/"
           className="group flex min-w-0 items-center gap-3"
@@ -85,8 +85,10 @@ export function AppHeader({
           </span>
         </a>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-        <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+        <nav
+          aria-label="Primary"
+          className="order-3 -mx-1 flex w-full items-center gap-1 overflow-x-auto pb-1 sm:order-none sm:mx-0 sm:w-auto sm:overflow-visible sm:pb-0 sm:gap-2"
+        >
           {navItems.map((item) => {
             const isActive = item.href === currentPath;
             return (
@@ -105,8 +107,11 @@ export function AppHeader({
             );
           })}
         </nav>
-        {sessionSlot ? <div className="flex items-center">{sessionSlot}</div> : null}
-        </div>
+        {sessionSlot ? (
+          <div className="order-2 ml-auto flex shrink-0 items-center sm:order-none sm:ml-0">
+            {sessionSlot}
+          </div>
+        ) : null}
       </div>
     </header>
   );

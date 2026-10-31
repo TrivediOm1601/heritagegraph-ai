@@ -442,12 +442,17 @@ try {
     });
   });
   cdp.on('Network.responseReceived', (params) => {
-    if (params.response.status >= 400) {
-      report.badResponses.push({
-        status: params.response.status,
-        url: params.response.url.slice(0, 300),
-      });
-    }
+    if (params.response.status < 400) return;
+    const url = params.response.url;
+    // Signing in probes the fallback path on purpose (signup → 409 when the
+    // account exists, then login); those answers are expected, not failures.
+    const expectedProbe =
+      /\/api\/auth\/(signup|login)$/.test(url) && [401, 409].includes(params.response.status);
+    if (expectedProbe) return;
+    report.badResponses.push({
+      status: params.response.status,
+      url: url.slice(0, 300),
+    });
   });
 
   await cdp.send('Page.enable');
@@ -455,51 +460,6 @@ try {
   await cdp.send('Log.enable');
   await cdp.send('Network.enable');
   await cdp.send('DOM.enable');
-
-  /* 0 — sign in --------------------------------------------------------
-     Image analysis and the history are owner-scoped, so the upload form (and
-     its file input) only exists for an authenticated session. The account is
-     created on the first run and reused afterwards; the cookie is handed to
-     the browser before the first navigation so the page's own network log
-     starts from a signed-in state. */
-  if (IMAGES.length > 0) {
-    await step('sign in (creating the check account on first use)', async () => {
-      const account = {
-        email: 'browser-check@heritagegraph.invalid',
-        password: 'browser-check-passphrase',
-      };
-      const post = (route) =>
-        fetch(`${APP_URL}${route}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(account),
-        });
-
-      let response = await post('/api/auth/login');
-      let created = false;
-      if (response.status === 401) {
-        response = await post('/api/auth/signup');
-        created = true;
-      }
-      if (!response.ok) throw new Error(`sign-in failed: HTTP ${response.status}`);
-
-      const raw = response.headers.getSetCookie?.() ?? [];
-      const cookies = raw.length > 0 ? raw.join(';') : response.headers.get('set-cookie') ?? '';
-      const token = /hg_session=([^;]+)/.exec(cookies)?.[1];
-      if (!token) throw new Error('the sign-in response carried no session cookie');
-
-      const set = await cdp.send('Network.setCookie', {
-        name: 'hg_session',
-        value: token,
-        url: APP_URL,
-        path: '/',
-        httpOnly: true,
-        sameSite: 'Lax',
-      });
-      if (set.success === false) throw new Error('the browser rejected the session cookie');
-      return { accountCreated: created };
-    }, report);
-  }
 
   /* 1 — load --------------------------------------------------------- */
   await step('load the application', async () => {
@@ -512,6 +472,38 @@ try {
     await cdp.eval(PAGE_HELPERS);
     return { title: await cdp.eval('document.title') };
   }, report);
+
+  /* 1.5 — sign in ------------------------------------------------------
+     Image analysis and the history are owner-scoped, so the upload form (and
+     its file input) only exists for an authenticated session. Signing in from
+     inside the page (rather than injecting a cookie over CDP) is what a real
+     user does and works in every engine; the account is created on the first
+     run and reused afterwards. */
+  if (IMAGES.length > 0) {
+    await step('sign in (creating the check account on first use)', async () => {
+      const result = await cdp.eval(`(async () => {
+        const account = {
+          email: 'browser-check@heritagegraph.invalid',
+          password: 'browser-check-passphrase',
+        };
+        const post = (route) => fetch(route, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(account),
+          credentials: 'same-origin',
+        });
+        let response = await post('/api/auth/signup');
+        const created = response.status === 201;
+        if (!created) response = await post('/api/auth/login');
+        const me = await fetch('/api/auth/me', { credentials: 'same-origin' });
+        return { created, signInStatus: response.status, meStatus: me.status };
+      })()`);
+      if (result.meStatus !== 200) {
+        throw new Error(`sign-in failed (HTTP ${result.signInStatus})`);
+      }
+      return result;
+    }, report);
+  }
 
   /* 2 — text search + subject photograph ----------------------------- */
   const search = await step(`search for "${SEARCH_QUERY}"`, async () => {
@@ -655,14 +647,19 @@ try {
           subjectPhoto: window.__hgImage('[aria-label="Analysis results"] img'),
           subjectPhotoLoading: Boolean(document.querySelector('[aria-label="Analysis results"] img')),
           statusBadge: window.__hgText('[aria-label="Analysis status"]'),
-          mentionsAdaFixture: /Ada Lovelace|Charles Babbage|CERTIFICATE OF HISTORICAL RECORD/.test(text),
+          // Only the demo fixture's own wording counts as a leak: a live
+          // retrieval may legitimately mention the same people (a query
+          // like "1843" really does return the Ada Lovelace record), and
+          // that is real data, not a fixture.
+          mentionsFixture:
+            /CERTIFICATE OF HISTORICAL RECORD|Ada Lovelace and Charles Babbage|DEMO FIXTURE/.test(text),
           demoMode: /DEMO MODE/.test(text),
         };
       })()`);
       Object.assign(entry, detail);
 
-      if (entry.mentionsAdaFixture) {
-        throw new Error('the Ada Lovelace / certificate fixture text is on the page');
+      if (entry.mentionsFixture) {
+        throw new Error('the demo fixture text is on the page');
       }
       if (entry.status === 'Failed') {
         throw new Error(`analysis ended as Failed: ${entry.statusText}`);
@@ -676,7 +673,7 @@ try {
         matches: detail.matches.length,
         extractedText: (detail.extractedText ?? '').slice(0, 80),
         subjectPhotoDecoded: Boolean(detail.subjectPhoto?.decoded),
-        fixture: detail.mentionsAdaFixture,
+        fixture: detail.mentionsFixture,
         demoMode: detail.demoMode,
       };
     }, report);

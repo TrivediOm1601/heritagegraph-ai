@@ -38,8 +38,15 @@ from typing import Any, Mapping, Optional, Sequence
 import httpx
 
 from ..core.logging import get_logger
+from .retry import (
+    TransientSourceError,
+    fetch_json_with_retries,
+    is_retryable_status,
+    parse_retry_after,
+    policy_from_environ,
+)
 from . import ProviderConfigurationError, read_timeout
-from .wikipedia import USER_AGENT
+from .wikipedia import user_agent
 
 logger = get_logger("sources.wikidata")
 
@@ -221,25 +228,36 @@ def _request_url(ids: Sequence[str]) -> str:
 
 def _fetch_via_urllib(url: str, *, timeout: float) -> tuple[int, bytes]:
     request = urllib.request.Request(
-        url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}
+        url, headers={"User-Agent": user_agent(), "Accept": "application/json"}
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return response.status, response.read()
 
 
-async def _fetch_json(
+async def _fetch_once(
     url: str, *, client: Optional[httpx.AsyncClient], timeout: float
 ) -> Any:
+    """One attempt: parsed JSON, or ``None`` for a permanent failure."""
     if client is None:
         try:
             status, body = await asyncio.to_thread(_fetch_via_urllib, url, timeout=timeout)
         except urllib.error.HTTPError as exc:
+            if is_retryable_status(exc.code):
+                raise TransientSourceError(
+                    f"HTTP {exc.code}",
+                    retry_after=parse_retry_after(
+                        getattr(exc, "headers", None)
+                        and exc.headers.get("Retry-After")
+                    ),
+                    status=exc.code,
+                ) from exc
             logger.warning("wikidata answered HTTP %d", exc.code)
             return None
         except Exception as exc:  # noqa: BLE001 — typing is an enhancement only
-            logger.warning("wikidata fetch failed: %s", type(exc).__name__)
-            return None
+            raise TransientSourceError(type(exc).__name__) from exc
         if status >= 400:
+            if is_retryable_status(status):
+                raise TransientSourceError(f"HTTP {status}", status=status)
             logger.warning("wikidata answered HTTP %d", status)
             return None
         try:
@@ -249,7 +267,7 @@ async def _fetch_json(
             return None
 
     request = httpx.Request(
-        "GET", url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}
+        "GET", url, headers={"User-Agent": user_agent(), "Accept": "application/json"}
     )
     request.extensions["timeout"] = {
         "connect": timeout,
@@ -259,10 +277,17 @@ async def _fetch_json(
     }
     try:
         response = await client.send(request)
+    except httpx.TimeoutException as exc:
+        raise TransientSourceError(f"timed out after {timeout:g}s") from exc
     except httpx.HTTPError as exc:
-        logger.warning("wikidata fetch failed: %s", type(exc).__name__)
-        return None
+        raise TransientSourceError(type(exc).__name__) from exc
     if response.status_code >= 400:
+        if is_retryable_status(response.status_code):
+            raise TransientSourceError(
+                f"HTTP {response.status_code}",
+                retry_after=parse_retry_after(response.headers.get("Retry-After")),
+                status=response.status_code,
+            )
         logger.warning("wikidata answered HTTP %d", response.status_code)
         return None
     try:
@@ -270,6 +295,21 @@ async def _fetch_json(
     except (ValueError, UnicodeDecodeError):
         logger.warning("wikidata returned non-JSON content")
         return None
+
+
+async def _fetch_json(
+    url: str,
+    *,
+    client: Optional[httpx.AsyncClient],
+    timeout: float,
+    environ: Optional[Mapping[str, str]] = None,
+) -> Any:
+    """GET ``url`` as JSON, retrying transient faults a bounded number of times."""
+    return await fetch_json_with_retries(
+        lambda: _fetch_once(url, client=client, timeout=timeout),
+        policy=policy_from_environ(environ),
+        label="wikidata",
+    )
 
 
 def is_index_description(description: Optional[str]) -> bool:
@@ -364,12 +404,20 @@ async def fetch_subject_classes(
 
     timeout = _timeout(environ)
     fetched: dict[str, SubjectClass] = {}
+    #: QIDs whose batch actually answered. A failed batch is *not* cached:
+    #: otherwise one transient 429 would leave those topics untyped for the
+    #: whole TTL, so a retried search would still look like it had lost
+    #: their identity.
+    answered: set[str] = set()
     for start in range(0, len(wanted), MAX_IDS):
         batch = wanted[start : start + MAX_IDS]
         payload = await _fetch_json(
-            _request_url(batch), client=client, timeout=timeout
+            _request_url(batch), client=client, timeout=timeout, environ=environ
         )
+        if payload is None:
+            continue
         fetched.update(_parse_classes(payload))
+        answered.update(batch)
 
     now = time.monotonic() + _CACHE_TTL_SECONDS
     if len(_cache) >= _CACHE_MAX_ENTRIES:
@@ -377,6 +425,7 @@ async def fetch_subject_classes(
             _cache.pop(stale, None)
     for qid in wanted:
         value = fetched.get(qid, SubjectClass(wikibase_item=qid))
-        _cache[qid] = (now, value)
+        if qid in answered:
+            _cache[qid] = (now, value)
         result[qid] = value
     return result

@@ -69,17 +69,24 @@ def main() -> None:
     print(f"schema migrated to head revision {revision}")
 
     if "--seed" in sys.argv[1:]:
-        added = asyncio.run(_seed_development_records())
-        print(f"historical seed: {added} new record(s) added (idempotent)")
+        records, sites, stories = asyncio.run(_seed_development_records())
+        print(f"historical seed: {records} new record(s) added (idempotent)")
+        print(f"heritage map seed: {sites} curated site(s) upserted")
+        print(f"story seed: {stories} curated story record(s) upserted")
 
 
-async def _seed_development_records() -> int:
-    """Load the curated development seed through Module C's repository."""
+async def _seed_development_records() -> tuple[int, int, int]:
+    """Load the curated development seeds through the repository layer."""
     from ..db.session import session_scope
     from ..repositories.record_repository import load_seed_records, seed_records
+    from ..services.heritage_service import seed_heritage_sites
+    from ..services.story_service import seed_heritage_stories
 
     async with session_scope() as session:
-        return await seed_records(session, load_seed_records())
+        records = await seed_records(session, load_seed_records())
+        sites = await seed_heritage_sites(session)
+        stories = await seed_heritage_stories(session)
+    return records, sites, stories
 
 
 if __name__ == "__main__":

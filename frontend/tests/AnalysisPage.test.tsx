@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { AnalysisPage } from '../src/pages/AnalysisPage';
 import { HomePage } from '../src/pages/HomePage';
@@ -143,7 +143,9 @@ describe('AnalysisPage', () => {
     expect(screen.queryByText(/^Warnings/)).not.toBeInTheDocument();
 
     // Requested via the agreed endpoints: analysis first, then its graph.
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    // The graph request is issued from a passive effect, so wait for it
+    // instead of assuming it already fired.
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
     expect(String(fetchMock.mock.calls[0][0])).toContain('/api/analysis/an-1');
     expect(String(fetchMock.mock.calls[1][0])).toContain('/api/analysis/an-1/graph');
     // The graph fixture is empty, so the graph section shows its empty state.

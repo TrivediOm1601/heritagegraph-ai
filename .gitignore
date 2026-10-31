@@ -23,6 +23,17 @@ backend/.vision_key
 backend/.adaption_key
 backend/*service-account*.json
 backend/*credentials*.json
+# Private key material anywhere in the tree (never required at build time)
+*.pem
+*.p12
+*.pfx
+*.key
+# Cloud credential files (Google service accounts, generic credential JSON)
+*service-account*.json
+*credentials*.json
+
+# Heritage Archive Studio — preserved uploaded originals (runtime state)
+backend/var/
 
 # Local databases (SQLite files are runtime state, never source)
 *.db

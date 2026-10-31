@@ -52,6 +52,36 @@ export default defineConfig(({ mode }) => {
       // cross-origin (403). A deployment's reverse proxy should preserve Host
       // for the same reason, or declare its public address in APP_ORIGIN.
       changeOrigin: false,
+      // A backend that is not running must produce a *readable* answer. The
+      // default is an empty 502, which the app can only report as a generic
+      // failure; a JSON body in the standard error envelope lets the UI say
+      // what is actually wrong.
+      configure: (proxyServer: {
+        on: (
+          event: 'error',
+          handler: (error: Error, req: unknown, res: unknown) => void,
+        ) => void;
+      }) => {
+        proxyServer.on('error', (_error, _req, response) => {
+          const res = response as {
+            headersSent?: boolean;
+            writeHead?: (status: number, headers: Record<string, string>) => void;
+            end?: (body: string) => void;
+          };
+          if (!res || res.headersSent || typeof res.writeHead !== 'function') return;
+          res.writeHead(503, { 'Content-Type': 'application/json' });
+          res.end?.(
+            JSON.stringify({
+              error: {
+                code: 'backend_unreachable',
+                message:
+                  `The HeritageGraph AI backend at ${backendOrigin} is not reachable. ` +
+                  'Start the whole app with `npm run dev`, or check .dev-logs/backend.log.',
+              },
+            }),
+          );
+        });
+      },
     },
   };
 

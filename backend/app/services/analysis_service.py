@@ -68,9 +68,12 @@ from ..integrations import (
 )
 from ..integrations.ocr import ENV_KEY as OCR_ENV_KEY
 from ..integrations.ocr import ENV_PROVIDER as OCR_ENV_PROVIDER
+from ..integrations.ocr import ENV_SPACE_KEY as OCR_SPACE_KEY_ENV
+from ..integrations.ocr import ENV_SPACE_URL as OCR_SPACE_URL_ENV
 from ..integrations.ocr import ENV_URL as OCR_ENV_URL
 from ..integrations.ocr import PROVIDER as OCR_PROVIDER
 from ..integrations.ocr import PROVIDER_HTTP as OCR_PROVIDER_HTTP
+from ..integrations.ocr import PROVIDER_OCR_SPACE as OCR_PROVIDER_OCR_SPACE
 from ..integrations.ocr import configuration_problem as ocr_configuration_problem
 from ..integrations.vision_model import (
     ENV_BASE_URL as VISION_ENV_BASE_URL,
@@ -200,31 +203,46 @@ def processing_configuration_error() -> Optional[str]:
     except ProviderConfigurationError as exc:
         problems.append(str(exc))
 
-    # OCR is OPTIONAL. Three states are valid, one is a typo:
+    # OCR is OPTIONAL. Four states are valid, two are typos:
     #   * nothing set                     -> OCR disabled (vision-only);
+    #   * OCR_PROVIDER=ocr_space          -> needs OCR_SPACE_API_KEY;
+    #     without it extraction reports an explicit "OCR skipped" warning,
+    #     never a silent one;
     #   * OCR_PROVIDER=google_vision      -> disabled until credentials exist
     #     (extraction reports an explicit "OCR skipped" warning, never a
     #     silent one, and the run is graded accordingly);
     #   * a fully configured provider     -> must be usable (validated below).
-    # A *partially* configured generic endpoint (only one of its two
-    # variables) is a typo and fails fast. The message always names the
-    # variables belonging to the *selected* provider, so Google Cloud Vision
-    # is never asked for OCR_API_URL/OCR_API_KEY.
+    # A *partially* configured endpoint (only some of its variables) is a
+    # typo and fails fast. The message always names the variables belonging
+    # to the *selected* provider, so Google Cloud Vision is never asked for
+    # OCR_API_URL/OCR_API_KEY and OCR.space is never asked for OCR_API_KEY.
     provider_raw = (os.environ.get(OCR_ENV_PROVIDER) or "").strip().lower()
     url_set = bool((os.environ.get(OCR_ENV_URL) or "").strip())
     key_set = bool((os.environ.get(OCR_ENV_KEY) or "").strip())
-    partially_configured_http = url_set != key_set
+    space_key_set = bool((os.environ.get(OCR_SPACE_KEY_ENV) or "").strip())
+    space_url_set = bool((os.environ.get(OCR_SPACE_URL_ENV) or "").strip())
     invalid_provider = bool(provider_raw) and provider_raw not in (
         OCR_PROVIDER_HTTP,
+        OCR_PROVIDER_OCR_SPACE,
         "google_vision",
     )
-    if partially_configured_http:
+    if provider_raw == OCR_PROVIDER_OCR_SPACE:
+        # OCR_SPACE_API_URL defaults to the official endpoint, so only a URL
+        # without its key can be a typo; a missing key alone stays "OCR off".
+        if space_url_set and not space_key_set:
+            problems.append(
+                f"{OCR_PROVIDER}={OCR_PROVIDER_OCR_SPACE} is partially "
+                f"configured: set {OCR_SPACE_KEY_ENV} (or unset "
+                f"{OCR_SPACE_URL_ENV})."
+            )
+    elif url_set != key_set:
         missing = [n for n in (OCR_ENV_URL, OCR_ENV_KEY) if not (os.environ.get(n) or "").strip()]
         problems.append(
             f"{OCR_PROVIDER} is partially configured: set "
             + ", ".join(missing)
             + " (or unset both OCR variables to run vision-only, "
-            "or set OCR_PROVIDER=google_vision to use Google Cloud Vision)."
+            "or set OCR_PROVIDER=ocr_space with OCR_SPACE_API_KEY to use "
+            "OCR.space)."
         )
     elif invalid_provider:
         ocr_problem = ocr_configuration_problem()

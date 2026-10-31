@@ -33,9 +33,15 @@ from ...integrations.google_vision import (
 )
 from ...integrations.ocr import ENV_KEY as OCR_ENV_KEY
 from ...integrations.ocr import ENV_PROVIDER as OCR_ENV_PROVIDER
+from ...integrations.ocr import ENV_SPACE_KEY as OCR_ENV_SPACE_KEY
+from ...integrations.ocr import ENV_SPACE_URL as OCR_ENV_SPACE_URL
 from ...integrations.ocr import ENV_URL as OCR_ENV_URL
 from ...integrations.ocr import (
+    DEFAULT_SPACE_URL as OCR_SPACE_DEFAULT_URL,
+)
+from ...integrations.ocr import (
     PROVIDER_GOOGLE,
+    PROVIDER_OCR_SPACE,
     configuration_problem as ocr_configuration_problem,
     selected_provider,
 )
@@ -106,6 +112,23 @@ def _ocr_status(environ: Mapping[str, str]) -> dict[str, Any]:
         }
 
     problem = ocr_configuration_problem(environ)
+    if provider == PROVIDER_OCR_SPACE:
+        # Only presence and shape: the key is reported as a boolean and
+        # never echoed, and the host comes from the documented default
+        # when no override is configured.
+        return {
+            "configured": problem is None,
+            "provider": provider,
+            "problem": problem,
+            "endpoint_host": _host_of(
+                (environ.get(OCR_ENV_SPACE_URL) or "").strip()
+                or OCR_SPACE_DEFAULT_URL
+            ),
+            "credentials": {
+                "api_key": _present(environ, OCR_ENV_SPACE_KEY),
+            },
+        }
+
     if provider == PROVIDER_GOOGLE:
         return {
             # OCR is optional: unconfigured means "vision-only", reported as

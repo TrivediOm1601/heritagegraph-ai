@@ -45,6 +45,20 @@ REQUIRED_TABLES = {
     "users",
     "user_sessions",
     "history_entries",
+    # 0006 — Heritage Archive Studio, timeline, map and research workspace.
+    "archives",
+    "archive_files",
+    "archive_pages",
+    "archive_entities",
+    "timeline_events",
+    "heritage_sites",
+    "research_collections",
+    "collection_items",
+    "research_notes",
+    # 0008 — Stories & Legends.
+    "heritage_stories",
+    "heritage_story_versions",
+    "heritage_story_sources",
 }
 
 
@@ -136,8 +150,10 @@ def test_migration_creates_all_tables_and_stamps_head(migrated_url, migrated_eng
     head = ScriptDirectory.from_config(alembic_config(migrated_url)).get_current_head()
     # Head of the frozen chain: 0001 initial schema + the reviewed,
     # additive repairs (0002 record URLs, 0003 interpretation, 0004
-    # briefing) + R7 (0005 users/sessions/history).
-    assert applied == head == "0005_users_sessions_history"
+    # briefing) + R7 (0005 users/sessions/history) + 0006 (archive studio,
+    # timeline, heritage map and research workspace) + 0007 (India-wide
+    # heritage metadata) + 0008 (Stories & Legends).
+    assert applied == head == "0008_heritage_stories"
 
 
 def test_migration_upgrade_is_idempotent(migrated_url):
@@ -173,12 +189,12 @@ def test_migration_output_matches_the_models(migrated_engine):
         assert db_fks == meta_fks, table_name
 
 
-def test_init_database_runs_the_migrations_at_the_r7_head(tmp_path):
+def test_init_database_runs_the_migrations_at_the_current_head(tmp_path):
     url = f"sqlite:///{tmp_path / 'init.db'}"
 
     revision = init_database(url)
 
-    assert revision == "0005_users_sessions_history"
+    assert revision == "0008_heritage_stories"
     engine = create_engine(url)
     try:
         tables = set(inspect(engine).get_table_names())

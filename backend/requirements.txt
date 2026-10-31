@@ -25,6 +25,12 @@ httpx>=0.27,<1.0
 google-auth>=2.20,<3.0
 # R7 — server-side PDF export (Unicode-capable, paginated documents)
 reportlab>=4.0,<6.0
+# Heritage Archive Studio — PDF text layer (page-preserving extraction)
+pypdf>=5.0,<7.0
+# Heritage Archive Studio — rasterise scanned PDF pages for OCR
+# (imported lazily: a deployment without it still extracts text-layer PDFs,
+# but scanned pages cannot be OCR-read)
+pypdfium2>=4.0,<6.0
 
 # Tests
 pytest>=8.0,<9.0

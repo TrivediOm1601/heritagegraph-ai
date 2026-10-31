@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -50,6 +51,13 @@ import httpx
 
 from ..core.logging import get_logger
 from . import ProviderConfigurationError, read_timeout
+from .retry import (
+    TransientSourceError,
+    fetch_json_with_retries,
+    is_retryable_status,
+    parse_retry_after,
+    policy_from_environ,
+)
 
 logger = get_logger("sources.wikipedia")
 
@@ -57,7 +65,8 @@ __all__ = [
     "ENV_LIVE_SOURCES",
     "ENV_TIMEOUT",
     "PROVIDER",
-    "USER_AGENT",
+    "USER_AGENT_PRODUCT",
+    "user_agent",
     "PageContent",
     "SourceHit",
     "live_sources_enabled",
@@ -74,8 +83,33 @@ ENV_TIMEOUT = "HG_SOURCE_TIMEOUT"
 PROVIDER = "historical source service"
 DEFAULT_TIMEOUT_SECONDS = 8.0
 
-#: MediaWiki requires a descriptive User-Agent identifying the client.
-USER_AGENT = "HeritageGraphAI/1.0 (heritage image research demo)"
+#: Override the User-Agent (name + contact) sent to the source API.
+ENV_USER_AGENT = "HG_SOURCE_USER_AGENT"
+#: Deployment origin, used as the default contact when the override is unset.
+ENV_APP_ORIGIN = "APP_ORIGIN"
+#: Fallback contact when neither variable is set (local development).
+_DEV_ORIGIN = "http://localhost:8000"
+
+#: MediaWiki's robot policy requires a descriptive agent **with a contact
+#: URL or email**, and throttles agents without one: verified live — the
+#: bare name answered HTTP 429, while the same request carrying this form
+#: answered 200 immediately. The default therefore includes the deployment
+#: origin as its contact (the same rule the image proxy follows).
+USER_AGENT_PRODUCT = "HeritageGraphAI/1.0"
+
+
+def user_agent(environ: Optional[Mapping[str, str]] = None) -> str:
+    """The User-Agent sent to the historical source API.
+
+    ``HG_SOURCE_USER_AGENT`` wins when set (a deployment should put its own
+    URL/email in it); otherwise the deployment origin is used as the contact.
+    """
+    env = os.environ if environ is None else environ
+    configured = (env.get(ENV_USER_AGENT) or "").strip()
+    if configured:
+        return configured[:256]
+    contact = (env.get(ENV_APP_ORIGIN) or "").strip() or _DEV_ORIGIN
+    return f"{USER_AGENT_PRODUCT} (+{contact}; heritage image research)"
 
 API_PATH = "https://{lang}.wikipedia.org/w/api.php"
 DEFAULT_LANG = "en"
@@ -191,7 +225,9 @@ def _request_url(query: str, *, limit: int, lang: str) -> str:
     return f"{API_PATH.format(lang=lang)}?{params}"
 
 
-def _fetch_via_urllib(url: str, *, timeout: float) -> tuple[int, bytes]:
+def _fetch_via_urllib(
+    url: str, *, timeout: float, environ: Optional[Mapping[str, str]] = None
+) -> tuple[int, bytes]:
     """Production transport: stdlib HTTP GET → ``(status, body)``.
 
     Raises only on transport failure (timeout, DNS, TLS) — the caller
@@ -201,7 +237,7 @@ def _fetch_via_urllib(url: str, *, timeout: float) -> tuple[int, bytes]:
     request = urllib.request.Request(
         url,
         headers={
-            "User-Agent": USER_AGENT,
+            "User-Agent": user_agent(environ),
             "Accept": "application/json",
         },
     )
@@ -209,14 +245,14 @@ def _fetch_via_urllib(url: str, *, timeout: float) -> tuple[int, bytes]:
         return response.status, response.read()
 
 
-def _build_request(
-    query: str, *, limit: int, lang: str, timeout: float
+def _client_request(
+    url: str, *, timeout: float, environ: Optional[Mapping[str, str]] = None
 ) -> httpx.Request:
-    """httpx request used by the injected (test/fixture) client seam."""
+    """httpx request for the injected (test/fixture) client seam."""
     request = httpx.Request(
         "GET",
-        _request_url(query, limit=limit, lang=lang),
-        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        url,
+        headers={"User-Agent": user_agent(environ), "Accept": "application/json"},
     )
     request.extensions["timeout"] = {
         "connect": timeout,
@@ -225,6 +261,95 @@ def _build_request(
         "pool": timeout,
     }
     return request
+
+
+def _build_request(
+    query: str,
+    *,
+    limit: int,
+    lang: str,
+    timeout: float,
+    environ: Optional[Mapping[str, str]] = None,
+) -> httpx.Request:
+    """httpx request used by the injected (test/fixture) client seam."""
+    return _client_request(
+        _request_url(query, limit=limit, lang=lang), timeout=timeout, environ=environ
+    )
+
+
+def _retry_after_of(headers: Any) -> float | None:
+    """``Retry-After`` from an httpx header map or a urllib header object."""
+    try:
+        value = headers.get("Retry-After") if headers is not None else None
+    except Exception:  # noqa: BLE001 — a header quirk must not break a fetch
+        return None
+    return parse_retry_after(value)
+
+
+async def _fetch_payload_once(
+    url: str,
+    *,
+    client: Optional[httpx.AsyncClient],
+    timeout: float,
+    environ: Optional[Mapping[str, str]] = None,
+    label: str = "historical source",
+) -> Any:
+    """One HTTP attempt, parsed as JSON.
+
+    Retryable outcomes (429, transient 5xx, timeout, connection failure)
+    raise :class:`TransientSourceError` so the retrying wrapper can try
+    again; permanent ones (4xx, malformed JSON) log and return ``None``.
+    Never returns fabricated data.
+    """
+    if client is None:
+        try:
+            status, body = await asyncio.to_thread(
+                _fetch_via_urllib, url, timeout=timeout, environ=environ
+            )
+        except urllib.error.HTTPError as exc:
+            if is_retryable_status(exc.code):
+                raise TransientSourceError(
+                    f"HTTP {exc.code}",
+                    retry_after=_retry_after_of(getattr(exc, "headers", None)),
+                    status=exc.code,
+                ) from exc
+            logger.warning("%s answered HTTP %d", label, exc.code)
+            return None
+        except Exception as exc:  # noqa: BLE001 — timeouts, DNS, TLS, resets
+            raise TransientSourceError(type(exc).__name__) from exc
+        if status >= 400:
+            if is_retryable_status(status):
+                raise TransientSourceError(f"HTTP {status}", status=status)
+            logger.warning("%s answered HTTP %d", label, status)
+            return None
+        try:
+            return json.loads(body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            logger.warning("%s returned non-JSON content", label)
+            return None
+
+    try:
+        response = await client.send(
+            _client_request(url, timeout=timeout, environ=environ)
+        )
+    except httpx.TimeoutException as exc:
+        raise TransientSourceError(f"timed out after {timeout:g}s") from exc
+    except httpx.HTTPError as exc:
+        raise TransientSourceError(type(exc).__name__) from exc
+    if response.status_code >= 400:
+        if is_retryable_status(response.status_code):
+            raise TransientSourceError(
+                f"HTTP {response.status_code}",
+                retry_after=_retry_after_of(response.headers),
+                status=response.status_code,
+            )
+        logger.warning("%s answered HTTP %d", label, response.status_code)
+        return None
+    try:
+        return response.json()
+    except (ValueError, UnicodeDecodeError):
+        logger.warning("%s returned non-JSON content", label)
+        return None
 
 
 def _parse(payload: Any) -> list[SourceHit]:
@@ -311,58 +436,30 @@ async def search_wikipedia(
 
     timeout = _timeout(environ)
     url = _request_url(cleaned, limit=limit, lang=lang)
-    payload: Any = None
 
-    if client is None:
-        # --- production transport (stdlib, thread off the event loop) ---
-        try:
-            status, body = await asyncio.to_thread(
-                _fetch_via_urllib, url, timeout=timeout
-            )
-        except urllib.error.HTTPError as exc:
-            logger.warning("historical source answered HTTP %d", exc.code)
-            _note(stats, "unavailable")
-            return []
-        except Exception as exc:  # noqa: BLE001 — live retrieval is an
-            # enhancement: any transport surprise (DNS, TLS, timeout,
-            # malformed response) degrades to "no live results" with the
-            # exception type in the log — never a raised 500 on search.
-            logger.warning("historical source fetch failed: %s", type(exc).__name__)
-            _note(stats, "unavailable")
-            return []
-        if status >= 400:
-            logger.warning("historical source answered HTTP %d", status)
-            _note(stats, "unavailable")
-            return []
-        try:
-            payload = json.loads(body.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
-            logger.warning("historical source returned non-JSON content")
-            _note(stats, "unavailable")
-            return []
-    else:
-        # --- fixture seam: injected httpx client (never dials out) ---
-        request = _build_request(cleaned, limit=limit, lang=lang, timeout=timeout)
-        try:
-            response = await client.send(request)
-        except httpx.TimeoutException:
-            logger.warning("historical source timed out after %gs", timeout)
-            _note(stats, "unavailable")
-            return []
-        except httpx.HTTPError as exc:
-            logger.warning("historical source unreachable: %s", type(exc).__name__)
-            _note(stats, "unavailable")
-            return []
-        if response.status_code >= 400:
-            logger.warning("historical source answered HTTP %d", response.status_code)
-            _note(stats, "unavailable")
-            return []
-        try:
-            payload = response.json()
-        except (ValueError, UnicodeDecodeError):
-            logger.warning("historical source returned non-JSON content")
-            _note(stats, "unavailable")
-            return []
+    def _count_retry(_attempt: int, _error: TransientSourceError, _delay: float) -> None:
+        # Lets the API report "served after a retry" instead of silently
+        # hiding that the source was briefly unavailable.
+        _note(stats, "retries")
+
+    # The one attempt that used to be final: a 429 or a transient 5xx here
+    # was reported as "no live results", which is why the *first* search
+    # could come back thin while repeating it immediately worked.
+    payload = await fetch_json_with_retries(
+        lambda: _fetch_payload_once(
+            url,
+            client=client,
+            timeout=timeout,
+            environ=environ,
+            label="historical source",
+        ),
+        policy=policy_from_environ(environ),
+        label="historical source",
+        on_retry=_count_retry,
+    )
+    if payload is None:
+        _note(stats, "unavailable")
+        return []
 
     hits = _parse(payload)
     _remember(key, hits)
@@ -459,6 +556,12 @@ async def fetch_page_text(
     degradation rule: every failure logs and returns ``None`` so a source
     outage reduces the briefing to the retrieval hits instead of failing
     the request or, worse, inventing text.
+
+    Transient failures are retried (bounded) and are **not cached**: the
+    old code remembered a failed fetch as ``None`` for the full TTL, so a
+    momentary 429 hid that article's text for ten minutes — including from
+    the user's next attempt. Only a real answer is cached, and a page the
+    source says does not exist (``missing``) is a real answer.
     """
     cleaned = " ".join((title or "").split())[:MAX_QUERY_LENGTH]
     if not cleaned:
@@ -471,65 +574,22 @@ async def fetch_page_text(
 
     timeout = _timeout(environ)
     url = _page_url(cleaned, lang=lang)
-    payload: Any = None
 
-    if client is None:
-        try:
-            status, body = await asyncio.to_thread(
-                _fetch_via_urllib, url, timeout=timeout
-            )
-        except urllib.error.HTTPError as exc:
-            logger.warning("historical source answered HTTP %d (page fetch)", exc.code)
-            _remember_page(key, None)
-            return None
-        except Exception as exc:  # noqa: BLE001 — retrieval enhancement only
-            logger.warning(
-                "historical source page fetch failed: %s", type(exc).__name__
-            )
-            _remember_page(key, None)
-            return None
-        if status >= 400:
-            logger.warning("historical source answered HTTP %d (page fetch)", status)
-            _remember_page(key, None)
-            return None
-        try:
-            payload = json.loads(body.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
-            logger.warning("historical source returned non-JSON content (page fetch)")
-            _remember_page(key, None)
-            return None
-    else:
-        request = httpx.Request(
-            "GET",
+    payload = await fetch_json_with_retries(
+        lambda: _fetch_payload_once(
             url,
-            headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
-        )
-        request.extensions["timeout"] = {
-            "connect": timeout,
-            "read": timeout,
-            "write": timeout,
-            "pool": timeout,
-        }
-        try:
-            response = await client.send(request)
-        except httpx.HTTPError as exc:
-            logger.warning(
-                "historical source page fetch failed: %s", type(exc).__name__
-            )
-            _remember_page(key, None)
-            return None
-        if response.status_code >= 400:
-            logger.warning(
-                "historical source answered HTTP %d (page fetch)", response.status_code
-            )
-            _remember_page(key, None)
-            return None
-        try:
-            payload = response.json()
-        except (ValueError, UnicodeDecodeError):
-            logger.warning("historical source returned non-JSON content (page fetch)")
-            _remember_page(key, None)
-            return None
+            client=client,
+            timeout=timeout,
+            environ=environ,
+            label="historical source page",
+        ),
+        policy=policy_from_environ(environ),
+        label="historical source page",
+    )
+    if payload is None:
+        # Deliberately not cached: a transient outage must not hide the
+        # article from the user's very next search.
+        return None
 
     page = _parse_page(payload, requested=cleaned)
     _remember_page(key, page)

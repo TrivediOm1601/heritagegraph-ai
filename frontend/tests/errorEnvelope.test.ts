@@ -44,7 +44,9 @@ describe('canonical error envelope', () => {
       'Search is unavailable: the historical record store could not be reached.';
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue(
+      // A transient 503 is retried, so every attempt gets a fresh
+      // Response: a single body can only be read once.
+      vi.fn().mockImplementation(async () =>
         jsonResponse(
           {
             error: {
@@ -115,7 +117,7 @@ describe('canonical error envelope', () => {
   it('falls back to flat text for non-JSON bodies', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue(
+      vi.fn().mockImplementation(async () =>
         new Response('Something went wrong upstream', {
           status: 502,
           headers: { 'content-type': 'text/plain' },

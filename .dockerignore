@@ -1,0 +1,16 @@
+.git
+.sidecar
+.freebuff
+.dev-logs
+node_modules
+**/node_modules
+backend/.venv
+backend/.env
+backend/.vision_key
+backend/.adaption_key
+backend/heritage.db
+backend/var
+backend/testdata
+frontend/dist
+screenshots
+docs

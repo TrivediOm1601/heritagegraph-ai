@@ -40,6 +40,7 @@ narrative to fill the gap.
 
 from __future__ import annotations
 
+import asyncio
 import re
 from dataclasses import dataclass
 from typing import Iterable, Literal, Mapping, Optional, Sequence
@@ -364,12 +365,24 @@ async def _resolve_primary(
     if live:
         tried: set[str] = set()
         candidates = [query, *(hit.record.title for hit in hits[: MAX_PAGE_PROBES - 1])]
+        keys: list[str] = []
         for candidate in candidates:
             key = " ".join(candidate.split()).casefold()
             if not key or key in tried:
                 continue
             tried.add(key)
-            page = await fetch_page_text(candidate, client=client, environ=environ)
+            keys.append(candidate)
+
+        # Probe the candidate titles **concurrently**. They are independent
+        # reads of the same public API, and doing them in sequence made one
+        # slow page cost every following probe its own timeout — the reason
+        # a first search could outlive the browser's deadline while the
+        # (cache-warmed) repeat succeeded. Order is preserved below, so the
+        # choice of primary article is unchanged.
+        pages = await asyncio.gather(
+            *(fetch_page_text(candidate, client=client, environ=environ) for candidate in keys)
+        )
+        for page in pages:
             if page is None or not page.text.strip():
                 continue
             if _is_disambiguation(page.text):
@@ -498,6 +511,29 @@ def _is_index_title(title: str) -> bool:
     return cleaned.startswith(_INDEX_TITLE_PREFIXES)
 
 
+#: ``Title (qualifier)`` — MediaWiki's own way of distinguishing a *different*
+#: entity that shares a name with another article.
+_TITLE_QUALIFIER_RE = re.compile(r"^(?P<base>.+?)\s*\((?P<qualifier>[^()]+)\)$")
+
+
+def _is_same_name_entity(title: str, subject_title: str) -> bool:
+    """True when ``title`` is the subject's name plus a qualifier.
+
+    ``Taj Mahal (musician)`` is a different entity that merely shares the
+    subject's name — Wikipedia distinguishes it precisely because it is not
+    the monument. Offering it as a *related topic* of the monument is the
+    "unrelated entity chosen because the name matches" failure, so it is
+    dropped. Only an exact name match is treated this way: a genuinely
+    different title (``Taj Mahal Palace Hotel``) is left to retrieval.
+    """
+    match = _TITLE_QUALIFIER_RE.match(" ".join((title or "").split()))
+    if match is None:
+        return False
+    base = " ".join(match.group("base").split()).casefold()
+    subject = " ".join((subject_title or "").split()).casefold()
+    return bool(base) and base == subject
+
+
 def _to_image(media: Optional[PageMedia]) -> Optional[SubjectImage]:
     """The display image of a page, with the provenance the source gave us.
 
@@ -596,6 +632,7 @@ async def _subject_and_topics(
             (classified is not None and classified.is_index)
             or is_index_description(media.description if media else None)
             or _is_index_title(hit.record.title)
+            or _is_same_name_entity(hit.record.title, primary.title)
         ):
             continue
         topics.append(
@@ -680,6 +717,11 @@ def _uncertainty_notes(
         notes.append(
             f"The retrieved source records no dated events for {year}."
         )
+    notes.append(
+        "Related topics are the other pages the source retrieved for this "
+        "query; they are candidates for exploration, not verified historical "
+        "relationships to the subject."
+    )
     notes.append(
         "The explanation quotes retrieved source material verbatim; it is a "
         "summary of secondary sources, not independent historical verification."

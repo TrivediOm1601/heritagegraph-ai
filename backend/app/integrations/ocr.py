@@ -1,12 +1,39 @@
-"""D2 — OCR adapter (env-configured HTTP OCR engine).
+"""D2 — OCR adapter (three selectable providers behind one call).
 
-One adapter, no vendor assumption: the endpoint, credential and timeout
-all come from the environment (see ``app.integrations`` for the full
-table), so the *selected* engine can be swapped without touching code
-once provider choice and cost approval land.
+``run_ocr`` is the single entry point the analysis pipeline uses; which
+provider answers is decided by ``OCR_PROVIDER``:
 
-Wire contract expected from ``OCR_API_URL`` (documented here because no
-vendor API is fixed yet):
+=========================  =========================================
+``ocr_space``              OCR.space's documented HTTP API
+                           (``POST https://api.ocr.space/parse/image``,
+                           API key in the ``apikey`` request header).
+                           Recommended: free key, no account approval.
+``google_vision``          Google Cloud Vision ``files:annotate``.
+``http`` (default)         A generic multipart endpoint you fully
+                           configure yourself.
+=========================  =========================================
+
+OCR.space contract implemented here (from https://ocr.space/ocrapi):
+
+* request: ``POST`` multipart with the image under the field name
+  ``file`` (filename preserved), ``language`` (default ``auto``),
+  ``OCREngine`` (default ``2``, the documented general-purpose engine)
+  and ``scale`` for small inscriptions; the key travels in the
+  ``apikey`` **request header**;
+* response: JSON whose ``IsErroredOnProcessing``/``ErrorMessage`` carry
+  provider failures *inside* an HTTP 200 — those are classified into the
+  auth/rate-limit/timeout hierarchy instead of being read as text;
+  ``ParsedResults[*].ParsedText`` is the recognised text. An empty text
+  with ``OCRExitCode: 1`` is a successful "no text in this image"
+  answer, never a failure.
+
+Size/format: the free plan accepts 1 MB per file and PNG/JPG/GIF/TIF/BMP.
+Payloads over that bound (or in another format, e.g. WebP) are
+recompressed — first quality, then only as much resolution as needed —
+and given up on with an actionable message rather than sent anyway.
+
+Generic endpoint contract for ``OCR_API_URL`` (documented here because
+no vendor API is fixed for that mode):
 
 * request: ``POST`` ``multipart/form-data`` with the image uploaded
   under the field name ``image`` (original filename and content type
@@ -33,16 +60,21 @@ carries ``provenance="live"`` (adapter-owned network client) or
 
 from __future__ import annotations
 
+import io
 import json
+import os
 from dataclasses import dataclass, field
 from typing import Mapping
 
 import httpx
+from PIL import Image
 
 from . import (
+    ProviderAuthenticationError,
     ProviderConfigurationError,
     ProviderConnectionError,
     ProviderError,
+    ProviderRateLimitError,
     ProviderResponseError,
     ProviderTimeoutError,
     classify_http_error,
@@ -62,12 +94,47 @@ ENV_URL = "OCR_API_URL"
 ENV_KEY = "OCR_API_KEY"
 ENV_TIMEOUT = "OCR_TIMEOUT"
 
-#: Supported OCR providers. ``google_vision`` uses the official Cloud
-#: Vision annotate API (see :mod:`app.integrations.google_vision`);
-#: ``http`` is the generic multipart endpoint described below.
+#: OCR.space variables (see :func:`configuration_problem` — the key is
+#: the only one that must be set; the others have documented defaults).
+ENV_SPACE_KEY = "OCR_SPACE_API_KEY"
+ENV_SPACE_URL = "OCR_SPACE_API_URL"
+ENV_SPACE_LANGUAGE = "OCR_SPACE_LANGUAGE"
+ENV_SPACE_ENGINE = "OCR_SPACE_ENGINE"
+ENV_SPACE_MAX_BYTES = "OCR_SPACE_MAX_BYTES"
+
+#: Documented endpoint and defaults from https://ocr.space/ocrapi.
+DEFAULT_SPACE_URL = "https://api.ocr.space/parse/image"
+#: ``auto`` is the documented default for engines 2 and 3: it does not
+#: assume English, which a historical inscription usually is not.
+DEFAULT_SPACE_LANGUAGE = "auto"
+#: Engine 2 is the documented default and the general-purpose choice.
+DEFAULT_SPACE_ENGINE = "2"
+#: Free-plan file limit ("1 MB" in the plan table). Deliberately the
+#: conservative byte count, and overridable for a paid plan.
+DEFAULT_SPACE_MAX_BYTES = 1_000_000
+#: Documented engines; anything else is a typo, not a fallback.
+SPACE_ENGINES: tuple[str, ...] = ("1", "2", "3")
+#: Formats OCR.space documents for image input (WebP is not one of them).
+SPACE_MIME_TYPES: frozenset[str] = frozenset(
+    {"image/png", "image/jpeg", "image/jpg", "image/bmp", "image/tiff", "image/gif"}
+)
+SPACE_MIME_EXTENSIONS: dict[str, str] = {
+    "image/png": ".png",
+    "image/jpeg": ".jpg",
+    "image/jpg": ".jpg",
+    "image/bmp": ".bmp",
+    "image/tiff": ".tif",
+    "image/gif": ".gif",
+}
+
+#: Supported OCR providers. ``ocr_space`` is OCR.space (recommended);
+#: ``google_vision`` uses the official Cloud Vision annotate API (see
+#: :mod:`app.integrations.google_vision`); ``http`` is the generic
+#: multipart endpoint described below.
+PROVIDER_OCR_SPACE = "ocr_space"
 PROVIDER_GOOGLE = "google_vision"
 PROVIDER_HTTP = "http"
-SUPPORTED_PROVIDERS: tuple[str, ...] = (PROVIDER_GOOGLE, PROVIDER_HTTP)
+SUPPORTED_PROVIDERS: tuple[str, ...] = (PROVIDER_OCR_SPACE, PROVIDER_GOOGLE, PROVIDER_HTTP)
 
 #: Provider selected when OCR_PROVIDER is unset (backwards compatible).
 DEFAULT_PROVIDER = PROVIDER_HTTP
@@ -127,8 +194,10 @@ def configuration_problem(
 
     Used by the analysis configuration gate and diagnostics so a missing
     provider is reported with the *right* variable names for the selected
-    provider (``GOOGLE_APPLICATION_CREDENTIALS``/``GOOGLE_VISION_API_KEY``
-    for Google Cloud Vision — never the generic ``OCR_API_URL``).
+    provider: ``OCR_SPACE_API_KEY`` for OCR.space,
+    ``GOOGLE_APPLICATION_CREDENTIALS``/``GOOGLE_VISION_API_KEY`` for
+    Google Cloud Vision — never a variable belonging to a provider that
+    is not selected.
     """
     import os
 
@@ -147,6 +216,17 @@ def configuration_problem(
             "or set GOOGLE_VISION_API_KEY (OCR_PROVIDER=google_vision)."
         )
 
+    if provider == PROVIDER_OCR_SPACE:
+        # The endpoint defaults to the official one, so the key alone is
+        # what an operator has to provide.
+        if (env.get(ENV_SPACE_KEY) or "").strip():
+            return None
+        return (
+            f"{PROVIDER} is not configured: set {ENV_SPACE_KEY} — a free key "
+            "is issued immediately at https://ocr.space/ocrapi/freekey "
+            "(keep it out of git and out of the frontend; see .env.example)."
+        )
+
     missing = [
         name for name in (ENV_URL, ENV_KEY) if not (env.get(name) or "").strip()
     ]
@@ -154,7 +234,10 @@ def configuration_problem(
         return (
             f"{PROVIDER} is not configured: set "
             + ", ".join(missing)
-            + ", or set OCR_PROVIDER=google_vision to use Google Cloud Vision."
+            + ", or set OCR_PROVIDER=ocr_space with "
+            + ENV_SPACE_KEY
+            + " to use OCR.space, or OCR_PROVIDER=google_vision for Google "
+            "Cloud Vision."
         )
     return None
 
@@ -185,6 +268,390 @@ def _extract_text(payload: object) -> str | None:
     return None
 
 
+# ---------------------------------------------------------------------------
+# OCR.space (https://ocr.space/ocrapi) — the recommended provider
+# ---------------------------------------------------------------------------
+
+
+def _read_max_bytes(environ: Mapping[str, str]) -> int:
+    """File-size bound for the OCR.space request (free plan: 1 MB)."""
+    raw = (environ.get(ENV_SPACE_MAX_BYTES) or "").strip()
+    if not raw:
+        return DEFAULT_SPACE_MAX_BYTES
+    try:
+        limit = int(raw)
+    except ValueError:
+        raise ProviderConfigurationError(
+            f"{PROVIDER} is misconfigured: {ENV_SPACE_MAX_BYTES} must be a "
+            f"number of bytes (got {raw!r}).",
+            provider=PROVIDER,
+        ) from None
+    if limit < 1024:
+        raise ProviderConfigurationError(
+            f"{PROVIDER} is misconfigured: {ENV_SPACE_MAX_BYTES} must be at "
+            f"least 1024 bytes (got {limit}).",
+            provider=PROVIDER,
+        )
+    return limit
+
+
+def _payload_filename(filename: str, mime: str) -> str:
+    """A base name with the extension matching ``mime``.
+
+    OCR.space picks the parser from the declared type and the filename,
+    so an uploaded ``scan.webp`` sent as JPEG must not keep the ``.webp``
+    suffix it no longer has.
+    """
+    import os
+
+    stem = os.path.splitext(os.path.basename(filename or "upload"))[0] or "upload"
+    extension = SPACE_MIME_EXTENSIONS.get(mime, ".jpg")
+    return f"{stem}{extension}"
+
+
+def _encode_for_ocr_space(
+    image: "Image.Image", *, max_bytes: int, filename: str
+) -> tuple[bytes, str, str]:
+    """Best-effort fit of a decoded image into the provider's file limit.
+
+    Legibility comes first: quality is reduced before resolution, and
+    resolution is only cut while the result stays above a floor that keeps
+    small inscriptions readable. If nothing fits, an actionable error is
+    raised instead of sending a payload the provider will reject (OCR is
+    an optional channel here — the analysis continues vision-only with
+    that message as its warning).
+    """
+    # Longest edge below which we stop shrinking: further reduction is far
+    # more likely to destroy the text than to save the request.
+    min_edge = 1400
+
+    current = image
+    while True:
+        for quality in (92, 85, 75, 65):
+            buffer = io.BytesIO()
+            try:
+                current.convert("RGB").save(
+                    buffer, format="JPEG", quality=quality, optimize=True
+                )
+            except OSError as exc:  # pragma: no cover - defensive
+                raise ProviderConfigurationError(
+                    f"{PROVIDER} could not encode the image for OCR "
+                    f"({type(exc).__name__}).",
+                    provider=PROVIDER,
+                ) from exc
+            data = buffer.getvalue()
+            if len(data) <= max_bytes:
+                return data, "image/jpeg", _payload_filename(filename, "image/jpeg")
+
+        width, height = current.size
+        if max(width, height) <= min_edge:
+            break
+        # Scale by 0.75 in one step instead of repeated 0.8s (fewer rounds).
+        scale = max(0.75, min_edge / max(width, height))
+        current = current.resize(
+            (max(1, int(width * scale)), max(1, int(height * scale))),
+            Image.LANCZOS,
+        )
+
+    raise ProviderConfigurationError(
+        f"{PROVIDER} could not accept the image: it is larger than the "
+        f"{max_bytes} byte file limit even after recompression, and shrinking "
+        "it further would make the text unreadable. Crop or export the image "
+        f"under {max_bytes} bytes ({ENV_SPACE_MAX_BYTES} raises the limit for "
+        "a paid plan).",
+        provider=PROVIDER,
+    )
+
+
+def _prepare_payload_ocr_space(
+    image: bytes,
+    *,
+    filename: str,
+    content_type: str,
+    max_bytes: int,
+) -> tuple[bytes, str, str]:
+    """``(bytes, mime, filename)`` to upload — untouched when possible.
+
+    * a documented format within the file limit is forwarded byte for
+      byte, keeping the original crispness;
+    * an undocumented format (WebP, AVIF, a lying content type) is
+      transcoded to PNG first — lossless, so text keeps its edges;
+    * anything over the limit goes through :func:`_encode_for_ocr_space`.
+
+    Raises :class:`ProviderConfigurationError` for an undecodable image
+    or one that cannot be made to fit: both stop *before* the request and
+    both are rendered as an explicit "OCR skipped" warning upstream,
+    which is the honest outcome for an optional channel (the provider
+    never saw the file, so this is deliberately not a provider error).
+    """
+    media = (content_type or "").split(";")[0].strip().lower()
+    if media in SPACE_MIME_TYPES and len(image) <= max_bytes:
+        return image, media, _payload_filename(filename, media)
+
+    try:
+        decoded = Image.open(io.BytesIO(image))
+        decoded.load()
+    except Exception as exc:  # noqa: BLE001 — any decode failure is the finding
+        raise ProviderConfigurationError(
+            f"{PROVIDER} could not read the uploaded image "
+            f"({type(exc).__name__}); OCR was skipped. Upload a JPEG, PNG, "
+            "GIF, TIFF or BMP instead.",
+            provider=PROVIDER,
+        ) from exc
+
+    # An unsupported-but-decodable format fits as lossless PNG.
+    if media not in SPACE_MIME_TYPES:
+        buffer = io.BytesIO()
+        try:
+            decoded.save(buffer, format="PNG", optimize=True)
+        except OSError as exc:  # pragma: no cover - defensive
+            raise ProviderConfigurationError(
+                f"{PROVIDER} could not transcode the image ({type(exc).__name__}).",
+                provider=PROVIDER,
+            ) from exc
+        if len(buffer.getvalue()) <= max_bytes:
+            return buffer.getvalue(), "image/png", _payload_filename(filename, "image/png")
+
+    return _encode_for_ocr_space(decoded, max_bytes=max_bytes, filename=filename)
+
+
+def _classify_space_error(message: str, *, key: str) -> ProviderError:
+    """Turn a provider-reported failure into the shared exception type.
+
+    OCR.space reports failures inside HTTP 200 bodies (``ErrorMessage``),
+    so the body — not the status — is what says whether credentials were
+    rejected, the quota ran out or the image timed out. The message is
+    collapsed to one line, capped and stripped of the key itself before
+    it can reach a log or the UI.
+    """
+    safe = " ".join(str(message).split())
+    if key:
+        safe = safe.replace(key, "[redacted]")
+    safe = safe[:300]
+    lowered = safe.lower()
+
+    if any(
+        marker in lowered
+        for marker in (
+            "invalid or missing api key",
+            "invalid api key",
+            "missing api key",
+            "api key is required",
+            "api key is invalid",
+            "unauthorized",
+            "forbidden",
+        )
+    ):
+        return ProviderAuthenticationError(
+            f"{PROVIDER} rejected the configured API key. Check {ENV_SPACE_KEY}.",
+            provider=PROVIDER,
+        )
+    if any(
+        marker in lowered
+        for marker in (
+            "rate limit",
+            "ratelimit",
+            "quota",
+            "too many",
+            "limit exceeded",
+            "exceeded the limit",
+            "500 requests",
+            "requests per day",
+            "daily limit",
+            "monthly limit",
+        )
+    ):
+        return ProviderRateLimitError(
+            f"{PROVIDER} refused the request because the plan's quota is used "
+            "up (the free plan allows 500 requests per day per IP). Try again "
+            "later or raise the plan.",
+            provider=PROVIDER,
+        )
+    if "timeout" in lowered or "timed out" in lowered or "time out" in lowered:
+        return ProviderTimeoutError(
+            f"{PROVIDER} timed out while processing the image. Try a smaller "
+            "or clearer image.",
+            provider=PROVIDER,
+        )
+    return ProviderError(
+        f"{PROVIDER} could not process the image: {safe}",
+        provider=PROVIDER,
+    )
+
+
+def _parse_space_response(raw: str, *, key: str) -> str:
+    """Extract recognised text from an OCR.space JSON body.
+
+    An HTTP 200 is *not* success: ``IsErroredOnProcessing``/``ErrorMessage``
+    carry auth, quota and processing failures inside a 200, and only the
+    body distinguishes them. Empty text with a successful exit code is a
+    legitimate "this image has no readable text" answer.
+    """
+    try:
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise ProviderResponseError(
+            f"{PROVIDER} returned a response that is not valid JSON.",
+            provider=PROVIDER,
+        ) from exc
+    if not isinstance(payload, dict):
+        raise ProviderResponseError(
+            f"{PROVIDER} returned a JSON response that is not an object.",
+            provider=PROVIDER,
+        )
+
+    message = payload.get("ErrorMessage")
+    message_text = message.strip() if isinstance(message, str) else ""
+    errored = bool(payload.get("IsErroredOnProcessing"))
+    if errored:
+        raise _classify_space_error(
+            message_text or "the provider reported a processing error", key=key
+        )
+
+    results = payload.get("ParsedResults")
+    if not isinstance(results, list) or not results:
+        if message_text:
+            raise _classify_space_error(message_text, key=key)
+        raise ProviderResponseError(
+            f"{PROVIDER} returned no OCR results for the image.",
+            provider=PROVIDER,
+        )
+
+    texts: list[str] = []
+    entry_errors: list[str] = []
+    for entry in results:
+        if not isinstance(entry, dict):
+            continue
+        text = entry.get("ParsedText")
+        if isinstance(text, str) and text.strip():
+            texts.append(text.strip())
+        error = entry.get("ErrorMessage")
+        if isinstance(error, str) and error.strip():
+            entry_errors.append(error.strip())
+
+    recognised = "\n".join(texts).strip()
+    if not recognised:
+        if entry_errors:
+            raise _classify_space_error(entry_errors[0], key=key)
+        exit_code = payload.get("OCRExitCode")
+        if exit_code in (3, 4):
+            # 3 = every page failed to parse, 4 = fatal error: a failure,
+            # not "the image contained no text".
+            raise ProviderError(
+                f"{PROVIDER} could not read any text from the image "
+                f"(OCRExitCode {exit_code}).",
+                provider=PROVIDER,
+            )
+    # ``""`` is a successful no-text answer; callers distinguish it via
+    # ``OcrResult.is_empty``.
+    return recognised
+
+
+async def _run_ocr_space(
+    image: bytes,
+    *,
+    filename: str,
+    content_type: str,
+    client: httpx.AsyncClient | None = None,
+    environ: Mapping[str, str] | None = None,
+) -> OcrResult:
+    """Send ``image`` to OCR.space's documented endpoint.
+
+    Configuration is validated *before* any request: a missing key names
+    ``OCR_SPACE_API_KEY``, a bad timeout/engine/limit names its own
+    variable, and a non-http(s) ``OCR_SPACE_API_URL`` is rejected.
+
+    Raises the shared hierarchy exactly like the other providers:
+    timeout/connection/auth/rate-limit/5xx before parsing, and
+    :class:`ProviderResponseError` for a 2xx body that cannot be parsed.
+    """
+    env = os.environ if environ is None else environ
+    problem = configuration_problem(env)
+    if problem:
+        raise ProviderConfigurationError(problem, provider=PROVIDER)
+
+    key = (env.get(ENV_SPACE_KEY) or "").strip()
+    url = (env.get(ENV_SPACE_URL) or "").strip() or DEFAULT_SPACE_URL
+    validate_http_url(PROVIDER, ENV_SPACE_URL, url)
+    timeout = read_timeout(PROVIDER, ENV_TIMEOUT, default=30.0, environ=env)
+
+    language = (env.get(ENV_SPACE_LANGUAGE) or DEFAULT_SPACE_LANGUAGE).strip()
+    engine = (env.get(ENV_SPACE_ENGINE) or DEFAULT_SPACE_ENGINE).strip()
+    if engine not in SPACE_ENGINES:
+        raise ProviderConfigurationError(
+            f"{PROVIDER} is misconfigured: {ENV_SPACE_ENGINE} must be one of "
+            + ", ".join(SPACE_ENGINES)
+            + f" (got {engine!r}).",
+            provider=PROVIDER,
+        )
+    max_bytes = _read_max_bytes(env)
+
+    payload, payload_type, payload_name = _prepare_payload_ocr_space(
+        image,
+        filename=filename,
+        content_type=content_type,
+        max_bytes=max_bytes,
+    )
+
+    request = httpx.Request(
+        "POST",
+        url,
+        headers={"apikey": key, "Accept": "application/json"},
+        # Documented fields only: file, language, OCREngine, scale,
+        # isOverlayRequired (bounding boxes would be pure overhead here).
+        data={
+            "language": language,
+            "OCREngine": engine,
+            "scale": "true",
+            "isOverlayRequired": "false",
+        },
+        files={"file": (payload_name, payload, payload_type)},
+    )
+    request.extensions["timeout"] = {
+        "connect": timeout,
+        "read": timeout,
+        "write": timeout,
+        "pool": timeout,
+    }
+
+    owns_client = client is None
+    active = client or httpx.AsyncClient(
+        timeout=httpx.Timeout(timeout), follow_redirects=True
+    )
+    provenance = "injected-client" if not owns_client else "live"
+    try:
+        response = await active.send(request)
+    except httpx.TimeoutException as exc:
+        raise ProviderTimeoutError(
+            f"{PROVIDER} did not respond within {timeout:g} seconds.",
+            provider=PROVIDER,
+        ) from exc
+    except httpx.HTTPError as exc:
+        raise ProviderConnectionError(
+            f"{PROVIDER} could not be reached. Please try again later.",
+            provider=PROVIDER,
+        ) from exc
+    finally:
+        if owns_client:
+            await active.aclose()
+
+    classified = classify_http_error(
+        response.status_code,
+        provider=PROVIDER,
+        retry_after=response.headers.get("Retry-After"),
+    )
+    if classified is not None:
+        raise classified
+
+    text = _parse_space_response(response.text, key=key)
+    return OcrResult(
+        text=text,
+        engine=_engine_label(url),
+        provenance=provenance,
+        provider=PROVIDER_OCR_SPACE,
+    )
+
+
 async def run_ocr(
     image: bytes,
     *,
@@ -207,8 +674,11 @@ async def run_ocr(
     Raises
     ------
     ProviderConfigurationError
-        ``OCR_API_URL``/``OCR_API_KEY`` missing or invalid, or a bad
-        ``OCR_TIMEOUT`` value — raised before any network traffic.
+        The selected provider's variables missing or invalid (``OCR_SPACE_API_KEY``
+        for OCR.space, ``OCR_API_URL``/``OCR_API_KEY`` for ``http``, the
+        ``GOOGLE_*`` credentials for Google Cloud Vision), a bad ``OCR_TIMEOUT``
+        value, an image the selected provider cannot accept, or a misconfigured
+        engine/language/limit — raised before any network traffic.
     ProviderTimeoutError / ProviderConnectionError
         The endpoint did not answer / could not be reached.
     ProviderAuthenticationError / ProviderRateLimitError / ProviderServerError
@@ -236,6 +706,15 @@ async def run_ocr(
             provenance="live" if owns_google_client else "injected-client",
             provider=PROVIDER_GOOGLE,
             languages=tuple(languages),
+        )
+
+    if provider == PROVIDER_OCR_SPACE:
+        return await _run_ocr_space(
+            image,
+            filename=filename,
+            content_type=content_type,
+            client=client,
+            environ=environ,
         )
 
     # One consistent, actionable message for a missing configuration. It

@@ -23,6 +23,7 @@ user is waiting for, and it never changes the response.
 
 from __future__ import annotations
 
+import asyncio
 from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, Query, Request
@@ -58,6 +59,16 @@ router = APIRouter(tags=["search"])
 
 #: Canonical failure text when the record store itself cannot serve the
 #: query (kept in ``responses`` documentation below).
+#: Wall-clock budget for the *explanation* (briefing) stage. Retrieval
+#: has already succeeded by the time it runs, so a slow source may cost the
+#: explanation but never the results — and the whole request stays inside
+#: the browser's 30s search timeout instead of being abandoned there.
+BRIEFING_BUDGET_SECONDS = 15.0
+BRIEFING_TIMEOUT_NOTICE = (
+    "The historical source took too long to answer, so these results are "
+    "shown without the full explanation. Please try again in a moment."
+)
+
 SEARCH_UNAVAILABLE = (
     "Search is unavailable: the historical record store could not be "
     "reached."
@@ -100,16 +111,28 @@ async def _run_search(query: str) -> _SearchOutcome:
         raise DependencyUnavailableError(SEARCH_UNAVAILABLE) from exc
 
     briefing = None
+    briefing_timed_out = False
     if hits:
         try:
-            briefing = await build_briefing(query, hits)
+            briefing = await asyncio.wait_for(
+                build_briefing(query, hits), timeout=BRIEFING_BUDGET_SECONDS
+            )
+        except asyncio.TimeoutError:
+            # The retrieval is valid; only the enrichment ran out of budget.
+            briefing_timed_out = True
+            logger.warning(
+                "briefing exceeded its %.0fs budget; serving results without it",
+                BRIEFING_BUDGET_SECONDS,
+            )
         except Exception as exc:  # noqa: BLE001 — enrichment must not break search
             logger.warning(
                 "briefing construction failed: %s", type(exc).__name__, exc_info=exc
             )
 
     notice = None
-    if stats.get("unavailable"):
+    if briefing_timed_out and briefing is None:
+        notice = BRIEFING_TIMEOUT_NOTICE
+    elif stats.get("unavailable"):
         notice = (
             "The live historical source could not be reached or rate-limited "
             "this request, so these results may be incomplete. Please try "
