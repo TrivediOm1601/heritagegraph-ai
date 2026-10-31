@@ -15,21 +15,9 @@ import type { HistoricalBriefing, HistoricalMatch } from '../types/api';
  * How-it-works cards shown under the hero (moved here from App.tsx in A5).
  */
 const CAPABILITIES = [
-  {
-    step: '01',
-    title: 'Upload or search',
-    body: 'Drop in a photograph, scan or manuscript page, or start from a text search to trigger an analysis.',
-  },
-  {
-    step: '02',
-    title: 'Review extracted entities',
-    body: 'People, places, events and dates found in the image are listed with progress and error status while processing runs.',
-  },
-  {
-    step: '03',
-    title: 'Explore the graph',
-    body: 'Entities become an interactive knowledge graph, each connection backed by evidence and a verification status.',
-  },
+  { step: 'I', title: 'Upload or search', body: 'A photograph, a scanned page, or just the name of a place.' },
+  { step: 'II', title: 'Read the entities', body: 'People, places, dates and events are pulled out and listed.' },
+  { step: 'III', title: 'Test the graph', body: 'Every link shows its evidence, or says it has none.' },
 ];
 
 type SearchState =
@@ -190,47 +178,46 @@ export function HomePage() {
 
   return (
     <div>
-      <section className="rounded-2xl border border-ivory-300 bg-ivory-100 p-6 shadow-sm sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-terracotta-600">
-          HeritageGraph AI
-        </p>
-        <h1 className="mt-3 max-w-3xl font-display text-3xl leading-tight text-teal-800 sm:text-5xl">
-          Every image holds a story.{' '}
-          <span className="text-terracotta-600">We map its connections.</span>
+      <section className="hg-hero">
+        <svg viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#6db9b4" strokeWidth="1.2">
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            <rect key={i} x={10 + i * 13} y={10 + i * 13} width={180 - i * 26} height={180 - i * 26} opacity={0.9 - i * 0.1} />
+          ))}
+          <rect x="88" y="88" width="24" height="24" fill="#c1623c" stroke="none" />
+        </svg>
+        <p className="hg-mono">HeritageGraph AI · Evidence register</p>
+        <h1>
+          Read the photograph. <em>Check the evidence.</em>
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-700 sm:text-lg">
-          Upload a historical image or search with text, and HeritageGraph AI extracts
-          the people, places and events it contains, matches them against historical
-          records, and lays the relationships out as a graph you can verify
-          evidence-by-evidence.
+        <p className="lede">
+          Search a heritage place or upload a photo. Every person, date and link
+          comes with its source, or says plainly that it has none.
         </p>
+        <div className="hg-facts hg-mono">
+          <span>67 sites</span>
+          <span>75 stories</span>
+          <span>Nothing invented</span>
+        </div>
       </section>
 
-      <section
-        aria-label="How it works"
-        className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-3 sm:gap-6"
-      >
+      <ol aria-label="How it works" className="hg-process">
         {CAPABILITIES.map((item) => (
-          <article
-            key={item.step}
-            className="rounded-xl border border-ivory-300 bg-ivory p-5 shadow-sm"
-          >
-            <p className="font-display text-sm font-semibold tracking-widest text-terracotta-500">
-              {item.step}
-            </p>
-            <h2 className="mt-2 font-display text-lg text-teal-800">{item.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink-700">{item.body}</p>
-          </article>
+          <li key={item.step}>
+            <span className="hg-num">{item.step}.</span>
+            <h2>{item.title}</h2>
+            <p>{item.body}</p>
+          </li>
         ))}
-      </section>
+      </ol>
 
       {/* A5/R6 — text search over historical records */}
       <section
         id={SUBJECT_SECTION_ID}
         aria-labelledby="search-heading"
-        className="mt-6 scroll-mt-4 rounded-xl border border-ivory-300 bg-ivory p-5 shadow-sm sm:mt-8 sm:p-6"
+        className="hg-card mt-8 scroll-mt-4"
       >
-        <h2 id="search-heading" className="font-display text-lg text-teal-800">
+        <p className="hg-mono hg-label">Catalogue search</p>
+        <h2 id="search-heading" className="mt-1 font-display text-2xl text-teal-800">
           Search historical records
         </h2>
         <p className="mt-1 text-sm text-ink-500">
@@ -248,17 +235,35 @@ export function HomePage() {
             value={term}
             onChange={(event) => setTerm(event.target.value)}
             placeholder="e.g. Rani ki Vav, Qutub Minar, 1946"
-            className="flex-1 rounded-lg border border-ivory-300 bg-ivory-50 px-3 py-2 text-sm text-ink-900 placeholder:text-ink-500 focus:border-teal-500 focus:outline-none"
+            className="hg-input flex-1 text-ink-900 placeholder:text-ink-500"
             autoComplete="off"
           />
           <button
             type="submit"
             disabled={search.phase === 'loading'}
-            className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-ivory transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="hg-stamp-btn font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60"
           >
             {search.phase === 'loading' ? 'Searching…' : 'Search'}
           </button>
         </form>
+
+        <div className="hg-chips">
+          <span className="hg-mono">Try</span>
+          {['Rani ki Vav', 'Nalanda', 'Qutub Minar', 'Jallianwala Bagh'].map((name) => (
+            <button
+              key={name}
+              type="button"
+              className="hg-chip"
+              onClick={() => {
+                setTerm(name);
+                remember(name);
+                void runSearch(name);
+              }}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
 
         <div className="mt-4">
           {search.phase === 'idle' ? (

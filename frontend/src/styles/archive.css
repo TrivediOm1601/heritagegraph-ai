@@ -1,0 +1,57 @@
+/* HeritageGraph AI - "archive register" look.
+   Loaded after index.css. Unlayered rules win over Tailwind's layered
+   utilities, so these overrides restyle every page without touching it. */
+:root { --hg-ink: #1f2a28; --hg-teal: #124442; --hg-rule: #b9a97f; --hg-paper: #f4edd9; --hg-stamp: #b1502e; }
+body {
+  background-color: var(--hg-paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .22 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Sharp, flat surfaces instead of soft rounded cards. */
+.rounded-2xl, .rounded-xl { border-radius: 2px; }
+.rounded-lg, .rounded-md { border-radius: 2px; }
+.shadow-sm, .shadow, .shadow-md { box-shadow: none; }
+.border-ivory-300 { border-color: var(--hg-rule); }
+/* let the paper texture show through the page background */
+.bg-ivory-50 { background-color: transparent; }
+header.sticky { border-bottom: 3px double var(--hg-teal); background: rgba(244, 237, 217, .96); }
+
+.hg-mono { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; font-size: .72rem; }
+
+.hg-hero { position: relative; overflow: hidden; background: var(--hg-teal); color: #fdfbf3; padding: 2.5rem 1.5rem; border-bottom: 6px solid var(--hg-stamp); }
+@media (min-width: 640px) { .hg-hero { padding: 3.5rem 3rem; } }
+.hg-hero h1 { font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.08; max-width: 18ch; margin-top: .9rem; }
+.hg-hero h1 em { color: #df9a79; font-style: italic; }
+.hg-hero p.lede { margin-top: 1.1rem; max-width: 46ch; font-size: 1.05rem; line-height: 1.6; color: #cbe7e4; }
+.hg-hero .hg-mono { color: #df9a79; }
+.hg-hero svg { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: min(46vw, 380px); opacity: .9; pointer-events: none; }
+@media (max-width: 639px) { .hg-hero svg { opacity: .22; } }
+.hg-facts { max-width: 30rem; display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid rgba(203, 231, 228, .35); }
+
+.hg-process { display: grid; gap: 0; margin-top: 2rem; list-style: none; padding: 0; }
+@media (min-width: 640px) { .hg-process { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+.hg-process li { border-top: 2px solid var(--hg-ink); padding: .8rem 0 1.2rem; }
+.hg-process .hg-num { color: var(--hg-stamp); font-family: ui-monospace, Consolas, monospace; font-size: .8rem; letter-spacing: .14em; }
+.hg-process h2 { font-family: 'Iowan Old Style', Palatino, Georgia, serif; font-size: 1.25rem; color: var(--hg-teal); margin-top: .3rem; }
+.hg-process p { margin-top: .35rem; font-size: .92rem; line-height: 1.55; color: #37423f; max-width: 32ch; }
+
+.hg-card { position: relative; background: #fffdf3; border: 1px solid var(--hg-rule); border-top: 4px solid var(--hg-teal); padding: 1.4rem 1.4rem 1.6rem; }
+.hg-card::after { content: ''; position: absolute; inset: 6px; border: 1px dashed rgba(185, 169, 127, .55); pointer-events: none; }
+.hg-label { color: var(--hg-stamp); }
+.hg-input { border: 0 !important; border-bottom: 2px solid var(--hg-ink) !important; background: transparent !important; border-radius: 0 !important; font-size: 1.05rem !important; padding: .55rem .1rem !important; }
+.hg-input:focus { outline: none; border-bottom-color: var(--hg-stamp) !important; }
+.hg-stamp-btn { background: var(--hg-stamp) !important; color: #fffdf3 !important; border-radius: 2px !important; letter-spacing: .12em; text-transform: uppercase; font-size: .75rem !important; padding: .7rem 1.4rem !important; transform: rotate(-1deg); }
+.hg-stamp-btn:hover { background: #934027 !important; }
+.hg-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; align-items: center; }
+.hg-chip { border: 1px solid var(--hg-ink); padding: .25rem .7rem; font-size: .85rem; background: transparent; color: var(--hg-ink); cursor: pointer; }
+.hg-chip:hover { background: var(--hg-ink); color: #fdfbf3; }
+
+/* 3D depth viewer: a dark "light table" */
+.hg-3d { grid-column: 1 / -1; background: #0f2321; color: #cbe7e4; border: 1px solid #124442; margin-top: 1rem; }
+.hg-3d-bar { display: flex; justify-content: space-between; align-items: center; padding: .6rem .9rem; border-bottom: 1px solid rgba(203, 231, 228, .2); }
+.hg-3d-bar .hg-mono { color: #df9a79; }
+.hg-chip-light { color: #cbe7e4; border-color: #cbe7e4; }
+.hg-3d-stage { position: relative; width: 100%; height: 360px; }
+.hg-3d-canvas { width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+.hg-3d-canvas:active { cursor: grabbing; }
+.hg-3d-msg { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1rem; font-size: .95rem; }
+.hg-3d-note { padding: .6rem .9rem .8rem; font-size: .8rem; line-height: 1.5; color: #9fd2cd; }
