@@ -53,7 +53,25 @@ export function resolveApiBaseUrl(raw: unknown): string {
     );
     return '';
   }
-  return value.replace(/\/+$/, '');
+  const normalised = value.replace(/\/+$/, '');
+  // A cross-origin API base is legitimate for a standalone build, but in
+  // development it silently turns every call into a CORS request — the exact
+  // situation that shows up as "could not reach the server". Say so once.
+  if (import.meta.env.DEV && typeof window !== 'undefined') {
+    try {
+      if (new URL(normalised).origin !== window.location.origin) {
+        console.warn(
+          `[heritagegraph] VITE_API_BASE_URL points at ${normalised}, which is a different ` +
+            `origin from this page (${window.location.origin}). The backend must allow ` +
+            `that origin via CORS_ORIGINS, or leave VITE_API_BASE_URL unset to use the ` +
+            'same-origin /api proxy.',
+        );
+      }
+    } catch {
+      // Unreachable: the absolute-URL check above already validated the shape.
+    }
+  }
+  return normalised;
 }
 
 /** Base URL for backend calls; "" = same-origin relative paths (default). */
@@ -146,13 +164,34 @@ const ACCEPTED_EXTENSIONS = [
 export const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
 /** Any failure in validating or submitting an analysis. */
+/**
+ * Statuses where repeating the *same* idempotent GET can legitimately
+ * succeed: a request/proxy timeout (408/425), a rate limiter (429) or a
+ * transient upstream failure (502/503/504). 501 is excluded — "not
+ * implemented" is permanent.
+ */
+const TRANSIENT_STATUS_CODES = new Set([408, 425, 429, 502, 503, 504]);
+
 export class ApiError extends Error {
   readonly status?: number;
+  /**
+   * Whether repeating the identical request could plausibly succeed.
+   *
+   * A transport failure carries no status and is transient by nature (the
+   * server may simply have been restarting); the statuses above are
+   * transient by definition; every other 4xx means the request itself was
+   * wrong and would fail identically forever. A **timeout** is explicitly
+   * not retryable by default — the caller already waited the full timeout,
+   * and doubling it helps nobody.
+   */
+  readonly retryable: boolean;
 
-  constructor(message: string, status?: number) {
+  constructor(message: string, status?: number, retryable?: boolean) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
+    this.retryable =
+      retryable ?? (status === undefined || TRANSIENT_STATUS_CODES.has(status));
   }
 }
 
@@ -581,19 +620,62 @@ export function normaliseBriefing(value: unknown): HistoricalBriefing | null {
  * A4 — graph & evidence (PROVISIONAL, same contract note as above)
  * ------------------------------------------------------------------ */
 
+/** Options for a JSON GET; `timeoutMs` aborts a request that never answers. */
+export interface JsonRequestOptions {
+  timeoutMs?: number;
+}
+
+/** Where the API actually lives, for a message the user can act on. */
+function apiOriginLabel(): string {
+  if (API_BASE_URL) return API_BASE_URL;
+  return typeof window !== 'undefined' ? window.location.origin : 'this origin';
+}
+
 export async function getJson<T>(
   url: string,
   description: string,
   normalise: (record: Record<string, unknown>) => T,
+  options: JsonRequestOptions = {},
 ): Promise<T> {
+  const controller = options.timeoutMs ? new AbortController() : null;
+  const timeoutId = controller
+    ? setTimeout(() => controller.abort(), options.timeoutMs)
+    : null;
+
   let response: Response;
   try {
     response = await fetch(url, {
       headers: { Accept: 'application/json' },
       credentials: 'include',
+      ...(controller ? { signal: controller.signal } : {}),
     });
-  } catch {
-    throw new ApiError('Could not reach the server. Check your connection and try again.');
+  } catch (error) {
+    // An aborted request is a timeout; every other rejection is a transport
+    // failure (server down, DNS, TLS, CORS, mixed content) — different causes
+    // that deserve different words, instead of one blanket message.
+    if (controller?.signal.aborted) {
+      const seconds = Math.round((options.timeoutMs ?? 0) / 1000);
+      // Not retryable: the caller already waited the whole timeout, so a
+      // silent second attempt would only double the wait before the same
+      // message. (The backend retries the provider well inside this.)
+      throw new ApiError(
+        `The server did not answer within ${seconds} seconds. It may be busy — try again.`,
+        undefined,
+        false,
+      );
+    }
+    if (import.meta.env.DEV) {
+      console.warn(
+        `[heritagegraph] ${description}: the request never reached the API`,
+        { url, error, api: apiOriginLabel() },
+      );
+    }
+    throw new ApiError(
+      `Could not reach the server (${apiOriginLabel()}). ` +
+        'Check that the backend is running, then try again.',
+    );
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
   }
 
   if (!response.ok) {
@@ -613,6 +695,76 @@ export async function getJson<T>(
   }
 
   return normalise(payload as Record<string, unknown>);
+}
+
+/** Retry backoff: exponential from this base, capped, plus jitter. */
+const RETRY_BASE_DELAY_MS = 400;
+const RETRY_MAX_DELAY_MS = 4_000;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Whether a failed request is worth repeating (see `ApiError.retryable`).
+ *
+ * Anything that is not an `ApiError` — a normalisation failure, a coding
+ * error — is rethrown untouched rather than retried.
+ */
+export function isTransientApiFailure(error: unknown): boolean {
+  return error instanceof ApiError && error.retryable;
+}
+
+/** Options for a GET that recovers from a transient failure by itself. */
+export interface ResilientJsonRequestOptions extends JsonRequestOptions {
+  /** Extra attempts after a transient failure (clamped to 0..2). */
+  transientRetries?: number;
+}
+
+/**
+ * `getJson`, plus transparent recovery from transient failures.
+ *
+ * The live historical source is a public API: a 429 or a momentary 5xx on
+ * the first attempt used to surface straight to the user, who then had to
+ * press "Search" again — the exact "first attempt fails, repeating works"
+ * symptom. A short, bounded, jittered retry inside the transport means the
+ * first request normally just succeeds.
+ *
+ * Permanent failures (4xx), validation errors and normalisation errors are
+ * rethrown immediately: they are not transient, and retrying them would
+ * only delay the user's answer.
+ *
+ * Provider-side `Retry-After` is honoured by the backend, which owns the
+ * provider connection; this layer deliberately uses backoff plus jitter so
+ * it never waits on a header it cannot read from a thrown error.
+ */
+export async function getJsonWithRetry<T>(
+  url: string,
+  description: string,
+  normalise: (record: Record<string, unknown>) => T,
+  options: ResilientJsonRequestOptions = {},
+): Promise<T> {
+  const extraAttempts = Math.max(
+    0,
+    Math.min(2, Math.floor(options.transientRetries ?? 0)),
+  );
+
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      return await getJson(url, description, normalise, options);
+    } catch (error) {
+      if (attempt >= extraAttempts || !isTransientApiFailure(error)) throw error;
+      const base = Math.min(RETRY_BASE_DELAY_MS * 2 ** attempt, RETRY_MAX_DELAY_MS);
+      const delay = Math.round(base + base * 0.25 * Math.random());
+      if (import.meta.env.DEV) {
+        console.warn(
+          `[heritagegraph] ${description}: transient failure, retrying in ${delay}ms`,
+          error,
+        );
+      }
+      await sleep(delay);
+    }
+  }
 }
 
 /** PROVISIONAL: fetches the knowledge graph of an analysis. */
@@ -677,6 +829,13 @@ export const SEARCH_ENDPOINT = '/api/search';
 export const MIN_SEARCH_QUERY_LENGTH = 2;
 
 /**
+ * A live search waits on the historical source, so it is allowed to take a
+ * while — but not forever: an unanswered request must end in a message, not
+ * an interface stuck on "Searching…".
+ */
+export const SEARCH_TIMEOUT_MS = 30_000;
+
+/**
  * Runs a text search over historical records.
  *
  * Rejects with ApiError for invalid input (before any request), transport
@@ -692,7 +851,7 @@ export async function searchHistoricalRecords(query: string): Promise<SearchResp
     );
   }
 
-  return getJson(
+  return getJsonWithRetry(
     `${API_BASE_URL}${SEARCH_ENDPOINT}?query=${encodeURIComponent(trimmed)}`,
     'Search failed',
     (record) => {
@@ -713,5 +872,6 @@ export async function searchHistoricalRecords(query: string): Promise<SearchResp
         notice: asString(record.notice),
       };
     },
+    { timeoutMs: SEARCH_TIMEOUT_MS, transientRetries: 1 },
   );
 }

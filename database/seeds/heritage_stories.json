@@ -1,0 +1,655 @@
+{
+  "dataset": "curated-demo-india",
+  "notice": "Curated Stories & Legends demonstration records. Each narrative is a short original summary of the cited sources, not a quotation. Labels describe the basis of an account (documented history, religious tradition, folklore, scholarly interpretation) and never rank one tradition as superior to another. No story here is field-verified, and no oral history has been collected yet.",
+  "stories": [
+    {
+      "id": "rani-ki-vav-udayamati",
+      "site_id": "rani-ki-vav",
+      "title": "The stepwell Queen Udayamati commissioned",
+      "summary": "Patan's seven-storeyed stepwell is traditionally attributed to Queen Udayamati, consort of the Chaulukya king Bhima I, in the 11th century. It later silted over and was recovered from the river silt in the 20th century.",
+      "narrative": "Rani ki Vav stands at Patan in northern Gujarat, on the bank of the Saraswati. Its construction is attributed in local and art-historical tradition to Queen Udayamati, wife of Bhima I of the Chaulukya (Solanki) dynasty, in the 11th century. The stepwell descends through seven levels, with sculpture on the walls of each gallery and a large sculptural programme centred on Vishnu and his avatars. It is not simply a well: the descent is treated as a journey into a sacred, subterranean temple, and water is the object of that journey.\n\nAfter the Saraswati changed course the structure filled with silt and disappeared from view. Excavation in the 20th century revealed the galleries again, and conservation followed. UNESCO inscribed Rani ki Vav on the World Heritage List in 2014, citing it as an exceptional example of a subterranean stepwell and of water architecture. The record of who built it rests on tradition and on the site's own inscriptions and sculpture rather than on a single surviving foundation charter.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Chaulukya court tradition and modern art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "11th century CE",
+      "cultural_background": "Stepwells (vav) combined water storage, ritual bathing and social space in western India; Rani ki Vav is the most elaborate surviving example in Gujarat.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and the UNESCO World Heritage listing",
+      "sources": [
+        {
+          "title": "Rani ki Vav",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Rani_ki_Vav",
+          "locator": "Lead and 'History' sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Rani-ki-Vav (the Queen's Stepwell) at Patan, Gujarat",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "2014",
+          "url": "https://whc.unesco.org/en/list/922/",
+          "locator": "Description and justification for inscription",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "rani-ki-vav-inverted-temple",
+      "site_id": "rani-ki-vav",
+      "title": "A temple turned upside down",
+      "summary": "Art historians read the stepwell's descent as an inverted temple: the visitor moves downward through sculpted levels toward water, reversing the upward movement of a temple ascent. This is an interpretation of the architecture, not a recorded statement by its builders.",
+      "narrative": "A stepwell is usually explained functionally — a place to reach groundwater in a dry region. Rani ki Vav invites a second reading. Its seven levels are treated as storeys of a subterranean structure, richly carved and organised around a central axis, so that the descent toward the water mirrors the ascent a worshipper makes through a temple. Sculptures of Vishnu, his avatars and attendant figures line the walls; the water at the bottom is the destination rather than an afterthought.\n\nThe interpretation is scholarly. No inscription at the site states 'this is an inverted temple', and the reading draws on the building's form, its sculptural programme and comparisons with other stepwells. It is presented here as an interpretation because that is what it is: a way of understanding the design, not a contemporary account of the builders' intentions.",
+      "category": "architecture",
+      "narrative_type": "scholarly-interpretation",
+      "tradition": "Art-historical interpretation of western Indian stepwell architecture",
+      "language": "en",
+      "community": null,
+      "period": "11th century CE",
+      "cultural_background": "The interpretation connects stepwell form with temple form and with the ritual value of water in Jain and Hindu practice.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited sources; explicitly labelled as interpretation",
+      "sources": [
+        {
+          "title": "Rani ki Vav",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Rani_ki_Vav",
+          "locator": "Architecture and sculpture sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Rani-ki-Vav (the Queen's Stepwell) at Patan, Gujarat",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "2014",
+          "url": "https://whc.unesco.org/en/list/922/",
+          "locator": "Description of the sculptural programme",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "modhera-bhima",
+      "site_id": "modhera-sun-temple",
+      "title": "Bhima I's solar temple at Modhera",
+      "summary": "The Sun Temple at Modhera was built in the reign of the Chaulukya king Bhima I, around 1026–27 CE, beside a large stepped tank and a hall of assembled columns.",
+      "narrative": "Modhera's Sun Temple is dated by inscription and style to the reign of Bhima I of the Chaulukya dynasty, around 1026–27 CE. The complex has three parts: the Surya Kund, a large stepped tank lined with small shrines; the sabha mandapa, a hall of carved pillars; and the sanctum, which no longer carries its tower. The tank's steps and the shrines along them survive in unusually complete form.\n\nThe temple belongs to a wider pattern of solar worship in western India, and its construction is usually linked to the prosperity of the Chaulukya court at Patan. Later damage to the superstructure is generally attributed to the turbulent centuries that followed, but the sources cited here describe the building and its date rather than claiming a single documented destruction event.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Chaulukya-period temple construction, dated by inscription and architectural style",
+      "language": "en",
+      "community": null,
+      "period": "c. 1026–27 CE",
+      "cultural_background": "Solar worship (Saura) was well established in Gujarat; the Surya Kund remains a focus of religious attention.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article",
+      "sources": [
+        {
+          "title": "Sun Temple, Modhera",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sun_Temple,_Modhera",
+          "locator": "Lead, history and architecture sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "modhera-solar-alignment",
+      "site_id": "modhera-sun-temple",
+      "title": "Built for the rising sun",
+      "summary": "The temple is oriented to the east, and its design is often read as a solar alignment: at the equinoxes the first rays are said to have reached the sanctum. The alignment is an architectural interpretation, not a documented ritual instruction.",
+      "narrative": "Modhera's sanctum faces east. That orientation, together with the position of the Surya Kund and the line of the axis, has led interpreters to describe the temple as a solar instrument: at the equinoxes, the rising sun would pass through the entrance and illuminate the image in the sanctum. The claim appears in architectural descriptions of the site and fits the building's dedication to Surya.\n\nIt is worth separating the observable fact from the interpretation. The eastward orientation and the axis can be measured; the story of the equinox rays reaching the deity depends on the lost superstructure and on how the sanctum originally opened. This record therefore labels the alignment as a scholarly interpretation. Visitors today can still see how deliberately the complex is arranged around the sun, even where the original effect cannot be reconstructed with certainty.",
+      "category": "architecture",
+      "narrative_type": "scholarly-interpretation",
+      "tradition": "Architectural and art-historical interpretation",
+      "language": "en",
+      "community": null,
+      "period": "c. 1026–27 CE",
+      "cultural_background": "Surya temples were designed around sunrise, and the tank's name and layout reinforce the solar dedication.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited article; interpretation separated from measurable orientation",
+      "sources": [
+        {
+          "title": "Sun Temple, Modhera",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sun_Temple,_Modhera",
+          "locator": "Architecture section",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "konark-origin",
+      "site_id": "konark-sun-temple",
+      "title": "Why was the Sun Temple built? Two traditions",
+      "summary": "Two accounts answer the same question. Odia temple tradition, recorded in the Madala Panji, tells of Samba's penance and cure; scholarly history attributes the temple to King Narasimhadeva I around 1250 CE. Both are presented here as separate traditions.",
+      "narrative": "The Sun Temple at Konark invites two very different origin stories.\n\nThe first is a temple tradition preserved in the Madala Panji, the chronicle associated with the Jagannath temple at Puri. It tells of Samba, a son of Krishna, who was afflicted with leprosy and came to the coast to worship Surya. Cured by the god, he is said to have built a temple in thanksgiving. In this account the temple's origin is devotional and its founder a figure from sacred narrative.\n\nThe second is the account given by epigraphy and architectural history: the temple was built in the mid-13th century under Narasimhadeva I of the Eastern Ganga dynasty, and its programme expresses royal power as well as solar devotion. This account does not treat Samba's cure as a historical event, but it does not have to: the two traditions answer different questions and are preserved separately rather than merged into a single 'real' story.",
+      "category": "mythology",
+      "narrative_type": "conflicting-accounts",
+      "tradition": "Odia temple tradition (Madala Panji) alongside modern epigraphic and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "c. 1250 CE; tradition unstated",
+      "cultural_background": "Konark remains a living pilgrimage site, and the Samba tradition is part of its religious memory rather than a rejected alternative.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited sources; the two accounts are kept as separate versions",
+      "sources": [
+        {
+          "title": "Konark Sun Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Konark_Sun_Temple",
+          "locator": "History and legend sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sun Temple, Konârak",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1984",
+          "url": "https://whc.unesco.org/en/list/246/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ],
+      "versions": [
+        {
+          "id": "konark-origin-samba",
+          "label": "Temple tradition: Samba's cure",
+          "summary": "Samba, son of Krishna, was cured of leprosy by Surya and built the temple in thanksgiving, according to the Madala Panji.",
+          "narrative": "In the version preserved in the Madala Panji, Samba is a son of Krishna who contracts leprosy. He comes to the Odisha coast and worships Surya, who cures him. In gratitude he builds a temple to the sun. The story places the temple's origin in divine intervention and devotional gratitude rather than in a royal building programme.",
+          "tradition": "Madala Panji — Odia temple chronicle",
+          "language": "en",
+          "community": "Odia temple tradition associated with the Jagannath temple, Puri",
+          "differences": "Places the founder in sacred narrative and gives a devotional motive; does not name Narasimhadeva I or a 13th-century date.",
+          "verification_status": "source-checked",
+          "sources": [
+            {
+              "title": "Konark Sun Temple",
+              "author": "Wikipedia contributors",
+              "source_type": "secondary-reference",
+              "published": "2026",
+              "url": "https://en.wikipedia.org/wiki/Konark_Sun_Temple",
+              "locator": "Legend section",
+              "licence": "CC BY-SA 4.0"
+            },
+            {
+              "title": "Madala Panji",
+              "author": "Wikipedia contributors",
+              "source_type": "secondary-reference",
+              "published": "2026",
+              "url": "https://en.wikipedia.org/wiki/Madala_Panji",
+              "locator": "Lead",
+              "licence": "CC BY-SA 4.0"
+            }
+          ]
+        },
+        {
+          "id": "konark-origin-narasimha",
+          "label": "Scholarly account: Narasimhadeva I",
+          "summary": "Epigraphic and architectural evidence dates the temple to the reign of Narasimhadeva I of the Eastern Ganga dynasty, around 1250 CE.",
+          "narrative": "Architectural history and inscriptions place the construction of the Konark temple in the reign of Narasimhadeva I, an Eastern Ganga king, around the middle of the 13th century. The temple's scale, its chariot form and its royal iconography are read as statements of dynastic power as well as solar devotion. The main tower collapsed in later centuries, leaving the audience hall and the wheeled platform that visitors see today.",
+          "tradition": "Epigraphic and art-historical scholarship",
+          "language": "en",
+          "community": null,
+          "differences": "Attributes construction to a named king and a date; treats Samba's cure as tradition rather than as a building record.",
+          "verification_status": "source-checked",
+          "sources": [
+            {
+              "title": "Konark Sun Temple",
+              "author": "Wikipedia contributors",
+              "source_type": "secondary-reference",
+              "published": "2026",
+              "url": "https://en.wikipedia.org/wiki/Konark_Sun_Temple",
+              "locator": "History section",
+              "licence": "CC BY-SA 4.0"
+            },
+            {
+              "title": "Sun Temple, Konârak",
+              "author": "UNESCO World Heritage Centre",
+              "source_type": "world-heritage-listing",
+              "published": "1984",
+              "url": "https://whc.unesco.org/en/list/246/",
+              "locator": "Description",
+              "licence": "UNESCO listing text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "konark-narasimha",
+      "site_id": "konark-sun-temple",
+      "title": "Narasimhadeva's chariot of the sun",
+      "summary": "The temple was built around 1250 CE under Narasimhadeva I. Its platform carries 24 great wheels and seven horses, and the main tower has not survived.",
+      "narrative": "Konark was conceived as the chariot of Surya. The platform is carved with 24 wheels, each treated as a sundial-like marker, and the temple is drawn by seven horses. The sanctum's tower, which once dominated the coast, collapsed in the centuries after construction; what survives is the audience hall and the sculpted platform, along with fragments of the larger complex.\n\nThe temple is attributed to Narasimhadeva I of the Eastern Ganga dynasty and dated to the mid-13th century. It is a World Heritage Site, inscribed in 1984. Conservation of the stone, exposed to salt air and sand, has been a continuing concern, and the surviving sculptures are among the best-known works of Odishan temple art.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Eastern Ganga royal construction, dated by inscription and scholarship",
+      "language": "en",
+      "community": null,
+      "period": "c. 1250 CE",
+      "cultural_background": "The chariot form makes the temple itself an image of the sun god's vehicle, moving across the sky.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and UNESCO listing",
+      "sources": [
+        {
+          "title": "Konark Sun Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Konark_Sun_Temple",
+          "locator": "History and architecture sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sun Temple, Konârak",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1984",
+          "url": "https://whc.unesco.org/en/list/246/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "konark-wheels",
+      "site_id": "konark-sun-temple",
+      "title": "Reading the twenty-four wheels",
+      "summary": "The wheels are among the temple's most discussed carvings. Interpretations connect them with the hours, the seasons and the solar year, but the readings are scholarly proposals rather than recorded instructions.",
+      "narrative": "Each of the 24 wheels on Konark's platform is carved as a spoked wheel with a decorated hub and rim. Because the number 24 can be divided into the hours of the day and the half-months of the year, interpreters have proposed that the wheels function as a calendar or sundial in stone. Other readings connect the seven horses with the days of the week.\n\nThese are interpretations, and they differ in detail: the wheels were not designed as a modern instrument, and no builder's text explains their use. What is not in doubt is the care taken over them. The wheels are carved on both faces, with figure panels between the spokes, and they carry the temple's central metaphor — the sun's chariot — at the scale of the building itself.",
+      "category": "architecture",
+      "narrative_type": "scholarly-interpretation",
+      "tradition": "Art-historical readings of Odishan temple iconography",
+      "language": "en",
+      "community": null,
+      "period": "c. 1250 CE",
+      "cultural_background": "Solar imagery in Odishan temples links the building to the movement of the sun and to royal display.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited sources; alternative readings noted, none asserted as fact",
+      "sources": [
+        {
+          "title": "Konark Sun Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Konark_Sun_Temple",
+          "locator": "Architecture section",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "taj-mahal-mumtaz",
+      "site_id": "taj-mahal",
+      "title": "A tomb for Mumtaz Mahal",
+      "summary": "Shah Jahan commissioned the Taj Mahal after the death of Mumtaz Mahal in 1631. The mausoleum was completed in 1648 and the wider complex around 1653.",
+      "narrative": "Mumtaz Mahal, the wife of the Mughal emperor Shah Jahan, died in 1631. The Taj Mahal was built at Agra as her mausoleum, with construction beginning in 1632. The tomb itself was completed in 1648, and the surrounding complex — mosque, guest house, gardens and gateways — was finished around 1653. The design is traditionally credited to the architect Ustad Ahmad Lahori, working within a large team of craftsmen and specialists.\n\nThe building combines a white marble mausoleum on a plinth, a charbagh garden, a reflecting pool and two flanking buildings, all set on the Yamuna's bank. Its inlaid stonework, calligraphy and dome are the elements most often described in the sources. UNESCO inscribed the Taj Mahal in 1983 as a masterpiece of Mughal architecture and a monument to a universal grief.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Mughal court chronology and architectural history",
+      "language": "en",
+      "community": null,
+      "period": "1632–1653 CE",
+      "cultural_background": "The complex follows the Mughal charbagh garden tradition, with the tomb at the centre of a formally ordered landscape.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and UNESCO listing",
+      "sources": [
+        {
+          "title": "Taj Mahal",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Taj_Mahal",
+          "locator": "Origin and construction sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Taj Mahal",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1983",
+          "url": "https://whc.unesco.org/en/list/252/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "taj-mahal-black-taj",
+      "site_id": "taj-mahal",
+      "title": "The Black Taj that was never found",
+      "summary": "A persistent tradition holds that Shah Jahan planned a second mausoleum in black marble across the Yamuna. No such tomb has been found, and the story is treated as legend rather than documented construction.",
+      "narrative": "The story is told in several forms: that Shah Jahan intended a black marble tomb for himself on the opposite bank of the Yamuna, mirroring the white Taj, and that the project was abandoned or interrupted by his deposition. Seventeenth-century European travellers, including Jean-Baptiste Tavernier, reported that the emperor planned a tomb of his own across the river. Later excavations in the area did not produce a black marble mausoleum.\n\nHistorians generally treat the Black Taj as an unverified tradition. It may preserve a memory of an actual plan, or it may have grown from the symmetry of the site and from travellers' expectations. The record is kept here as a local legend with its sources, separately from the documented chronology of the Taj Mahal — not because it is worthless, but because it is a different kind of claim.",
+      "category": "local-legend",
+      "narrative_type": "local-folklore",
+      "tradition": "Travellers' reports and later popular tradition",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE onwards",
+      "cultural_background": "The legend draws on the site's symmetry and on the political drama of Shah Jahan's last years.",
+      "verification_status": "unverified",
+      "provenance": "Curated from the cited article; explicitly labelled as unverified tradition",
+      "sources": [
+        {
+          "title": "Black Taj Mahal",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Black_Taj_Mahal",
+          "locator": "Lead and 'Origins' section",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "hampi-vijayanagara",
+      "site_id": "hampi",
+      "title": "Capital of the Vijayanagara empire",
+      "summary": "Hampi was the capital of Vijayanagara from the 14th century, reached its height under Krishnadevaraya, and was abandoned after the city's defeat in 1565.",
+      "narrative": "Hampi grew as the capital of the Vijayanagara empire, founded in the 14th century by Harihara I and Bukka Raya. Its urban core spread across a dramatic landscape of granite hills and the Tungabhadra river, with temple complexes, royal enclosures, markets, aqueducts and fortifications. The empire's wealth and the city's scale attracted travellers from Persia, Portugal and Italy, whose accounts describe a vast and busy capital.\n\nThe city's fortunes turned at the Battle of Talikota in 1565, after which Vijayanagara was defeated and Hampi was abandoned. Its ruins were surveyed and conserved in later centuries, and UNESCO inscribed the group of monuments in 1986. The site is both an archaeological landscape and a living religious centre, with temples that continue to receive worshippers.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Vijayanagara historiography and archaeological survey",
+      "language": "en",
+      "community": null,
+      "period": "14th–16th century CE",
+      "cultural_background": "The site combines a royal capital, temple towns and a working agricultural landscape on the Tungabhadra.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and UNESCO listing",
+      "sources": [
+        {
+          "title": "Hampi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Hampi",
+          "locator": "History and description sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Group of Monuments at Hampi",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1986",
+          "url": "https://whc.unesco.org/en/list/241/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "hampi-kishkindha",
+      "site_id": "hampi",
+      "title": "Kishkindha of the Ramayana",
+      "summary": "Local tradition identifies Hampi with Kishkindha, the monkey kingdom of Sugriva and Hanuman in the Ramayana. The identification is a religious and literary tradition, not an archaeological conclusion.",
+      "narrative": "For many pilgrims and residents, Hampi is Kishkindha, the kingdom of the monkeys in the Ramayana. In the epic, Rama and Lakshmana arrive in Kishkindha during their search for Sita and form an alliance with Sugriva, aided by Hanuman. The landscape around Hampi — hills, caves and the Tungabhadra — is read through that narrative, and several local sites are named for events in it.\n\nScholars do not treat the identification as proven history. The Ramayana is a literary and religious work whose geography is debated, and the association with Hampi is a living tradition rather than a finding of excavation. It is recorded here as religious tradition: it shapes how the place is understood and visited, and it deserves to be presented on its own terms, beside the archaeological account rather than swallowed by it.",
+      "category": "mythology",
+      "narrative_type": "religious-tradition",
+      "tradition": "Ramayana tradition and local pilgrimage geography",
+      "language": "en",
+      "community": "Local and pilgrim tradition around Hampi and the Tungabhadra valley",
+      "period": "Epic tradition; association of long standing",
+      "cultural_background": "The Ramayana association is part of the living religious landscape of the site, not a separate 'attraction'.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited articles; labelled as tradition, not archaeology",
+      "sources": [
+        {
+          "title": "Hampi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Hampi",
+          "locator": "Ramayana association",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kishkindha",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kishkindha",
+          "locator": "Lead",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "meenakshi-marriage",
+      "site_id": "meenakshi-temple",
+      "title": "The marriage of Meenakshi and Sundareswarar",
+      "summary": "In the Tiruvilaiyadal tradition, Meenakshi, the Pandya princess, marries the god Sundareswarar (Shiva). The Chithirai festival re-enacts the wedding each year.",
+      "narrative": "Madurai's Meenakshi Amman temple is built around a marriage. In the Tamil Tiruvilaiyadal tradition, Meenakshi is born to the Pandya king Malayadhwaja and grows up as a warrior princess; she meets Sundareswarar, a form of Shiva, and their wedding becomes the centre of the temple's sacred geography. The annual Chithirai festival re-enacts the marriage, with processions of the two deities through the streets of Madurai.\n\nThe narrative is religious tradition, recorded in Tamil literary and temple texts rather than in a historical chronicle. The temple's architecture — its gopuras, halls and tank — frames the story, and the city's ritual calendar is organised around it. Presenting it as tradition is not a judgement on its truth; it is a description of the kind of account it is, and of how it is held and performed by a living community.",
+      "category": "religious-tradition",
+      "narrative_type": "mythological-narrative",
+      "tradition": "Tamil Saiva tradition and the Tiruvilaiyadal",
+      "language": "en",
+      "community": "Madurai's Saiva temple community",
+      "period": "Temple tradition; festival continues today",
+      "cultural_background": "The Chithirai festival is one of Tamil Nadu's largest temple festivals and is centred on this marriage.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited articles",
+      "sources": [
+        {
+          "title": "Meenakshi Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Meenakshi_Temple",
+          "locator": "Legend and festival sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tiruvilaiyadal",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Tiruvilaiyadal",
+          "locator": "Lead",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "golden-temple-ramdas",
+      "site_id": "golden-temple",
+      "title": "Guru Ram Das and the pool of nectar",
+      "summary": "Guru Ram Das founded the settlement and sacred pool at Amritsar in the 1570s. Guru Arjan built the Harmandir Sahib and installed the Adi Granth there in 1604.",
+      "narrative": "The site of the Golden Temple began as a pool and a settlement established by Guru Ram Das, the fourth Sikh Guru, in the 1570s. His successor Guru Arjan oversaw the construction of the Harmandir Sahib in the pool's midst and installed the Adi Granth there in 1604, giving the place its enduring role as a centre of Sikh scripture and worship. The building was repeatedly damaged and rebuilt; the marble and gold cladding familiar today dates largely from the 19th century, including work under Maharaja Ranjit Singh.\n\nThe Harmandir Sahib is open on all four sides, a deliberate statement of welcome, and the Akal Takht stands opposite it as the seat of temporal authority. The complex includes the langar kitchen, where free meals are served to all visitors, and the pool itself remains the focus of the site.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Sikh historical tradition and modern scholarship",
+      "language": "en",
+      "community": null,
+      "period": "1570s–1604 CE; later rebuilding",
+      "cultural_background": "The open-sided Harmandir and the langar express the Sikh principles of welcome and equality.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article",
+      "sources": [
+        {
+          "title": "Golden Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Golden_Temple",
+          "locator": "History and architecture sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "golden-temple-langar",
+      "site_id": "golden-temple",
+      "title": "The kitchen that feeds everyone",
+      "summary": "The langar at the Harmandir Sahib serves free vegetarian meals to all visitors regardless of background. The practice is a central Sikh institution, not a visitor amenity.",
+      "narrative": "The langar — the community kitchen — is one of the defining institutions of Sikh practice. At the Golden Temple it runs continuously, serving free vegetarian food to anyone who comes, without distinction of religion, caste or status. The kitchen is staffed largely by volunteers and is funded by donations; the meal is eaten seated together on the floor, a deliberate equalising of those who share it.\n\nThe institution is usually traced to Guru Nanak and was developed by later Gurus, with Guru Amar Das particularly associated with making the communal meal central to Sikh life. At Amritsar the langar is part of the temple complex rather than a separate charity, and its scale is one of the things visitors most often remark on. It is presented here as a living religious and cultural practice, described from the cited sources rather than from a single visitor's impression.",
+      "category": "culture",
+      "narrative_type": "religious-tradition",
+      "tradition": "Sikh practice and institutional history",
+      "language": "en",
+      "community": "Sikh community; volunteers and donors at the Harmandir Sahib",
+      "period": "From the 16th century; continues today",
+      "cultural_background": "Langar expresses equality and service (seva) and is open to all visitors.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited articles",
+      "sources": [
+        {
+          "title": "Langar (Sikhism)",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Langar_(Sikhism)",
+          "locator": "Lead and practice sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Golden Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Golden_Temple",
+          "locator": "Complex description",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "sanchi-ashoka",
+      "site_id": "sanchi-stupa",
+      "title": "Ashoka's stupa on the hill",
+      "summary": "The Great Stupa at Sanchi was begun under the Mauryan emperor Ashoka in the 3rd century BCE and enlarged over the following centuries. The site was inscribed by UNESCO in 1989.",
+      "narrative": "Sanchi's Great Stupa is one of the oldest surviving Buddhist monuments in India. Its core is attributed to the reign of Ashoka in the 3rd century BCE, with later enlargements that gave it its present form, including the balustrade, the four gateways and the carved panels. The hill also holds smaller stupas, monasteries and temples built over many centuries, so the site records a long sequence of Buddhist activity rather than a single moment.\n\nThe stupa's gateways carry scenes from the Buddha's life and from Jataka stories, and the site is closely associated with the development of Buddhist art in central India. UNESCO inscribed the Buddhist monuments at Sanchi in 1989. Conservation in the 20th century, including work associated with John Marshall, shaped much of what visitors see today.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological survey and Buddhist art history",
+      "language": "en",
+      "community": null,
+      "period": "3rd century BCE onwards",
+      "cultural_background": "Sanchi is a Buddhist monastic and pilgrimage site whose monuments span several centuries.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and UNESCO listing",
+      "sources": [
+        {
+          "title": "Sanchi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sanchi",
+          "locator": "History and monuments sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Buddhist Monuments at Sanchi",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1989",
+          "url": "https://whc.unesco.org/en/list/524/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "sanchi-relics",
+      "site_id": "sanchi-stupa",
+      "title": "The relics that went to England and came back",
+      "summary": "Relics believed to be those of the Buddha's disciples Sariputta and Moggallana were recovered at Sanchi in the 19th century, taken to Britain, and returned to India in 1952.",
+      "narrative": "In the 19th century, excavations at Sanchi uncovered relic caskets in one of the stupas. The relics were identified by tradition as those of Sariputta and Moggallana, two of the Buddha's chief disciples, and were taken to Britain. They were kept at the Victoria and Albert Museum before being returned to India in 1952, after which they were enshrined at Sanchi in a ceremony attended by government and Buddhist representatives.\n\nThe episode is a useful reminder that a heritage site's story is not only about its construction. It also includes excavation, colonial-era removal, and the politics of return. The identification of the relics rests on the inscriptions and the tradition surrounding them; this record presents the sequence of events and the sources, not a devotional claim about their authenticity.",
+      "category": "lesser-known",
+      "narrative_type": "historically-documented",
+      "tradition": "Archaeological and museum records",
+      "language": "en",
+      "community": null,
+      "period": "1851–1952 CE",
+      "cultural_background": "The return of the relics was a significant moment for Buddhist communities in India and abroad.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited article",
+      "sources": [
+        {
+          "title": "Sanchi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sanchi",
+          "locator": "Relics section",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "qutub-aibak",
+      "site_id": "qutub-minar",
+      "title": "The tower begun by Qutb ud-Din Aibak",
+      "summary": "The Qutub Minar was begun around 1199 under Qutb ud-Din Aibak and continued by Iltutmish. Its sandstone storeys rise to about 72.5 metres.",
+      "narrative": "The Qutub Minar was begun at the end of the 12th century, around 1199, under Qutb ud-Din Aibak, the first ruler of the Delhi Sultanate. His successor Iltutmish continued the tower, and later repairs and additions followed. It stands about 72.5 metres high, built of fluted sandstone with carved bands of calligraphy and geometric ornament, and it tapers as it rises.\n\nThe tower is part of a wider complex that includes the Quwwat-ul-Islam mosque, built from the remains of earlier temples, and the Iron Pillar, which predates the Sultanate by centuries. The site is a World Heritage Site, inscribed in 1993. Its layered construction — Hindu and Jain masonry reused in the mosque, the Sultanate's own additions, and later restoration — makes it a compact record of Delhi's changing regimes.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Delhi Sultanate chronology and archaeological study",
+      "language": "en",
+      "community": null,
+      "period": "c. 1199 CE onwards",
+      "cultural_background": "The complex layers reused temple masonry, Sultanate construction and later conservation in one place.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited Wikipedia article and UNESCO listing",
+      "sources": [
+        {
+          "title": "Qutb Minar",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Qutb_Minar",
+          "locator": "History and architecture sections",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Qutb Minar and its Monuments, Delhi",
+          "author": "UNESCO World Heritage Centre",
+          "source_type": "world-heritage-listing",
+          "published": "1993",
+          "url": "https://whc.unesco.org/en/list/233/",
+          "locator": "Description",
+          "licence": "UNESCO listing text"
+        }
+      ]
+    },
+    {
+      "id": "charminar-founding",
+      "site_id": "charminar",
+      "title": "A monument at the crossing of Hyderabad",
+      "summary": "Charminar was built in 1591 by Muhammad Quli Qutb Shah. A widely repeated tradition links it to the end of a plague, while the city's foundation and the building's own inscriptions provide the documented context.",
+      "narrative": "Charminar stands at the centre of the old city of Hyderabad, where the four minarets mark a crossing of roads and bazaars. It was built in 1591 under Muhammad Quli Qutb Shah, the fifth sultan of the Qutb Shahi dynasty, shortly after the founding of Hyderabad. The structure combines a mosque on its upper floor with four tall minarets and open arches at ground level.\n\nA popular account says the sultan vowed to build a mosque if a plague afflicting the city ended, and that Charminar fulfilled the vow. The story is repeated widely in guidebooks and local memory, but the sources cited here treat it as tradition rather than as a contemporary record; the building's date and patron are documented, the motive is not. Both belong in the story of the monument, kept distinct.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Qutb Shahi chronology; plague association is local tradition",
+      "language": "en",
+      "community": "Hyderabad city tradition",
+      "period": "1591 CE",
+      "cultural_background": "Charminar anchors the historic bazaars and is the symbolic centre of Hyderabad.",
+      "verification_status": "source-checked",
+      "provenance": "Curated from the cited article; the plague account is explicitly marked as tradition in the narrative",
+      "sources": [
+        {
+          "title": "Charminar",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Charminar",
+          "locator": "History and architecture sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    }
+  ]
+}
