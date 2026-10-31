@@ -82,8 +82,8 @@ the README. A limitation is not hidden behind a feature claim.
 
 | Limitation | Impact | Current workaround | Possible improvement |
 |---|---|---|---|
-| No deployment has been performed | No public URL or production proof | `docs/deployment.md` documents the intended setup | Deploy to a staging environment and run the checklist |
-| No Dockerfile/Compose | Setup relies on Node + Python on the host | `npm run setup` is verified | Add a tested container image if needed |
+| Free hosting limits | Demo sleeps when idle; accounts, history and uploads reset on restart | Curated map and stories are re-seeded on every start | Use paid hosting with PostgreSQL and a persistent disk |
+| Single container | API and website run in one Docker image on Render | A tested `Dockerfile` is in the repo | Split services and add a worker queue |
 | Single-process background tasks | Long archive jobs die if the process restarts | Status is persisted; reprocess is available | Durable queue (Celery/RQ/Arq) and workers |
 | No HTTPS termination in-repo | Secure cookies depend on deployment | `TRUST_PROXY_HEADERS` + reverse proxy documented | Terminate TLS at the proxy/load balancer |
 | Google Vision credentials not configured | GCP OCR unavailable in this workspace | OCR.space is live; GCP setup documented | Add a service account/ADC in deployment |
