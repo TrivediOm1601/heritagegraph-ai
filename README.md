@@ -6,9 +6,9 @@
 *Digital Revitalisation of Unstructured Cultural & Architectural Heritage
 Archives* (Software — Open Innovation; Culture, Media & Entertainment).
 
-**Status:** pre-1.0 hackathon build. The application runs and is verified locally;
-it has **not been deployed** and no public URL exists. The submission checklist
-records exactly what is verified, partial or still an owner action.
+  **Status:** hackathon build, deployed. **Live demo:** https://YOUR-RENDER-URL
+  (free hosting: the first load after idle can take about a minute). Short note:
+  [APPROACH_AND_LIMITS.md](APPROACH_AND_LIMITS.md).
 
 [Submission checklist](SUBMISSION_CHECKLIST.md) ·
 [Repository audit](docs/repository-audit.md) ·
@@ -76,7 +76,7 @@ More: [archive studio](docs/screenshots/archive-studio.png) ·
 | [docs/technical-approach.md](docs/technical-approach.md) | how the system works end to end |
 | [docs/known-limitations.md](docs/known-limitations.md) | what is missing or unverified, with impact and next steps |
 | [docs/database-schema.md](docs/database-schema.md) | tables, relationships, migrations, ownership |
-| [docs/deployment.md](docs/deployment.md) | production topology and configuration (nothing deployed) |
+| [docs/deployment.md](docs/deployment.md) | production topology and configuration (deployed on Render using the Dockerfile) |
 | [SECURITY.md](SECURITY.md) | verified controls, reporting, security limits |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | setup, conventions, tests, PR expectations |
 | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) | honest status of every submission item |
@@ -1094,7 +1094,7 @@ tail -n 40 .dev-logs/backend.log
 │   ├── technical-approach.md # engineering explanation end to end
 │   ├── known-limitations.md  # limitations with impact/workaround/next step
 │   ├── database-schema.md    # tables, ER diagram, migrations, ownership
-│   ├── deployment.md         # production preparation (nothing deployed)
+│   ├── deployment.md         # production preparation (deployed on Render)
 │   ├── screenshots/          # genuine current UI screenshots used by this README
 │   └── HeritageGraph-AI.pdf  # earlier report snapshot (28 Oct 2026; not current docs)
 ├── frontend/
