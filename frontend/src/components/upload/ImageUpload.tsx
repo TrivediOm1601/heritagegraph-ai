@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 
 import { useAnalysis } from '../../hooks/useAnalysis';
+import { Photo3DViewer } from '../viewer/Photo3DViewer';
 import {
   formatBytes,
   validateImageFile,
@@ -188,6 +189,12 @@ export function ImageUpload({ onSubmitted }: ImageUploadProps) {
           ) : null}
         </div>
       </form>
+
+      {previewUrl && file ? (
+        <div className="mt-3">
+          <Photo3DViewer src={previewUrl} />
+        </div>
+      ) : null}
     </section>
   );
 }
