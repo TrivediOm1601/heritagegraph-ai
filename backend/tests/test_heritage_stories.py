@@ -31,7 +31,7 @@ def seeded_stories(auth_url):
 def test_seed_loads_sourced_stories_for_ten_sites(auth_client, seeded_stories):
     sites, stories = seeded_stories
     assert sites == 67
-    assert stories == 18
+    assert stories == 75
 
     body = auth_client.get("/api/heritage/sites/rani-ki-vav/stories").json()
     assert body["siteName"] == "Rani ki Vav"
@@ -99,8 +99,8 @@ def test_category_and_language_filters_use_published_records(auth_client, seeded
 
 def test_map_payload_exposes_story_counts_and_story_filters(auth_client, seeded_stories):
     body = auth_client.get("/api/heritage/sites").json()
-    assert body["summary"]["stories"] == 18
-    assert body["summary"]["sitesWithStories"] == 10
+    assert body["summary"]["stories"] == 75
+    assert body["summary"]["sitesWithStories"] == 67
     categories = {item["name"]: item["count"] for item in body["facets"]["storyCategories"]}
     assert categories["history"] >= 5
     assert categories["mythology"] == 2
@@ -108,8 +108,8 @@ def test_map_payload_exposes_story_counts_and_story_filters(auth_client, seeded_
     by_id = {site["id"]: site for site in body["sites"]}
     assert by_id["rani-ki-vav"]["storyCount"] == 2
     assert len(by_id["rani-ki-vav"]["featuredStories"]) == 2
-    assert by_id["dholavira"]["storyCount"] == 0
-    assert by_id["dholavira"]["featuredStories"] == []
+    assert by_id["dholavira"]["storyCount"] == 1
+    assert len(by_id["dholavira"]["featuredStories"]) == 1
 
     mythology = auth_client.get(
         "/api/heritage/sites", params={"story": "mythology"}
@@ -119,7 +119,12 @@ def test_map_payload_exposes_story_counts_and_story_filters(auth_client, seeded_
         "konark-sun-temple",
     }
     legend = auth_client.get("/api/heritage/sites", params={"story": "local-legend"}).json()
-    assert {site["id"] for site in legend["sites"]} == {"taj-mahal"}
+    assert {site["id"] for site in legend["sites"]} == {
+        "taj-mahal",
+        "adalaj-stepwell",
+        "unakoti",
+        "ujra-mosque-kavaratti",
+    }
     # A story filter composes with the national filters rather than replacing them.
     combined = auth_client.get(
         "/api/heritage/sites", params={"story": "history", "state": "Gujarat"}
@@ -127,6 +132,8 @@ def test_map_payload_exposes_story_counts_and_story_filters(auth_client, seeded_
     assert {site["id"] for site in combined["sites"]} == {
         "rani-ki-vav",
         "modhera-sun-temple",
+        "champaner-pavagadh",
+        "dholavira",
     }
 
 
@@ -164,7 +171,7 @@ def test_question_off_the_library_says_so_instead_of_inventing(auth_client, seed
         json={"siteId": "dholavira", "question": "What legends are associated here?"},
     ).json()
     assert empty["matchedStories"] == []
-    assert "No stories are stored" in empty["answer"]
+    assert "do not address" in empty["answer"]
 
 
 def test_submission_requires_sign_in_consent_and_is_not_public(auth_client, client, seeded_stories):
@@ -206,7 +213,7 @@ def test_submission_requires_sign_in_consent_and_is_not_public(auth_client, clie
     assert story["id"] not in {item["id"] for item in site_stories["stories"]}
     assert auth_client.get(f"/api/heritage/stories/{story['id']}").status_code == 404
     summary = auth_client.get("/api/heritage/sites").json()["summary"]
-    assert summary["stories"] == 18
+    assert summary["stories"] == 75
 
 
 def test_moderation_is_allowlisted_and_publication_stays_a_community_account(
@@ -287,7 +294,7 @@ def test_reseeding_is_idempotent_and_does_not_touch_community_rows(
         async with session_scope() as session:
             return await seed_heritage_stories(session)
 
-    assert asyncio.run(_reseed()) == 18
+    assert asyncio.run(_reseed()) == 75
     site_stories = auth_client.get("/api/heritage/sites/rani-ki-vav/stories").json()
     assert len(site_stories["stories"]) == 2  # the curated two, not the pending one
     assert story_id not in {item["id"] for item in site_stories["stories"]}

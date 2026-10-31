@@ -650,6 +650,1545 @@
           "licence": "CC BY-SA 4.0"
         }
       ]
+    },
+    {
+      "id": "agra-fort-story",
+      "site_id": "agra-fort",
+      "title": "Akbar's red fort on the Yamuna",
+      "summary": "Akbar had the old fort at Agra rebuilt in red sandstone from about 1565, making it a major Mughal residence and seat of government.",
+      "narrative": "Akbar had the old fort at Agra rebuilt in red sandstone from about 1565, making it a major Mughal residence and seat of government. His grandson Shah Jahan later added white marble palaces and mosques. In his last years Shah Jahan was confined here by his son Aurangzeb, and the fort, with the Taj Mahal downstream, became a symbol of the dynasty's rise and decline.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th–17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Agra Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Agra_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "fatehpur-sikri-story",
+      "site_id": "fatehpur-sikri",
+      "title": "Akbar's city of victory",
+      "summary": "Akbar built Fatehpur Sikri from about 1571 beside the village where the Sufi saint Salim Chishti lived, and accounts link the choice to the birth of his son Jahangir.",
+      "narrative": "Akbar built Fatehpur Sikri from about 1571 beside the village where the Sufi saint Salim Chishti lived, and accounts link the choice to the birth of his son Jahangir. The court stayed only for some years before returning to Agra, a move commonly explained by water shortage and shifting military needs. The Buland Darwaza gateway was added later to mark Akbar's Gujarat campaign.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Fatehpur Sikri",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Fatehpur_Sikri",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "sarnath-story",
+      "site_id": "sarnath",
+      "title": "Where the Buddha first taught",
+      "summary": "Buddhist tradition holds that the Buddha gave his first sermon at Sarnath, in the deer park near Varanasi, setting the wheel of the teaching in motion.",
+      "narrative": "Buddhist tradition holds that the Buddha gave his first sermon at Sarnath, in the deer park near Varanasi, setting the wheel of the teaching in motion. Emperor Ashoka's pillar, whose lion capital became India's national emblem, and the Dhamek Stupa mark the place. Excavations in the 19th and 20th centuries uncovered monasteries and shrines that show the site was active for many centuries.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "3rd century BCE onwards",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Sarnath",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sarnath",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "red-fort-delhi-story",
+      "site_id": "red-fort-delhi",
+      "title": "Shah Jahan's palace fort",
+      "summary": "Shah Jahan moved the Mughal capital to a new city in Delhi and built the Red Fort as its palace between 1638 and 1648.",
+      "narrative": "Shah Jahan moved the Mughal capital to a new city in Delhi and built the Red Fort as its palace between 1638 and 1648. The fort held audience halls, gardens and private apartments. After the events of 1857 the British took it over, and since 1947 the Prime Minister has addressed the nation from its ramparts on Independence Day.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Red Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Red_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "humayuns-tomb-story",
+      "site_id": "humayuns-tomb",
+      "title": "A tomb that set a style",
+      "summary": "After the emperor Humayun died in 1556, his first wife Bega Begum is traditionally credited with commissioning his tomb, finished around 1570.",
+      "narrative": "After the emperor Humayun died in 1556, his first wife Bega Begum is traditionally credited with commissioning his tomb, finished around 1570. Designed by Persian architects in a walled garden divided into four parts, it was the first large garden tomb in India. Its dome, high platform and symmetry shaped later Mughal tombs, including the Taj Mahal.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Humayun's Tomb",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Humayun%27s_Tomb",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "jama-masjid-delhi-story",
+      "site_id": "jama-masjid-delhi",
+      "title": "The mosque opposite the Red Fort",
+      "summary": "Shah Jahan ordered the Jama Masjid of Delhi as part of his new capital, and it was built in red sandstone and white marble between about 1650 and 1656.",
+      "narrative": "Shah Jahan ordered the Jama Masjid of Delhi as part of his new capital, and it was built in red sandstone and white marble between about 1650 and 1656. It stands on a raised platform facing the Red Fort, with three gateways and a very large courtyard. It remains a working congregational mosque as well as a landmark of Old Delhi.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Jama Masjid, Delhi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Jama_Masjid,_Delhi",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "jallianwala-bagh-story",
+      "site_id": "jallianwala-bagh",
+      "title": "The garden of 13 April 1919",
+      "summary": "On 13 April 1919, the day of Baisakhi, a large crowd gathered in the walled garden at Amritsar.",
+      "narrative": "On 13 April 1919, the day of Baisakhi, a large crowd gathered in the walled garden at Amritsar. Troops under Brigadier-General Dyer fired on them without warning, killing hundreds; official and Indian estimates of the toll differ. The massacre turned many Indians against British rule, and the garden is now a memorial with preserved bullet marks and a well.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "1919 CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Jallianwala Bagh",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Jallianwala_Bagh",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "sheikh-chillis-tomb-story",
+      "site_id": "sheikh-chillis-tomb",
+      "title": "The Sufi tomb at Thanesar",
+      "summary": "At Thanesar in Kurukshetra, a Mughal-era complex built in the 17th century is associated with the Sufi saint known as Sheikh Chilli.",
+      "narrative": "At Thanesar in Kurukshetra, a Mughal-era complex built in the 17th century is associated with the Sufi saint known as Sheikh Chilli. The tomb, with its dome and carved red sandstone and white marble, sits within a walled garden. Accounts link it with Mughal patronage, but the exact identity of the saint and the builder is discussed in the sources.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Sheikh Chilli's Tomb",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sheikh_Chilli%27s_Tomb",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "capitol-complex-chandigarh-story",
+      "site_id": "capitol-complex-chandigarh",
+      "title": "Le Corbusier's capital",
+      "summary": "After Partition left Punjab without its capital, Chandigarh was planned as a new city, and Le Corbusier designed its Capitol Complex from the early 1950s.",
+      "narrative": "After Partition left Punjab without its capital, Chandigarh was planned as a new city, and Le Corbusier designed its Capitol Complex from the early 1950s. The Legislative Assembly, Secretariat and High Court stand with the Open Hand monument. UNESCO inscribed it in 2016 as part of a transnational group of Le Corbusier's works.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "20th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Capitol Complex, Chandigarh",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Capitol_Complex,_Chandigarh",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "jaisalmer-fort-story",
+      "site_id": "jaisalmer-fort",
+      "title": "The golden living fort",
+      "summary": "Jaisalmer Fort was founded in 1156 by the Bhati ruler Rawal Jaisal and rises from the Thar desert in yellow sandstone.",
+      "narrative": "Jaisalmer Fort was founded in 1156 by the Bhati ruler Rawal Jaisal and rises from the Thar desert in yellow sandstone. Unlike most forts, many families still live within its walls, among Jain temples and carved merchant houses. It forms part of the UNESCO Hill Forts of Rajasthan inscription.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "12th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Jaisalmer Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Jaisalmer_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "amer-fort-story",
+      "site_id": "amer-fort",
+      "title": "The palace above Maota Lake",
+      "summary": "Raja Man Singh I began the present Amer Fort in 1592, and later rulers such as Jai Singh I extended it.",
+      "narrative": "Raja Man Singh I began the present Amer Fort in 1592, and later rulers such as Jai Singh I extended it. Courtyards, gardens and the mirrored Sheesh Mahal sit above Maota Lake. Amer was the Kachwaha capital until the court moved to the new city of Jaipur in 1727.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th–17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Amer Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Amer_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "hawa-mahal-story",
+      "site_id": "hawa-mahal",
+      "title": "The palace of winds",
+      "summary": "Maharaja Sawai Pratap Singh built the Hawa Mahal in 1799, with the design credited to Lal Chand Ustad.",
+      "narrative": "Maharaja Sawai Pratap Singh built the Hawa Mahal in 1799, with the design credited to Lal Chand Ustad. Its facade has hundreds of small latticed windows that let royal women watch street festivals without being seen. It was built as an extension of the City Palace rather than as a separate residence.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "18th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Hawa Mahal",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Hawa_Mahal",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "kumbhalgarh-story",
+      "site_id": "kumbhalgarh",
+      "title": "The fort of Rana Kumbha",
+      "summary": "Rana Kumbha of Mewar built Kumbhalgarh in the 15th century in the Aravalli hills, with a long defensive wall that is among the longest in India.",
+      "narrative": "Rana Kumbha of Mewar built Kumbhalgarh in the 15th century in the Aravalli hills, with a long defensive wall that is among the longest in India. Inside are temples and palaces. Mewar tradition also names the fort as the birthplace of Maharana Pratap.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "15th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Kumbhalgarh",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kumbhalgarh",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "adalaj-stepwell-story",
+      "site_id": "adalaj-stepwell",
+      "title": "The queen and the stepwell",
+      "summary": "An inscription dates Adalaj Stepwell to 1499.",
+      "narrative": "An inscription dates Adalaj Stepwell to 1499. Local tradition tells that Rani Roopba, widow of the Vaghela chief Veer Singh, was asked to marry the Sultan Mahmud Begada. She agreed on condition that he first complete the stepwell her husband had begun, and she is said to have ended her life there. This is a traditional account rather than a verified record.",
+      "category": "local-legend",
+      "narrative_type": "local-folklore",
+      "tradition": "Local tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "1499 CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Adalaj Stepwell",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Adalaj_Stepwell",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "champaner-pavagadh-story",
+      "site_id": "champaner-pavagadh",
+      "title": "A sultan's city beneath a sacred hill",
+      "summary": "Pavagadh hill has been a place of worship for centuries, with the Kalika Mata temple at its summit.",
+      "narrative": "Pavagadh hill has been a place of worship for centuries, with the Kalika Mata temple at its summit. Below it, Sultan Mahmud Begada conquered the fort of Champaner in 1484 and built a new fortified capital with mosques, gateways and water systems. The Jama Masjid there is among the finest examples of Gujarat Sultanate architecture.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "8th–16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Champaner-Pavagadh Archaeological Park",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Champaner-Pavagadh_Archaeological_Park",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "dholavira-story",
+      "site_id": "dholavira",
+      "title": "A Harappan city of water",
+      "summary": "Dholavira on Khadir Bet in Kutch was found in 1967 to 1968 and excavated at length from 1990.",
+      "narrative": "Dholavira on Khadir Bet in Kutch was found in 1967 to 1968 and excavated at length from 1990. The city had a citadel, a middle town and a lower town, and large reservoirs to hold scarce rainwater. A signboard with large Indus script signs was found near a gate, and UNESCO inscribed the site in 2021.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "c. 3000–1500 BCE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Dholavira",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Dholavira",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "khajuraho-story",
+      "site_id": "khajuraho",
+      "title": "The temples of the Chandelas",
+      "summary": "The Chandela rulers built the Khajuraho temples mainly between about 950 and 1050.",
+      "narrative": "The Chandela rulers built the Khajuraho temples mainly between about 950 and 1050. Their facades carry bands of sculpture showing gods, musicians, dancers and everyday scenes, some of them erotic. Only a fraction of the original temples survive, and the Kandariya Mahadeva temple is the largest.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "9th–11th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Khajuraho Group of Monuments",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Khajuraho_Group_of_Monuments",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "bhimbetka-story",
+      "site_id": "bhimbetka",
+      "title": "Paintings in the rock shelters",
+      "summary": "Bhimbetka's sandstone shelters near Bhopal were recognised for their paintings in 1957.",
+      "narrative": "Bhimbetka's sandstone shelters near Bhopal were recognised for their paintings in 1957. The images of animals, hunts and dances were made over a very long span, from prehistoric times into the historic period. Dating painting is difficult, so the sources describe the sequence in broad stages rather than precise years.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "Palaeolithic to historic periods",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Bhimbetka Rock Shelters",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Bhimbetka_rock_shelters",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "orchha-story",
+      "site_id": "orchha",
+      "title": "The Bundela capital on the Betwa",
+      "summary": "Orchha was founded in the 16th century by the Bundela ruler Rudra Pratap Singh beside the Betwa river.",
+      "narrative": "Orchha was founded in the 16th century by the Bundela ruler Rudra Pratap Singh beside the Betwa river. Bir Singh Deo built the Jahangir Mahal in the early 17th century, traditionally to receive the emperor Jahangir. The palace now known as the Ram Raja Temple is a place where Rama is worshipped as a king.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th–17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Orchha Fort Complex",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Orchha",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "sirpur-story",
+      "site_id": "sirpur",
+      "title": "Brick temples on the Mahanadi",
+      "summary": "Sirpur was an important centre in the 6th to 8th centuries under rulers of the Panduvamshi and related dynasties.",
+      "narrative": "Sirpur was an important centre in the 6th to 8th centuries under rulers of the Panduvamshi and related dynasties. The Laxman Temple, built in brick, is one of the finest early brick temples in India. Excavations also revealed Buddhist monasteries, and some scholars link the place with the region described by the Chinese pilgrim Xuanzang.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "6th–8th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Sirpur Monuments",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Sirpur,_Chhattisgarh",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "ajanta-caves-story",
+      "site_id": "ajanta-caves",
+      "title": "Painted caves in the Sahyadri hills",
+      "summary": "The Ajanta caves were cut in two main phases, from about the 2nd century BCE and again in the 5th century CE under Vakataka patronage.",
+      "narrative": "The Ajanta caves were cut in two main phases, from about the 2nd century BCE and again in the 5th century CE under Vakataka patronage. Their walls carry Buddhist paintings and sculpture. Local people knew them, but they became widely known after a British officer came upon them in 1819 during a hunt.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "2nd century BCE–6th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Ajanta Caves",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Ajanta_Caves",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "ellora-caves-story",
+      "site_id": "ellora-caves",
+      "title": "Three faiths in one hillside",
+      "summary": "The caves at Ellora hold Buddhist, Hindu and Jain monuments cut between about the 6th and 10th centuries.",
+      "narrative": "The caves at Ellora hold Buddhist, Hindu and Jain monuments cut between about the 6th and 10th centuries. The Kailasa temple, Cave 16, was carved from the top of the rock downward and is attributed to the Rashtrakuta king Krishna I in the 8th century. Together the caves show several traditions sharing one site.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "6th–10th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Ellora Caves",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Ellora_Caves",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "elephanta-caves-story",
+      "site_id": "elephanta-caves",
+      "title": "The Trimurti island",
+      "summary": "On Elephanta island in Mumbai Harbour, rock-cut Shaiva caves hold a monumental Trimurti sculpture of Shiva.",
+      "narrative": "On Elephanta island in Mumbai Harbour, rock-cut Shaiva caves hold a monumental Trimurti sculpture of Shiva. The Portuguese named the island after a stone elephant they found there. Dating and patronage are uncertain, and the sources place the work in the 5th to 8th centuries.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": "6th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Elephanta Caves",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Elephanta_Caves",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "csmt-mumbai-story",
+      "site_id": "csmt-mumbai",
+      "title": "A Gothic terminus for Bombay",
+      "summary": "Designed by the architect F.",
+      "narrative": "Designed by the architect F. W. Stevens, the terminus opened in 1888 as Victoria Terminus, named for the Queen's jubilee. It blends Victorian Gothic design with Indian motifs, such as domes and carved stone. It was renamed in 1996 and again in 2017, and it is still a busy working station.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "19th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Chhatrapati Shivaji Maharaj Terminus",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Chhatrapati_Shivaji_Maharaj_Terminus",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "basilica-bom-jesus-story",
+      "site_id": "basilica-bom-jesus",
+      "title": "The church of St Francis Xavier",
+      "summary": "The Basilica of Bom Jesus in Old Goa was completed in 1605 by the Jesuits in laterite and granite.",
+      "narrative": "The Basilica of Bom Jesus in Old Goa was completed in 1605 by the Jesuits in laterite and granite. It holds the remains of St Francis Xavier, who died in 1552, and the body is shown to the public on rare occasions. It is part of the UNESCO listing of the churches and convents of Goa.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th–17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Basilica of Bom Jesus",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Basilica_of_Bom_Jesus",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "pattadakal-story",
+      "site_id": "pattadakal",
+      "title": "Where the Chalukyas were crowned",
+      "summary": "Pattadakal on the Malaprabha was a ceremonial centre of the Chalukyas of Badami, and kings were consecrated here.",
+      "narrative": "Pattadakal on the Malaprabha was a ceremonial centre of the Chalukyas of Badami, and kings were consecrated here. The Virupaksha Temple was built around 740 by Queen Lokamahadevi, traditionally to mark a victory over the Pallavas. The group mixes northern and southern temple styles in one place.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "7th–8th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Pattadakal",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Pattadakal",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "mysore-palace-story",
+      "site_id": "mysore-palace",
+      "title": "The rebuilt Wadiyar palace",
+      "summary": "A fire destroyed the old palace of the Wadiyars at Mysuru in 1897.",
+      "narrative": "A fire destroyed the old palace of the Wadiyars at Mysuru in 1897. The present palace was built by the architect Henry Irwin and finished in 1912 for Krishnaraja Wadiyar IV, in the Indo-Saracenic style. It is lit by thousands of bulbs during the Dasara festival.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "19th–20th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Mysore Palace",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Mysore_Palace",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "padmanabhaswamy-temple-story",
+      "site_id": "padmanabhaswamy-temple",
+      "title": "Dedicated to Vishnu, kingdom included",
+      "summary": "The temple in Thiruvananthapuram shows Vishnu reclining on the serpent Ananta.",
+      "narrative": "The temple in Thiruvananthapuram shows Vishnu reclining on the serpent Ananta. Its present form dates mainly from the 18th century, under Marthanda Varma of Travancore, who is recorded as dedicating the kingdom to the deity in 1750. The rulers afterwards governed as servants of Padmanabha.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th–18th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Sree Padmanabhaswamy Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Padmanabhaswamy_Temple",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "mattancherry-palace-story",
+      "site_id": "mattancherry-palace",
+      "title": "The Dutch Palace at Kochi",
+      "summary": "The Portuguese built this palace around 1555 and gave it to the ruler of Kochi.",
+      "narrative": "The Portuguese built this palace around 1555 and gave it to the ruler of Kochi. The Dutch renovated it in the 17th century, which is why it is called the Dutch Palace. Its murals, based on the Ramayana and Puranic stories, survive and the building is now a museum.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Mattancherry Palace",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Mattancherry_Palace",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "brihadeeswarar-temple-story",
+      "site_id": "brihadeeswarar-temple",
+      "title": "Rajaraja's temple at Thanjavur",
+      "summary": "The Chola king Rajaraja I built the Brihadeeswarar Temple at Thanjavur, which was consecrated around 1010.",
+      "narrative": "The Chola king Rajaraja I built the Brihadeeswarar Temple at Thanjavur, which was consecrated around 1010. Its vimana rises about 66 metres, and inscriptions on the walls record gifts and the staff of the temple, including dancers and musicians. It is part of the UNESCO Great Living Chola Temples.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "11th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Brihadeeswarar Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Brihadeeswarar_Temple",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "mahabalipuram-story",
+      "site_id": "mahabalipuram",
+      "title": "The Pallava port of stone",
+      "summary": "Mahabalipuram was a port of the Pallava dynasty, and most of its monuments date from the 7th and 8th centuries.",
+      "narrative": "Mahabalipuram was a port of the Pallava dynasty, and most of its monuments date from the 7th and 8th centuries. They include the monolithic Pancha Rathas, a vast relief often called the Descent of the Ganges, and the Shore Temple built around 700. Rock-cut caves and structural temples stand together on the coast.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "7th–8th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Mahabalipuram Group of Monuments",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Mahabalipuram",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "golconda-fort-story",
+      "site_id": "golconda-fort",
+      "title": "The hill fort of the Qutb Shahis",
+      "summary": "Golconda was held by the Kakatiyas, and from 1518 it became the capital of the Qutb Shahi sultans.",
+      "narrative": "Golconda was held by the Kakatiyas, and from 1518 it became the capital of the Qutb Shahi sultans. The nearby diamond trade made the name famous. The Fateh Darwaza is known for its acoustics, where a clap at the entrance can be heard far up the hill, and the Mughals took the fort after a long siege in 1687.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "13th–17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Golconda Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Golconda",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "lepakshi-story",
+      "site_id": "lepakshi",
+      "title": "Virupanna's temple and its hanging pillar",
+      "summary": "The Veerabhadra temple at Lepakshi was built in the 1530s under the Vijayanagara king Achyuta Raya, with the brothers Virupanna and Viranna credited as builders.",
+      "narrative": "The Veerabhadra temple at Lepakshi was built in the 1530s under the Vijayanagara king Achyuta Raya, with the brothers Virupanna and Viranna credited as builders. It is known for its murals, a pillar that seems to hang from the ceiling, and a large Nandi monolith nearby. Local legend says Virupanna was blinded, but that is a tradition rather than a documented fact.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Lepakshi",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Lepakshi",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "jagannath-temple-puri-story",
+      "site_id": "jagannath-temple-puri",
+      "title": "The Lord of the Rath Yatra",
+      "summary": "The Jagannath Temple at Puri was begun in the 12th century by the Eastern Ganga king Anantavarman Chodaganga Deva.",
+      "narrative": "The Jagannath Temple at Puri was begun in the 12th century by the Eastern Ganga king Anantavarman Chodaganga Deva. Its deities are made of wood and ritually renewed, and each year they are drawn through the streets in the Rath Yatra. The English word juggernaut comes from the name Jagannath.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "12th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Jagannath Temple, Puri",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Jagannath_Temple,_Puri",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "victoria-memorial-story",
+      "site_id": "victoria-memorial",
+      "title": "A memorial in white marble",
+      "summary": "After Queen Victoria's death in 1901, Lord Curzon proposed a memorial in Calcutta.",
+      "narrative": "After Queen Victoria's death in 1901, Lord Curzon proposed a memorial in Calcutta. The foundation stone was laid in 1906 and the building was opened in 1921, designed by William Emerson in white Makrana marble. It is now a museum set in a large garden.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "early 20th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Victoria Memorial",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Victoria_Memorial,_Kolkata",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "bishnupur-temples-story",
+      "site_id": "bishnupur-temples",
+      "title": "Terracotta temples of the Mallas",
+      "summary": "The Malla kings of Bishnupur built brick temples in the 17th and 18th centuries and faced them with terracotta panels.",
+      "narrative": "The Malla kings of Bishnupur built brick temples in the 17th and 18th centuries and faced them with terracotta panels. The panels show scenes from the epics and from everyday life. The Rasmancha, a pyramid-roofed structure from about 1600, and the Jor Bangla temple are well-known examples.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th–18th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Bishnupur Temples",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Bishnupur,_Bankura",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "mahabodhi-temple-story",
+      "site_id": "mahabodhi-temple",
+      "title": "The place of enlightenment",
+      "summary": "Buddhist tradition places the Buddha's enlightenment beneath the Bodhi tree at Bodh Gaya.",
+      "narrative": "Buddhist tradition places the Buddha's enlightenment beneath the Bodhi tree at Bodh Gaya. Emperor Ashoka is traditionally credited with an early shrine here. The present temple is largely from the Gupta period, around the 5th to 6th centuries, and it was restored in the 19th century.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "3rd century BCE onwards",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Mahabodhi Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Mahabodhi_Temple",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "nalanda-story",
+      "site_id": "nalanda",
+      "title": "The ancient monastic university",
+      "summary": "Nalanda grew from the 5th century under Gupta patronage into a large Buddhist monastic university.",
+      "narrative": "Nalanda grew from the 5th century under Gupta patronage into a large Buddhist monastic university. The Chinese pilgrims Xuanzang and Yijing, who visited in the 7th century, described its teaching and its students. It declined and was damaged around 1200, and the accounts of how this happened are debated.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "5th–12th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Nalanda Mahavihara",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Nalanda",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "maluti-temples-story",
+      "site_id": "maluti-temples",
+      "title": "Terracotta temples of Maluti",
+      "summary": "Maluti in Dumka district holds small brick temples faced with terracotta panels, dated to the 17th to 19th centuries and associated with the local Nayak rulers.",
+      "narrative": "Maluti in Dumka district holds small brick temples faced with terracotta panels, dated to the 17th to 19th centuries and associated with the local Nayak rulers. Tradition counts 108 temples originally, and only a part of them survive. The panels depict epic scenes and daily life.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th–19th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Maluti Temples",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Maluti",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "kamakhya-temple-story",
+      "site_id": "kamakhya-temple",
+      "title": "The Shakti temple on Nilachal Hill",
+      "summary": "Kamakhya on Nilachal Hill in Guwahati is a major Shakti pilgrimage place.",
+      "narrative": "Kamakhya on Nilachal Hill in Guwahati is a major Shakti pilgrimage place. Tradition holds that a part of the goddess Sati fell here, and the annual Ambubachi Mela marks her worship. The present building was rebuilt in the 16th century under the Koch king Nara Narayan.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "8th century CE onwards; present structure rebuilt",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Kamakhya Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kamakhya_Temple",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "charaideo-moidams-story",
+      "site_id": "charaideo-moidams",
+      "title": "Burial mounds of the Ahom kings",
+      "summary": "Charaideo was the first capital of the Ahom dynasty, whose founder Sukaphaa is recorded as reaching it in 1253.",
+      "narrative": "Charaideo was the first capital of the Ahom dynasty, whose founder Sukaphaa is recorded as reaching it in 1253. The Ahom kings and nobles were buried in domed earthen mounds called moidams, some of them quite large. UNESCO inscribed the moidams in 2024.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "13th–19th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Charaideo Moidams",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Charaideo",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "nongriat-root-bridges-story",
+      "site_id": "nongriat-root-bridges",
+      "title": "Bridges grown from living roots",
+      "summary": "Khasi and Jaintia communities guide the aerial roots of rubber fig trees across streams until they thicken into bridges.",
+      "narrative": "Khasi and Jaintia communities guide the aerial roots of rubber fig trees across streams until they thicken into bridges. This takes many years, and some bridges are used for generations. The double-decker bridge near Nongriat is the best known, and the practice is a living tradition rather than a single dated monument.",
+      "category": "culture",
+      "narrative_type": "local-folklore",
+      "tradition": "Local tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": null,
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Nongriat Living Root Bridges",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Living_root_bridge",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "kangla-fort-story",
+      "site_id": "kangla-fort",
+      "title": "The royal seat of the Meitei kings",
+      "summary": "Kangla at Imphal was a seat of the Meitei kings for centuries, with earthwork defences, shrines and palace remains.",
+      "narrative": "Kangla at Imphal was a seat of the Meitei kings for centuries, with earthwork defences, shrines and palace remains. After the British takeover in 1891 it was used as a colonial headquarters and later by the Assam Rifles. It was returned to the people of Manipur in 2004.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "15th–19th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Kangla Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kangla_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "vangchhia-story",
+      "site_id": "vangchhia",
+      "title": "Standing stones of Champhai",
+      "summary": "Vangchhia in Champhai district has standing stones, some with carved designs, as well as rock-cut channels and terraces.",
+      "narrative": "Vangchhia in Champhai district has standing stones, some with carved designs, as well as rock-cut channels and terraces. The sources consulted do not give a confident date, so its age remains uncertain. Local Mizo tradition connects such stones with memory and with the dead.",
+      "category": "history",
+      "narrative_type": "archaeological-support",
+      "tradition": "Archaeological and art-historical scholarship",
+      "language": "en",
+      "community": null,
+      "period": null,
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Vangchhia Menhirs",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Vangchhia",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "kohima-war-cemetery-story",
+      "site_id": "kohima-war-cemetery",
+      "title": "The cemetery on Garrison Hill",
+      "summary": "The Battle of Kohima in April to June 1944 was one of the turning points of the Second World War in Asia.",
+      "narrative": "The Battle of Kohima in April to June 1944 was one of the turning points of the Second World War in Asia. The war cemetery on Garrison Hill was laid out on the former tennis court of the Deputy Commissioner's bungalow. Its famous epitaph, for the dead of the 2nd British Division, asks visitors to tell others of the men who fell.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "1944 CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Kohima War Cemetery",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kohima_War_Cemetery",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "unakoti-story",
+      "site_id": "unakoti",
+      "title": "One less than a crore",
+      "summary": "Unakoti means one less than a crore, and legend tells that Shiva halted here with a crore of gods.",
+      "narrative": "Unakoti means one less than a crore, and legend tells that Shiva halted here with a crore of gods. He told them to wake before dawn, and only the sculptor Kallu Kumhar, who was not among them, is said to have carved a crore minus one figures. Whatever the story, the site holds large rock-cut reliefs, including a giant Shiva head.",
+      "category": "local-legend",
+      "narrative_type": "local-folklore",
+      "tradition": "Local tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "8th–9th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Unakoti",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Unakoti",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "rumtek-monastery-story",
+      "site_id": "rumtek-monastery",
+      "title": "The seat of the Karmapa in exile",
+      "summary": "Rumtek near Gangtok is a Kagyu monastery with origins in earlier centuries.",
+      "narrative": "Rumtek near Gangtok is a Kagyu monastery with origins in earlier centuries. After the 16th Karmapa left Tibet in 1959 he settled at Rumtek, and the present complex was built in the 1960s as his seat. It is a major centre of the Karma Kagyu school.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century origin; rebuilt in the 1960s",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Rumtek Monastery",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Rumtek_Monastery",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "tawang-monastery-story",
+      "site_id": "tawang-monastery",
+      "title": "The largest monastery in India",
+      "summary": "Merak Lama Lodre Gyatso founded Tawang Monastery in the 1680s, following the wishes of the 5th Dalai Lama.",
+      "narrative": "Merak Lama Lodre Gyatso founded Tawang Monastery in the 1680s, following the wishes of the 5th Dalai Lama. The Gelug monastery grew into one of the largest in India. The 6th Dalai Lama was born nearby, and the 14th Dalai Lama stayed here in 1959.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Tawang Monastery",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Tawang_Monastery",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "martand-sun-temple-story",
+      "site_id": "martand-sun-temple",
+      "title": "The Sun temple of Lalitaditya",
+      "summary": "The Martand Sun Temple was built in the 8th century under the Karkota king Lalitaditya Muktapida, with a large colonnaded courtyard around the main shrine.",
+      "narrative": "The Martand Sun Temple was built in the 8th century under the Karkota king Lalitaditya Muktapida, with a large colonnaded courtyard around the main shrine. It lies in ruins today. Tradition blames the ruler Sikandar for its destruction, but historians also consider earthquakes and discuss the evidence.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "8th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Martand Sun Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Martand_Sun_Temple",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "raghunath-temple-jammu-story",
+      "site_id": "raghunath-temple-jammu",
+      "title": "The Dogra temple of Rama",
+      "summary": "Maharaja Gulab Singh began the Raghunath Temple in Jammu in 1835, and his son Ranbir Singh completed it around 1860.",
+      "narrative": "Maharaja Gulab Singh began the Raghunath Temple in Jammu in 1835, and his son Ranbir Singh completed it around 1860. The complex has many shrines and a tall gateway. It is dedicated to Rama and shows the Dogra rulers' patronage.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "19th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Raghunath Temple",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Raghunath_Temple,_Jammu",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "leh-palace-story",
+      "site_id": "leh-palace",
+      "title": "The Namgyal palace above Leh",
+      "summary": "Sengge Namgyal of the Namgyal dynasty built Leh Palace in the 17th century, with several storeys rising above the old town.",
+      "narrative": "Sengge Namgyal of the Namgyal dynasty built Leh Palace in the 17th century, with several storeys rising above the old town. Its style is often compared with the Potala Palace of Lhasa. After the Dogra conquest of Ladakh in 1834, the royal family moved away and the palace fell into disrepair, and it is now a museum.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "17th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Leh Palace",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Leh_Palace",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "cellular-jail-story",
+      "site_id": "cellular-jail",
+      "title": "The prison at Port Blair",
+      "summary": "The British built the Cellular Jail between 1896 and 1906 on the Andaman Islands.",
+      "narrative": "The British built the Cellular Jail between 1896 and 1906 on the Andaman Islands. It had wings of single cells radiating from a central tower, and it held many political prisoners from the freedom movement. Only part of the original structure remains, and it is now a national memorial.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "19th–20th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Cellular Jail",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Cellular_Jail",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "ujra-mosque-kavaratti-story",
+      "site_id": "ujra-mosque-kavaratti",
+      "title": "The carved mosque of Kavaratti",
+      "summary": "The Ujra Mosque on Kavaratti is known for its carved wood and coral stone work.",
+      "narrative": "The Ujra Mosque on Kavaratti is known for its carved wood and coral stone work. Local tradition associates it with an early Arab missionary buried at the site. The sources consulted do not give a secure construction date, so none is given here.",
+      "category": "local-legend",
+      "narrative_type": "local-folklore",
+      "tradition": "Local tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": null,
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Ujra Mosque, Kavaratti",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kavaratti",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "pondicherry-french-quarter-story",
+      "site_id": "pondicherry-french-quarter",
+      "title": "A French grid by the sea",
+      "summary": "The French settled at Pondicherry in 1674, and over the following centuries a planned grid of streets grew along the coast.",
+      "narrative": "The French settled at Pondicherry in 1674, and over the following centuries a planned grid of streets grew along the coast. A canal separated the White Town from the Indian quarters. The French left Pondicherry in 1954, and many townhouses in the French quarter still stand.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "18th–20th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Pondicherry French Quarter",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Puducherry",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "diu-fort-story",
+      "site_id": "diu-fort",
+      "title": "The Portuguese fort of Diu",
+      "summary": "The Sultan of Gujarat allowed the Portuguese to build at Diu in 1535, and they raised the sea fort between about 1535 and 1546.",
+      "narrative": "The Sultan of Gujarat allowed the Portuguese to build at Diu in 1535, and they raised the sea fort between about 1535 and 1546. It was besieged in 1538 and 1546 and held. Portuguese rule at Diu ended in 1961, and the fort keeps its bastions, a lighthouse and a chapel.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Diu Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Diu_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "har-ki-pauri-story",
+      "site_id": "har-ki-pauri",
+      "title": "The ghat at Haridwar",
+      "summary": "Har Ki Pauri is the main bathing ghat of Haridwar, where the Ganges leaves the hills.",
+      "narrative": "Har Ki Pauri is the main bathing ghat of Haridwar, where the Ganges leaves the hills. Tradition links the name to a footprint of Vishnu, and another tradition credits the king Vikramaditya with building it. The ghat has been rebuilt many times, and the evening Ganga Aarti draws large crowds, especially during the Kumbh Mela.",
+      "category": "religious-tradition",
+      "narrative_type": "religious-tradition",
+      "tradition": "Religious tradition, as reported in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": null,
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Har Ki Pauri",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Har_Ki_Pauri",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    {
+      "id": "kangra-fort-story",
+      "site_id": "kangra-fort",
+      "title": "The old fort of the Katochs",
+      "summary": "Kangra Fort above the valley is linked with the Katoch dynasty, whose tradition says they ruled here from ancient times.",
+      "narrative": "Kangra Fort above the valley is linked with the Katoch dynasty, whose tradition says they ruled here from ancient times. Mahmud of Ghazni is recorded to have attacked in 1009, and the Mughal emperor Jahangir took it in 1620. The earthquake of 1905 damaged much of the fort.",
+      "category": "history",
+      "narrative_type": "historically-documented",
+      "tradition": "Documented history, as summarised in the cited reference",
+      "language": "en",
+      "community": null,
+      "period": "16th century CE (earlier origins)",
+      "cultural_background": null,
+      "verification_status": "unverified",
+      "provenance": "Short original summary written from the site record and the cited Wikipedia article; not yet source-checked",
+      "sources": [
+        {
+          "title": "Kangra Fort",
+          "author": "Wikipedia contributors",
+          "source_type": "secondary-reference",
+          "published": "2026",
+          "url": "https://en.wikipedia.org/wiki/Kangra_Fort",
+          "locator": "Lead and history sections",
+          "licence": "CC BY-SA 4.0"
+        }
+      ]
     }
   ]
 }
