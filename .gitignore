@@ -64,3 +64,5 @@ node_modules/
 frontend/dist/
 frontend/coverage/
 frontend/.vite/
+
+.cloud-attachments/
