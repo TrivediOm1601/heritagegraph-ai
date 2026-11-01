@@ -358,7 +358,7 @@ These are the verified controls, not a claim of complete security. See
 | Keyword search, labelled as keyword | No embedding provider is configured; claiming semantic search would be false |
 | Owner-scoped rows in one schema | Simpler than multi-tenant infrastructure while still enforcing isolation in SQL |
 | Alembic migrations from the start | The schema grew across eight features without destructive resets |
-| No Docker in this pass | The verified workflow is `npm run setup` / `npm run dev`; adding an untested container would create a second, unverified deployment path. A Docker option is left as future work |
+| Single Docker image | The API and the built website run from one container on Render, so there is one origin and no CORS setup | The `Dockerfile` builds the frontend, then serves it from the backend | Split into separate services and add a worker queue |
 
 ## 17. What is deliberately not built
 
