@@ -13,7 +13,7 @@ application is completely secure.
 | `0.1.x` (current repository state) | yes — fixes are applied to this line |
 | Older snapshots / forks | no |
 
-The project is pre-1.0 and has not been deployed publicly. Security reports are
+The project is pre-1.0 and is deployed at https://heritagegraph-ai.onrender.com (free hosting). Security reports are
 welcome before and after publication.
 
 ---
