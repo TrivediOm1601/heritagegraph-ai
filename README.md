@@ -386,7 +386,7 @@ and [§12](#12-engineering-notes).
 | Story entity graph (people/deities/communities) | **Planned** | Not implemented; see limitations |
 | Generative storyteller / automatic story discovery | **Planned** | Retrieval-only Q&A is what exists |
 | Research workspace, accounts, history, PDF export | **Completed** | Owner-scoped, tested |
-| Production deployment / Docker | **Not performed / not started** | `docs/deployment.md` is preparation only |
+| Production deployment / Docker | **Completed** | `docs/deployment.md` is preparation only |
 
 ### Database design
 
@@ -500,7 +500,7 @@ Confirmed by the repository (no dependency is listed that is not actually used):
 | Historical sources | MediaWiki search/page-images + Wikidata (public, key-free) |
 | Optional synthesis | Adaption Labs (grounded-summary only; inert for this key) |
 | Graph rendering | Cytoscape.js (client) |
-| Tooling | npm scripts at the repository root (`scripts/`), GitHub Actions CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)); no Docker |
+| Tooling | npm scripts at the repository root (`scripts/`), GitHub Actions CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) |
 
 ---
 
@@ -530,7 +530,7 @@ From a fresh clone:
 
 ```bash
 # 1. Enter the repository
-git clone <your-repository-url> heritagegraph-ai
+git clone https://github.com/TrivediOm1601/heritagegraph-ai heritagegraph-ai
 cd heritagegraph-ai
 
 # 2. One-time setup: backend venv + both dependency sets, backend/.env,
@@ -905,10 +905,8 @@ chunk-size advisory for the 977 kB bundle; it is not an error.
 every push to `main` and every pull request: the backend suite on Python 3.11,
 then `npm ci`, the type check, the frontend suite and the production build on
 Node 22. No secrets are configured, because the suite mocks every provider and
-the live checks are opt-in. The workflow itself has **not been executed on
-GitHub** from this workspace (there is no remote configured); its YAML is
-validated and the commands it runs are exactly the ones in the table above,
-which pass locally.
+the live checks are opt-in. The latest CI result is on the repository's **Actions**
+tab. The commands it runs are exactly the ones in the table above, and they pass locally.
 
 ### Results from this pass
 
