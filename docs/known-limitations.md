@@ -61,9 +61,9 @@ the README. A limitation is not hidden behind a feature claim.
 
 | Limitation | Impact | Current workaround | Possible improvement |
 |---|---|---|---|
-| 18 curated stories for 10 of 67 sites | Most sites have an empty story section | Empty states explain that no sourced story has been collected | Expand the corpus with sourced narratives |
+| 57 of 75 stories are unverified summaries | They were written from the site record and Wikipedia, and no person has checked them yet | They are marked `unverified` in the story data | Have a person check each story against its source |
 | English-only curated text | Indian-language originals are not displayed | The schema/contribution form accept 14 language tags, and community submissions preserve their declared language | Add original-language seed stories and separately stored translations |
-| No automated discovery/crawling | New stories require manual curation | The corpus is source-checked by hand | Add a bounded, licensed discovery pipeline with human review |
+| No automated discovery/crawling | New stories require manual curation | The first 18 stories are source-checked by hand; the other 57 are marked unverified | Add a bounded, licensed discovery pipeline with human review |
 | No story images | Story cards use a category tile | Images are not faked | Add licensed images with attribution and alt text |
 | Moderation allowlist empty by default | Submitted stories stay pending forever in a default install | The UI explains the review state | Configure `STORY_MODERATOR_EMAILS`; add a review screen |
 | Publication does not equal verification | An approved community account can be misread as proven history | The label says “community account”; the notice explains it | Keep the distinction prominent and add reviewer notes |
