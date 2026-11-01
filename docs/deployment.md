@@ -2,7 +2,7 @@
 
 > **Status: deployment has not been performed.** This document describes the
 > intended production topology and the verified commands/configuration needed to
-> run it. No public URL, cloud resource, DNS record or hosting account was
+> run it. it is deployed on Render using the Dockerfile, cloud resource, DNS record or hosting account was
 > created during this pass.
 
 ---
