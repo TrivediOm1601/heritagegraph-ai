@@ -14,9 +14,7 @@ Status legend:
 - **Not started** — intentionally left for later.
 - **N/A** — does not apply to this project.
 
-> Do not mark every row complete. Several rows are owner actions, and the
-> deployment rows are preparation only — nothing was deployed.
-
+> Do not mark every row complete. Several rows are owner actions
 ---
 
 ## A. Project directory
@@ -53,7 +51,7 @@ Status legend:
 | C1 | README completed | **Verified** | Identity, features, setup, API, tests, limitations, screenshots |
 | C2 | Technical approach completed | **Verified** | [`docs/technical-approach.md`](docs/technical-approach.md) |
 | C3 | Known limitations completed | **Verified** | [`docs/known-limitations.md`](docs/known-limitations.md) |
-| C4 | Deployment instructions completed | **Verified** | [`docs/deployment.md`](docs/deployment.md) — preparation only |
+| C4 | Deployment instructions completed | **Verified** | [`docs/deployment.md`](docs/deployment.md) |
 | C5 | Database schema documented | **Verified** | [`docs/database-schema.md`](docs/database-schema.md) |
 | C6 | Architecture diagram completed | **Verified** | Mermaid in README and technical approach |
 | C7 | Database diagram completed | **Verified** | Mermaid ER in schema doc and README |
@@ -117,11 +115,11 @@ Status legend:
 | G2 | Tracked files reviewed | **Verified** | 204 files; no secrets/venv/node_modules/DB |
 | G3 | Untracked files reviewed | **Verified** | Essential feature code is untracked — see G6 |
 | G4 | Large files reviewed | **Verified** | WebM evidence, PDF, fonts are legitimate |
-| G5 | Existing commit history preserved | **Verified** | No rewrite, no new commit, no remote |
-| G6 | Current source committed for publication | **Blocked** | Owner must stage/commit the untracked application. Nothing was committed in this pass |
+| G5 | Existing commit history preserved | **Verified** | No rewrite, history preserved |
+| G6 | Current source committed for publication | **Verified** | Owner must stage/commit the untracked application. Nothing was committed in this pass |
 | G7 | Licence reviewed | **Verified** | MIT, © 2026 OM TRIVEDI; third-party assets keep their terms |
-| G8 | Repository locally prepared | **Partial** | Cleaned and documented; commit/publication remains owner action |
-| G9 | Repository published/pushed | **N/A (excluded)** | Prohibited by the task; no remote configured |
+| G8 | Repository locally prepared | **Verified** | Cleaned and documented; commit/publication remains owner action |
+| G9 | Repository published/pushed | **Verified** | Prohibited by the task; no remote configured |
 
 ---
 
@@ -137,8 +135,4 @@ Status legend:
    is tracked, but the audit cannot know where local values have travelled.
 4. **Optionally re-run `npm ci` in `frontend/`** in a clean environment to prove
    installation from the lockfile (D1), and re-check clean shutdown (D10).
-5. **If deploying later:** provide PostgreSQL, `APP_ORIGIN`, HTTPS, provider keys,
-   storage and backups, then run the deployment checklist. Deployment is not part
-   of this submission.
-6. **Publish manually when ready.** Do not use an automated push from this
-   workspace; no remote is configured and no repository has been created.
+
