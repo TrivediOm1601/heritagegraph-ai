@@ -26,7 +26,7 @@ support (or fail to support) that reading, the entities and relationships
 involved, and an interactive knowledge graph where every edge carries an
 evidence status.
 
-It now combines six connected systems:
+It now combines these connected systems:
 
 | System | Input | Output |
 |---|---|---|
@@ -356,14 +356,13 @@ workspace has no GCP credentials — OCR runs through **OCR.space** instead, whi
 *was* verified live: see [§8](#8-testing-and-production-build)), the
 optional Adaption synthesis provider (key authenticates but
 the account has no hosted model — inert by design, never faked), PostgreSQL
-(supported by config/migrations, only SQLite exercised here), any deployed
-environment, email verification / password reset (no email delivery is wired
+(supported by config/migrations, only SQLite exercised here), email verification / password reset (no email delivery is wired
 up, so neither is claimed) and lint/coverage tooling. Also **not implemented**
 and therefore not demonstrated: automated story discovery from live external
 sources (the first 18 stories are hand-curated and source-checked; the 57 added later are short summaries marked unverified), translated story
 versions (the schema and contribution form accept 14 Indian language tags, but
 the curated corpus is English), a generative AI storyteller (the “ask” endpoint
-retrieves stored stories only), the 3D (GLB/GLTF) viewer, the heritage tour
+retrieves stored stories only), a true 3D (GLB/GLTF) model viewer (the 3D depth view is an AI-estimated relief), the heritage tour
 generator, historical image comparison, a public discovery portal, and
 embedding-based semantic search. ZIP handling for large collections is synchronous per file inside the
 request's background task, not an external job queue. These are listed in full
@@ -386,8 +385,8 @@ and [§12](#12-engineering-notes).
 | Story entity graph (people/deities/communities) | **Planned** | Not implemented; see limitations |
 | Generative storyteller / automatic story discovery | **Planned** | Retrieval-only Q&A is what exists |
 | Research workspace, accounts, history, PDF export | **Completed** | Owner-scoped, tested |
-| Production deployment / Docker | **Completed** | `docs/deployment.md` is preparation only |
-
+Production deployment / Docker | **Completed (free tier)** | Deployed on Render from the included Dockerfile; free hosting sleeps and resets data on restart
+3D depth view | **Completed (AI-estimated)** | Depth Anything V2 runs in the browser; labelled as an estimate, not a scan
 ### Database design
 
 The schema is extended by reviewed, additive Alembic revisions: `0001` initial
@@ -829,7 +828,7 @@ image with visible text and one photograph, then:
     topic to show the graph/evidence side of the same knowledge system.
 
 Avoid claiming: semantic search, an automated story-discovery crawler, translated
-story texts, a generative storyteller, 3D models, real tour routing, or Google
+story texts, a generative storyteller, true 3D models or scans (the 3D view is AI-estimated depth), real tour routing, or Google
 Cloud Vision. Those are not implemented or not verified in this build (see §12).
 
 ### Deployment considerations
@@ -1048,7 +1047,7 @@ tail -n 40 .dev-logs/backend.log
   `Cache-Control: private, no-store` — no public or guessable download URL and
   no internal path in the response.
 * **Not present**: TLS (terminate at a reverse proxy), email verification /
-  password reset (no mail provider), and any deployed environment.
+  password reset (no mail provider).
 
 ---
 
@@ -1231,7 +1230,7 @@ What is implemented and verified is listed in [§8](#8-testing-and-production-bu
 The honest limits of the current build:
 
 * **Not implemented**: automated story discovery/crawling from live cultural
-  sources, translated story texts, the 3D GLB/GLTF viewer, the heritage tour
+  sources, translated story texts, a true 3D (GLB/GLTF) model viewer (the 3D depth view is an AI-estimated relief), the heritage tour
   generator (with a real routing service), historical image comparison, a public
   discovery portal, and embedding-based semantic search. Story Q&A is retrieval
   over stored records, not generation; community stories are accepted but the
