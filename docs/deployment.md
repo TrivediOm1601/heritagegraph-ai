@@ -1,9 +1,9 @@
-# Deployment Preparation — HeritageGraph AI
+# Deployment — HeritageGraph AI
 
-> **Status: deployment has not been performed.** This document describes the
-> intended production topology and the verified commands/configuration needed to
-> run it. it is deployed on Render using the Dockerfile, cloud resource, DNS record or hosting account was
-> created during this pass.
+> **Status: deployed on Render** from the included `Dockerfile`
+> (https://heritagegraph-ai.onrender.com). This document describes the production
+> topology and the verified commands and configuration. The free tier sleeps when
+> idle, and accounts and uploads reset on restart.
 
 ---
 
@@ -207,7 +207,7 @@ implemented; replacing the local storage service is a future improvement.
 
 ## 10. Docker evaluation
 
-A Dockerfile/Compose pair was **not** added. Reasoning:
+A Dockerfile is included and the app runs from it on Render. Reasoning:
 
 - the verified local path is `npm run setup` + `npm run dev`, and the production
   path is a static build + one ASGI process; there is no multi-service
@@ -247,4 +247,4 @@ and run the migration as a release step. Test it before claiming support.
 - **Production database migrated:** no.
 - **Production secret store configured:** no.
 
-Everything above is preparation and documentation only.
+Everything above documents the live Render deployment and the production path.
